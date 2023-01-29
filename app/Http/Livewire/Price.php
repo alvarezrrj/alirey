@@ -6,14 +6,12 @@ use App\Models\Config;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class Anticipation extends Component
+class Price extends Component
 {
     public $config;
-
+ 
     protected $rules = [
-        'config.allways_open' => 'required|boolean',
-        'config.anticipation' => 'required|integer',
-        'config.open_until' => 'required|date'
+        'config.price' => 'required|integer|min:0',
     ];
 
     public function mount() 
@@ -23,7 +21,7 @@ class Anticipation extends Component
 
     public function render()
     {
-        return view('livewire.anticipation');
+        return view('livewire.price');
     }
 
     public function updated()

@@ -16,9 +16,11 @@
 
     <div class="py-12 space-y-6">
 
-    <livewire:working-days />
+        <livewire:working-days />
 
-    <livewire:anticipation />
+        <livewire:anticipation />
+
+        <livewire:price />
 
     </div>
 

@@ -9,15 +9,14 @@
         <div class="max-w-xl pl-8 space-y-2">
 
             <label class="form-check-label inline-block text-gray-800 dark:text-gray-200" for="allways-open">{{ __('Always open') }}
-                <input class="toggle checked:bg-brown checked:hover:bg-brown checked:border-brown focus:ring-brown focus:checked:bg-brown appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" 
-                type="checkbox" 
-                id="allways-open"
-                @checked($config->allways_open)
-                value="1"
-                wire:model='config.allways_open'
-                />
+                <x-toggle
+                    id="allways-open"
+                    :checked="$config->allways_open"
+                    value="1"
+                    wire:model="config.allways_open"
+                ></x-toggle>
             </label>
-            
+            <x-input-error :messages="$errors->get('config.allways_open')" class="mt-2" />
 
             <x-input-label for="anticipation-input">{{ __('Anticipation') }}</x-input-label>
             <small class="text-gray-500 dark:text-gray-500">
@@ -28,6 +27,7 @@
                 wire:model="config.anticipation"
                 >
             </x-text-input>
+            <x-input-error :messages="$errors->get('config.anticipation')" class="mt-2" />
 
             <x-input-label for="open-until-input">{{ __('Open until') }}</x-input-label>
             <small class="text-gray-500 dark:text-gray-500">
@@ -36,6 +36,7 @@
             <x-text-input class="block" :disabled="$config->allways_open" type="date" 
                 name="open_until" wire:model="config.open_until">
             </x-text-input>
+            <x-input-error :messages="$errors->get('config.open_until')" class="mt-2" />
         </div>
     </div>
 </div>

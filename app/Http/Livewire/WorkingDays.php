@@ -31,10 +31,10 @@ class WorkingDays extends Component
 
     public function updated() 
     {
-        $this->validate();
-
         // Cast all values to integer
-        //foreach($this->working_days as &$day) $day = (int) $day;
+        foreach($this->working_days as &$day) $day = (int) $day;
+
+        $this->validate();
 
         $config = Config::where('user_id', Auth::user()->id)->first();
         $config->working_days = implode($this->working_days);
