@@ -29,10 +29,18 @@
             <x-input-error class="mt-2" :messages="$errors->get('lastName')" />
         </div>
 
-        <div>
+        <!-- Telephone Number -->
+        <div class="mt-4">
             <x-input-label for="phone" :value="__('Telephone Number')" />
-            <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $user->phone)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+            <div class="flex">
+                <x-code-select :codes="$codes" :value="old('code_id', $user->code_id)" label="Country code" id="code" name="code_id" rounded="rounded-l-md"
+                class="flexselect inline-block mt-1 w-2/5" required />
+                <x-text-input id="phone" inputmode="numeric" rounded="rounded-r-md"
+                class="inline-block mt-1 w-3/5" type="text" name="phone" 
+                :value="old('phone', $user->phone )" required />
+            </div>
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+            <x-input-error :messages="$errors->get('code_id')" class="mt-2" />
         </div>
 
         <div>

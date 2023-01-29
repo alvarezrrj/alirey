@@ -23,6 +23,7 @@ class User extends Authenticatable
         'firstName',
         'lastName',
         'email',
+        'code_id',
         'phone',
         'password',
     ];
@@ -46,11 +47,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function isAdmin() {
+    public function isAdmin() 
+    {
         return $this->role->role === SD::admin;
     }
 
-    public function role() {
+    public function role() 
+    {
         return $this->belongsTo(Role::class);
+    }
+
+    public function code()
+    {
+        return $this->belongsTo(Code::class);
+    }
+
+    public function config()
+    {
+        return $this->hasOne(Config::class);
     }
 }

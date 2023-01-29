@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Code;
 use App\Models\User;
 use App\Models\Role;
 use App\Providers\RouteServiceProvider;
@@ -10,6 +11,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -22,7 +24,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $codes = DB::table('codes')->orderBy('country', 'asc')->get();
+
+        return view('auth.register', [
+            'codes' => $codes
+        ]);
     }
 
     /**
@@ -36,6 +42,7 @@ class RegisteredUserController extends Controller
             'role_id' => ['integer'],
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
+            'code_id' => ['required', 'integer'],
             'phone' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -44,9 +51,10 @@ class RegisteredUserController extends Controller
         $user = new User;
         $user->role_id = $request->user?->isAdmin()
             ? $request->role_id
-            : Role::where('role', SD::admin)->first()->id;
+            : Role::where('role', SD::client)->first()->id;
         $user->firstName = $request->firstName;
         $user->lastName =  $request->lastName;
+        $user->code_id = $request->code_id;
         $user->phone = $request->phone;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);

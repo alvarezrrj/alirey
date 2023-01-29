@@ -12,12 +12,18 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Third party styles -->
+        @stack('third-party-styles')
+
+        <!-- Own styles -->
+        @stack('styles')
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <x-vertical-logo class="w-52 h-52 fill-current text-gray-500" />
                 </a>
             </div>
 
@@ -25,5 +31,11 @@
                 {{ $slot }}
             </div>
         </div>
+
+        {{-- Push stuff into this stack with @push('scripts') <foo> @endpush 
+             from within the view --}}
+        @stack('libraries')
+        @stack('scripts')
+
     </body>
 </html>

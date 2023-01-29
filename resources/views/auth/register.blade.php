@@ -1,4 +1,5 @@
 <x-guest-layout>
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -26,7 +27,12 @@
         <!-- Telephone Number -->
         <div class="mt-4">
             <x-input-label for="phone" :value="__('Telephone Number')" />
-            <x-text-input id="email" inputmode="numeric" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required />
+            <div class="flex">
+                <x-code-select :codes="$codes" :value="old('code')" label="Country code" id="code" name="code_id" rounded="rounded-l-md"
+                class="flexselect inline-block mt-1 w-2/5" required />
+                <x-text-input id="phone" inputmode="numeric" rounded="rounded-r-md"
+                class="inline-block mt-1 w-3/5" type="text" name="phone" :value="old('phone')" required />
+            </div>
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
         </div>
 
@@ -66,4 +72,6 @@
             </x-primary-button>
         </div>
     </form>
+
+
 </x-guest-layout>
