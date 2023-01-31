@@ -9,8 +9,9 @@
 
         <div class="max-w-xl pl-8 space-y-2">
 
+            <span class="text-gray-900 dark:text-gray-100">$&nbsp;</span>
             <x-text-input 
-                class="block" id="price" 
+                class="inline-block" id="price" 
                 min="0" 
                 intputmode="numeric" 
                 type="number" 

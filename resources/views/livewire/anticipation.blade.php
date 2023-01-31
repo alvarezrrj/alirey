@@ -29,7 +29,7 @@
             </x-text-input>
             <x-input-error :messages="$errors->get('config.anticipation')" class="mt-2" />
 
-            <x-input-label for="open-until-input">{{ __('Open until') }}</x-input-label>
+            <x-input-label class="!mt-6" for="open-until-input">{{ __('Open until') }}</x-input-label>
             <small class="text-gray-500 dark:text-gray-500">
                 {{ __("Choose the last date to display on the calendar") }}
             </small>

@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('holidays', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('slot_id');
             $table->foreignId('user_id');
-            $table->foreignId('payment_id');
-            $table->boolean('is_booking')->default(true);
-            $table->boolean('virtual')->default(true);
-            $table->string('status', 32);
+            $table->dateTime('day', 6);
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('holidays');
     }
 };

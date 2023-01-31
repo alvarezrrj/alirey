@@ -1,3 +1,4 @@
+{{-- Admin configurations --}}
 <x-app-layout>
     @push('third-party-styles')
         @livewireStyles
@@ -21,6 +22,8 @@
         <livewire:anticipation />
 
         <livewire:price />
+
+        <livewire:holiday />
 
     </div>
 

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use StaticDetails\SD;
 
 return new class extends Migration
 {
@@ -13,14 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bookings', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('slot_id');
-            $table->foreignId('user_id');
-            $table->foreignId('payment_id');
-            $table->boolean('is_booking')->default(true);
-            $table->boolean('virtual')->default(true);
-            $table->string('status', 32);
+            $table->bigInteger('mp_id')->nullable();
+            $table->integer('amount')->default(0);
+            $table->string('status', 32)->default(SD::PAYMENT_PENDING);
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bookings');
+        Schema::dropIfExists('payments');
     }
 };

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -34,3 +35,6 @@ require __DIR__.'/auth.php';
 Route::get('/config', [ConfigController::class, 'index'])
     ->name('config')
     ->middleware(['auth']);
+
+Route::resource('bookings', BookingController::class)
+    ->middleware(['auth', 'admin']);
