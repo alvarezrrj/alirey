@@ -10,7 +10,7 @@ use Livewire\Component;
 class HolidayRange extends Component
 {
     public $range;
-    public $index;
+    //public $index;
     public $hidden = '';
     public $deleted = false;
 
@@ -37,6 +37,6 @@ class HolidayRange extends Component
         //$this->hidden = 'hidden';
         //$this->deleted = true;
 
-        $this->emit('rangeDeleted', $this->index);
+        $this->emit('rangeDeleted');
     }
 }

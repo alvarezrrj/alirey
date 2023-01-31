@@ -11,7 +11,6 @@ class Slot extends Component
     use AuthorizesRequests;
 
     public ModelsSlot $slot;
-    //public $index;
 
     public function render()
     {

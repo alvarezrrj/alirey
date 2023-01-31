@@ -7,9 +7,7 @@
         </h2>
 
         <x-alert-error key="bookings" />
-
         <x-alert-warning key="holiday" />
-
         <x-alert-message />
 
         <div class="max-w-xl pl-8">
@@ -68,9 +66,8 @@
                 @foreach ($holidays as $holiday)
 
                     <livewire:holiday-range 
-                        :index="$loop->index"
                         :range="$holiday" 
-                        :wire:key="$loop->index"/>
+                        :wire:key="$holiday[0]"/>
 
                 @endforeach
                 </tbody>

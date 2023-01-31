@@ -30,7 +30,6 @@ Delete holiday plans by clicking 'delete' on the table rows.
 
 Allows admin to manage session slots. These will be shown to clients and made available for booking.
 
-
 ## Deployment
 
 Add additional notes about how to deploy this on a live system

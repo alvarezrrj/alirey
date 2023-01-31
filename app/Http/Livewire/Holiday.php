@@ -15,13 +15,6 @@ class Holiday extends Component
 {
     use AuthorizesRequests;
 
-    /**
-     * Array of arrays of Carbon objects:
-     *  [start-date, end-date]
-     * where start-date == end-date for 1-day holidays
-     *  */ 
-    public $holidays = [];
-
     public $from;
     public $until;
     public $bookings_exist = false;
@@ -33,84 +26,42 @@ class Holiday extends Component
     ];
 
     protected $listeners = [
-        'rangeDeleted' => 'deleteRange',
+        'rangeDeleted' => 'noop',
     ];
 
-    public function deleteRange($index)
-    {
-        unset($this->holidays[$index]);
-    }
-
+    /*
     public function mount(Request $request)
     {
         $this->fetchHolidays($request);
     }
+    */
 
-    public function render()
+    public function render(Request $request)
     {
-        return view('livewire.holidays');
-    }
-
-    public function updated()
-    {
-        $this->validate();
-
-        $bookings = Booking::
-            whereDate('day', '>=', $this->from)
-            ->whereDate('day', '<=', $this->until ?? $this->from)
-            ->get();
-
-        if(count($bookings)) {
-            $this->addError('bookings', 'There are pending bookings in that range');
-            $this->bookings_exist = true;
-        }
-        else $this->bookings_exist = false;
-
-        $holiday_overlap = Holidays::
-            whereDate('day', '>=', $this->from)
-            ->whereDate('day', '<=', $this->until ?? $this->from)
-            ->get();
-
-        if(count($holiday_overlap)) {
-            $this->addError('holiday', 'Overlaping holiday plans!');
-            $this->holiday_overlap = true;
-        }
-        else $this->holiday_overlap = false;
-
-        return $this->bookings_exist || $this->holiday_overlap;
-
+        
+        return view('livewire.holidays', [
+            'holidays' => $this->fetchHolidays($request),
+        ]);
     }
 
     public function submit(Request $request)
     {
         if($this->updated()) return;
-        /*
-        if($this->bookings_exist) {
-            $this->addError('bookings', 'There are bookings present in that range');
-            return;
-        }
-
-        if($this->holiday_overlap) {
-            $this->addError('holiday', 'Overlaping holiday plans!');
-            return;
-        }
-
-        $this->validate();
-        */
 
         if(! Gate::allows('admin-only')) {
             return response('', 403);
         }
-
         
         $from = Carbon::create($this->from);
         $until = $this->until ? Carbon::create($this->until) : $from;
 
         // Push new values into array for livewire to re-render table
+        /*
         array_push($this->holidays, [
             $from->format('d/m/Y'), 
             $until->format('d/m/Y')
         ]);
+        */
 
         if($until->lte($from)) {
             $request->user()->holidays()->create([ 'day' => $from ]);
@@ -143,6 +94,7 @@ class Holiday extends Component
          *  multiple 1 day holidays
          *  multi-day holidays
          */
+        $holidays = [];
         $i = 0;
         $start = $dates[$i]->day;
         while($i < count($dates))
@@ -151,14 +103,14 @@ class Holiday extends Component
 
             $next = $dates[$i+1]->day ?? null;
 
-            if(! $next) array_push($this->holidays, [
+            if(! $next) array_push($holidays, [
                 $start->format('d/m/Y'), 
                 $current->format('d/m/Y')
             ]);
 
             elseif($current->diffInDays($next) > 1)
             {
-                array_push($this->holidays, [
+                array_push($holidays, [
                     $start->format('d/m/Y'), 
                     $current->format('d/m/Y')
                 ]);
@@ -168,13 +120,7 @@ class Holiday extends Component
             $i++;
         }
 
-        $this->sort($this->holidays);
-
-    }
-
-    public function sort($array)
-    {
-        usort($array, function($a, $b) {
+        usort($holidays, function($a, $b) {
             $params1 = explode('/', $a[0]);
             $params2 = explode('/', $b[0]);
 
@@ -188,10 +134,49 @@ class Holiday extends Component
             if($first->gt($second)) return 1;
         });
 
+        return $holidays;
+
+    }
+
+    public function updated()
+    {
+        $this->validate();
+
+        $bookings = Booking::
+            whereDate('day', '>=', $this->from)
+            ->whereDate('day', '<=', $this->until ?? $this->from)
+            ->get();
+
+        if(count($bookings)) {
+            $this->addError('bookings', 'There are pending bookings in that range');
+            $this->bookings_exist = true;
+        }
+        else $this->bookings_exist = false;
+
+        $holiday_overlap = Holidays::
+            whereDate('day', '>=', $this->from)
+            ->whereDate('day', '<=', $this->until ?? $this->from)
+            ->get();
+
+        if(count($holiday_overlap)) {
+            $this->addError('holiday', 'Overlaping holiday plans!');
+            $this->holiday_overlap = true;
+        }
+        else $this->holiday_overlap = false;
+
+        return $this->bookings_exist || $this->holiday_overlap;
+
+    }
+
+    public function sort(&$array)
+    {
+
     }
     
     public function resetUntil() 
     {
         $this->until = null;
     }
+
+    public function noop() { }
 }
