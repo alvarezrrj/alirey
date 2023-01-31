@@ -17,7 +17,7 @@
                 type="number" 
                 step="100"
                 name="price"
-                wire:model.debounce.750ms="config.price"
+                wire:model.lazy="config.price"
                 
             />
             <x-input-error :messages="$errors->get('config.price')" class="mt-2" />

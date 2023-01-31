@@ -13,4 +13,9 @@ class Slot extends Model
     ];
 
     use HasFactory;
+
+    public function config()
+    {
+        return $this->belongsTo(Config::class);
+    }
 }

@@ -15,4 +15,9 @@ class Config extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function slots()
+    {
+        return $this->hasMany(Slot::class);
+    }
 }

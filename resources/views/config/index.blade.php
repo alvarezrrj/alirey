@@ -25,6 +25,8 @@
 
         <livewire:holiday />
 
+        <livewire:slots />
+
     </div>
 
     @push('libraries')

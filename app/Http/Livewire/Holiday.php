@@ -77,11 +77,13 @@ class Holiday extends Component
         }
         else $this->holiday_overlap = false;
 
+        return $this->bookings_exist || $this->holiday_overlap;
+
     }
 
     public function submit(Request $request)
     {
-        $this->updated();
+        if($this->updated()) return;
         /*
         if($this->bookings_exist) {
             $this->addError('bookings', 'There are bookings present in that range');
