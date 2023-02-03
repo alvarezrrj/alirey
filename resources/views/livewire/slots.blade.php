@@ -13,9 +13,10 @@
 
         <x-alert-message />
 
-        <div class="max-w-xl pl-8">
+        <div class="max-w-xl sm:pl-8">
 
             <form wire:submit.prevent="submit" class="space-y-4">
+                <div class="flex space-x-5">
                 <x-input-label for="start">{{ __('Start') }}
                     <x-text-input 
                         class="block mt-1" id="start" 
@@ -35,6 +36,7 @@
                         type="time" 
                         wire:model="slot.end" />
                 </x-input-label>
+                </div>
                 <x-input-error :messages="$errors->get('end')" class="mt-2" />
                 <x-input-error :messages="$errors->get('invalid')" class="mt-2" />
                 <x-input-error :messages="$errors->get('overlaps')" class="mt-2" />

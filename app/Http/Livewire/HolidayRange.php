@@ -10,9 +10,6 @@ use Livewire\Component;
 class HolidayRange extends Component
 {
     public $range;
-    //public $index;
-    public $hidden = '';
-    public $deleted = false;
 
     public function render()
     {

@@ -24,7 +24,7 @@
             </small>
             <x-text-input class="block" id="anticipation-input" min="0" 
                 :disabled="(! $config->allways_open)" type="number" name="anticipation"
-                wire:model="config.anticipation"
+                wire:model.lazy="config.anticipation"
                 >
             </x-text-input>
             <x-input-error :messages="$errors->get('config.anticipation')" class="mt-2" />

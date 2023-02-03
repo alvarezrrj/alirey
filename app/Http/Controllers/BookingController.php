@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use StaticDetails\SD;
 
 class BookingController extends Controller
 {
@@ -14,6 +15,10 @@ class BookingController extends Controller
      */
     public function index()
     {
+        /**
+         * TO DO
+         *  pending, completed, cancelled
+         */
         return view('bookings.index');
     }
 
@@ -46,7 +51,11 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        //
+        return view('bookings.show', [
+            'booking' => $booking,
+            'payment_refunded' => SD::PAYMENT_REFUNDED,
+            'booking_pending' => SD::BOOKING_PENDING,
+        ]);
     }
 
     /**
@@ -81,5 +90,18 @@ class BookingController extends Controller
     public function destroy(Booking $booking)
     {
         //
+    }
+
+    public function complete(int $id)
+    {
+        $booking = Booking::find($id);
+
+        $this->authorize('update', $booking);
+
+        $booking->status = SD::BOOKING_COMPLETED;
+
+        $booking->save();
+
+        return back();
     }
 }

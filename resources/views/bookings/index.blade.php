@@ -1,4 +1,4 @@
-{{-- All booknigs --}}
+{{-- Bookings table --}}
 <x-app-layout>
 
     <x-slot name="header">
@@ -10,7 +10,7 @@
 
     <div class="py-12 space-y-6">
 
-
+        <livewire:bookings-table />
 
     </div>
 

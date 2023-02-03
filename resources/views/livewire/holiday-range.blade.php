@@ -1,5 +1,5 @@
 {{-- Be like water. --}}
-<tr class="{{ $hidden }} even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700">
+<tr class="even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700">
 
     <td class="p-2">{{ $range[0] }}</td>
 

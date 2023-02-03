@@ -10,7 +10,7 @@
         <x-alert-warning key="holiday" />
         <x-alert-message />
 
-        <div class="max-w-xl pl-8">
+        <div class="max-w-xl sm:pl-8">
 
             <form wire:submit.prevent="submit" class="space-y-4">
                 <x-input-label for="from">{{ __('From') }}

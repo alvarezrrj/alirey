@@ -7,12 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slot extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'start',
         'end'
     ];
 
-    use HasFactory;
+    protected $casts = [
+        'start' => 'datetime',
+        'end' => 'datetime'
+    ];
+
 
     public function config()
     {
