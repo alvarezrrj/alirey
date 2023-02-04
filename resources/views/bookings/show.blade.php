@@ -51,6 +51,7 @@
                   {{ $booking->user->lastName }}
                 </td>
               </tr>
+
               <tr>
                 <th class="text-left p-2 ">
                   {{ __('Email') }}<br>
@@ -64,6 +65,7 @@
                   </a>
                 </td>
               </tr>
+
               <tr>
                 <th class="text-left p-2 ">
                   {{ __('Phone') }}<br>
@@ -73,26 +75,35 @@
                     </small>
                   </template>
                 </th>
-                <td class="text-right p-2 ">
-                  <span 
-                    x-data="" 
-                    x-init="$refs.tap ?
-                      $el.style.cursor = 'pointer' :
-                      ''" 
-                    x-ref="number"
-                    x-on:click="
-                      navigator.clipboard?.writeText($el.innerText)
-                      .then(notif.i(
-                          '{{ __('Copied') }}', 
-                          true, 
-                          3500)
-                      )
-                    ">
-                    +{{ $booking->user->code->code }}&nbsp;
-                     {{ $booking->user->phone }}
-                  </span>
+                <td class="text-right p-2">
+                  <div class="flex items-center justify-end h-full">
+                    <span 
+                      x-data="" 
+                      x-init="$refs.tap ?
+                        $el.style.cursor = 'pointer' :
+                        ''" 
+                      x-ref="number"
+                      x-on:click="
+                        navigator.clipboard?.writeText($el.innerText)
+                        .then(notif.i(
+                            '{{ __('Copied') }}', 
+                            true, 
+                            3500)
+                        )
+                      ">
+                      +{{ $booking->user->code->code }}&nbsp;
+                      {{ $booking->user->phone }}
+                    </span>
+                      <a href="https://api.whatsapp.com/send/?phone={{ $booking->user->code->code }}{{ $booking->user->phone }}&text&type=phone_number&app_absent=1"
+                        class="ml-2">
+                        <x-primary-button :small="true">
+                          <x-antdesign-whats-app-o width="22" height="22"/>
+                        </x-primary-button>
+                      </a>
+                  </div>
                 </td>
               </tr>
+
               <tr>
                 <th class="text-left p-2 ">
                   {{ __('Date') }}
@@ -101,6 +112,7 @@
                   {{ $booking->day->format('m/d/Y') }}
                 </td>
               </tr>
+
               <tr>
                 <th class="text-left p-2 ">
                   {{ __('Start time') }}
@@ -109,6 +121,7 @@
                   {{ $booking->slot->start->format('h:i') }}
                 </td>
               </tr>
+
               <tr>
                 <th class="text-left p-2 ">
                   {{ __('Payment status') }}
@@ -117,6 +130,7 @@
                   {{ __($booking->payment->status) }}
                 </td>
               </tr>
+
               @if ($booking->payment->status == $payment_refunded)
                 <tr>
                   <th class="text-left p-2 ">
@@ -127,6 +141,7 @@
                   </td>
                 </tr>
               @endif
+
               <tr>
                 <th class="text-left p-2 ">
                   {{ __('Paid ammount') }}

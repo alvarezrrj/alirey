@@ -39,9 +39,19 @@ Can only be accessed by admin, displays a table which is filterable by booking s
 
 Displays booking details and allows admin to mark booking as 'complete', refund and edit it.
 
-## Deployment
+## Deployment TO DO
 
-Add additional notes about how to deploy this on a live system
+Cache views with 
+
+```
+php artisan view:cache
+```
+
+Cache icons with
+
+```
+php artisan icons:cache
+```
 
 ## Built With
 

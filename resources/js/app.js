@@ -11,5 +11,6 @@ Alpine.start();
 import.meta.glob([
     './libraries/**',
     './img/**',
+    './icons/*',
     './*',
 ])
