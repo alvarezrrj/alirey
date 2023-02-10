@@ -91,26 +91,24 @@
               <legend class="font-medium text-sm text-gray-800 dark:text-gray-200">
                 {{ __('Booking type') }}
               </legend>
-              <input 
-                class="m-2"
-                type="radio" 
+              <x-radio-input 
+                id="virtual"
                 name="type" 
-                @checked($booking->virtual)
-                value="1">
+                :checked="$booking->virtual"
+                value="1" />
               <x-input-label 
                 class="inline-block" 
-                for="type" 
+                for="virtual" 
                 :value="__('Virtual')" />
                 <br>
 
-              <input 
-                class="inline-block m-2"
-                type="radio" 
+              <x-radio-input
+                id="in-person"
                 name="type" 
-                @checked(! $booking->virtual)
-                value="0">
+                :checked="! $booking->virtual"
+                value="0" />
               <x-input-label class="inline-block" 
-                for="type" 
+                for="in-person" 
                 :value="__('In-person')" />
             </fieldset>
             <x-input-error class="mt-2" :messages="$errors->get('type')" />
