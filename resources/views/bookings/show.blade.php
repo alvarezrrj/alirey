@@ -6,9 +6,7 @@
 
     <div class="flex items-center">
       <a href="{{ route('bookings.index') }}">
-        <x-secondary-button :small="true" class="inline-block" aria-label="back">
-          👈
-        </x-secondary-button>
+          <x-bi-caret-left class="text-gray-800 dark:text-gray-200" width="20" height="20"/>
       </a>
 
       <h2 class="inline-block ml-2 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -22,17 +20,14 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
       <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
 
-        <div class="max-w-xl pl-8">
+        <div class="max-w-xl sm:pl-8">
 
           <h3 class="text-gray-900 dark:text-gray-100 font-bold">
             {{ __('Booking number') }}:&nbsp;{{ $booking->id }}
           </h3>
 
-          <table class="text-gray-900 dark:text-gray-100 w-full">
+          <table class="text-gray-900 dark:text-gray-100 w-full mt-6">
             <tbody class="divide-y">
-              {{--
-                            <tr class="odd:bg-gray-100 dark:odd:bg-gray-900">
-                                --}}
               <tr>
                 <th class="text-left p-2  ">
                   {{ __('Status') }}
@@ -95,7 +90,8 @@
                       {{ $booking->user->phone }}
                     </span>
                       <a href="https://api.whatsapp.com/send/?phone={{ $booking->user->code->code }}{{ $booking->user->phone }}&text&type=phone_number&app_absent=1"
-                        class="ml-2">
+                        class="ml-2"
+                        title="{{ __('Call on Whatsapp') }}">
                         <x-primary-button :small="true">
                           <x-antdesign-whats-app-o width="22" height="22"/>
                         </x-primary-button>
@@ -106,10 +102,21 @@
 
               <tr>
                 <th class="text-left p-2 ">
+                  {{ __('Booking type') }}
+                </th>
+                <td class="text-right p-2 ">
+                  @if($booking->virtual) {{ __('Virtual') }}
+                  @else {{ __('In-person') }}
+                  @endif
+                </td>
+              </tr>
+
+              <tr>
+                <th class="text-left p-2 ">
                   {{ __('Date') }}
                 </th>
                 <td class="text-right p-2 ">
-                  {{ $booking->day->format('m/d/Y') }}
+                  {{ $booking->day->format('d/m/Y') }}
                 </td>
               </tr>
 
@@ -155,10 +162,13 @@
           </table>
 
           <div class="flex justify-between mt-6">
+
             <x-danger-button>
               {{ __('Refund') }}
             </x-danger-button>
+
             <div>
+
               @if($booking->status === $booking_pending)
                 <form 
                   action="{{ route('booking.complete', $booking->id) }}" 
@@ -171,10 +181,17 @@
                   </x-secondary-button>
                 </form>
               @endif
-              <x-primary-button class="w-full sm:w-auto">
-                {{ __('Edit') }}
-              </x-primary-button>
+
+              @unless($booking->status === $booking_completed)
+                <a href="{{ route('bookings.edit', $booking->id) }}">
+                  <x-primary-button class="w-full sm:w-auto">
+                    {{ __('Edit') }}
+                  </x-primary-button>
+                </a>
+              @endunless
+
             </div>
+
           </div>
 
         </div>

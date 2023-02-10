@@ -22,6 +22,7 @@ class Holiday extends Model
     {
         return $date->format('d/m/Y');
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);

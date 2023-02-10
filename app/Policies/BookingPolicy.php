@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use StaticDetails\SD;
 
 class BookingPolicy
 {
@@ -53,7 +54,9 @@ class BookingPolicy
      */
     public function update(User $user, Booking $booking)
     {
-        return $this->delete($user, $booking);
+        return $this->delete($user, $booking) 
+            && $booking->status == SD::BOOKING_PENDING
+            && $booking->is_booking;
     }
 
     /**

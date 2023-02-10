@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +19,11 @@ class Slot extends Model
         'start' => 'datetime',
         'end' => 'datetime'
     ];
+
+    public function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('h:i');
+    }
 
 
     public function config()

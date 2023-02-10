@@ -187,6 +187,7 @@ return array(
     'Database\\Seeders\\CodeSeeder' => $baseDir . '/database/seeders/CodeSeeder.php',
     'Database\\Seeders\\ConfigSeeder' => $baseDir . '/database/seeders/ConfigSeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
+    'Davidhsianturi\\BladeBootstrapIcons\\BladeBootstrapIconsServiceProvider' => $vendorDir . '/davidhsianturi/blade-bootstrap-icons/src/BladeBootstrapIconsServiceProvider.php',
     'DeepCopy\\DeepCopy' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/DeepCopy.php',
     'DeepCopy\\Exception\\CloneException' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/Exception/CloneException.php',
     'DeepCopy\\Exception\\PropertyException' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/Exception/PropertyException.php',

@@ -23,7 +23,7 @@
                 </h2>
 
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {{ $slot->start->format('h:i')}} - {{ $slot->end->format('h:i') }}
+                    {{ $slot->start }} - {{ $slot->end }}
                 </p>
 
                 <div class="mt-6 flex justify-end">

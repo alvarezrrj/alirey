@@ -65,11 +65,12 @@
                         {{ __($booking->status) }}
                     </div>
                     <div class="md:mt-0 col-span-6 md:col-span-2 flex items-center justify-between md:justify-evenly md:grid-cols-2">
-                        <x-primary-button :small="true" class="w-2/5 ">
-                            <a href="{{ route('bookings.show', $booking->id) }}">
+                        <a href="{{ route('bookings.show', $booking->id) }}"
+                          class="w-2/5">
+                          <x-primary-button :small="true" class="w-full ">
                             {{ __('View') }}
-                            </a>
-                        </x-primary-button>
+                          </x-primary-button>
+                        </a>
 
                         <x-danger-button 
                             :small="true" 

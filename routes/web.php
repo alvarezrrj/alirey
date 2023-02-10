@@ -37,7 +37,7 @@ Route::get('/config', [ConfigController::class, 'index'])
     ->middleware(['auth']);
 
 Route::resource('bookings', BookingController::class)
-    ->only(['index', 'show', 'store'])
+    ->only(['index', 'show', 'create', 'store', 'edit', 'update'])
     ->middleware(['auth', 'admin']);
 
 Route::patch('bookings/complete/{id}', [BookingController::class, 'complete'])

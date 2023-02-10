@@ -21,9 +21,10 @@ class BookingsTable extends Component
 
     public function render()
     {
+        $bookings = Booking::where('is_booking', true);
         $bookings = $this->filter 
-        ? Booking::where('status', $this->filter)
-        : Booking::all();
+        ? $bookings->where('status', $this->filter)->get()
+        : $bookings->get();
 
         return view('livewire.bookings-table', [
             'bookings' => $bookings,

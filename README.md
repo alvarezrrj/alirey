@@ -2,6 +2,31 @@
 
 A booking management system. This doc describes what each section does.
 
+## TO DO
+
+config
+- Dissallow deleting slots with pending bookings
+
+bookings.upsert
+- Display dates in spanish
+
+bookings.show
+- Display refund button according to payment status:
+    + payment == PAYMENT_MP -> 'refund'
+    + payment == PAYMENT_PENDING -> 'mark as paid'
+    + payment == PAYMENT_REFUNDED || payment == PAYMENT_CASH -> remove button
+- Implement 'refund'
+- Hide 'edit' button when status == BOOKING_COMPLETED || status == BOOKING_CANCELLED
+
+bookings.destroy
+- Test it
+
+bookings.index
+- Test filter()
+
+config.slots
+- These are rendering as am/pm instead of 24h format. Take a look
+
 
 ## Config (/config)
 
@@ -37,7 +62,17 @@ Can only be accessed by admin, displays a table which is filterable by booking s
 
 ## Bookings.show (/bookings/{id})
 
-Displays booking details and allows admin to mark booking as 'complete', refund and edit it.
+Displays booking details and allows admin to mark booking as 'complete', refund, mark as paid and edit it.
+
+## Bookings.upsert (/bookings/{id}/edit & /bookings/create)
+
+Displays a form for updating/inserting bookings that have a state of BOOKING_PENDING
+
+'date' &lt;select&gt; shows days as disabled if there's a corresponding holiday or if there are as many bookings for the day as slots in config table.
+
+'time' &lt;select&gt; updates itself when a new day is selected, disabling any slots that have a booking on them, except if it corresponds to current booking.
+
+'restore' button restores date and time.
 
 ## Deployment TO DO
 

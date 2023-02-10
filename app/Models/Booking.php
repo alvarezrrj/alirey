@@ -18,7 +18,8 @@ class Booking extends Model
 
     public function serializeDate(DateTimeInterface $date)
     {
-        return $date->format('d-m-Y');
+        //return $date->format('d-m-Y');
+        return $date->format('Y-m-d');
     }
     
     public function slot()

@@ -80,20 +80,16 @@ class Holiday extends Component
 
     public function fetchHolidays(Request $request)
     {
+        $now = Carbon::now();
+
         $dates = Holidays::where('user_id', $request->user()->id)
-            ->whereDate('day', '>', 'now')
+            ->whereDate('day', '>=', $now)
             ->oldest('day')
             ->get();
         
-        if(! count($dates)) return;
+        if(! count($dates)) return [];
 
         // Walk the array to find holiday groups
-        /**
-         * Holiday options:
-         *  1 day single holiday
-         *  multiple 1 day holidays
-         *  multi-day holidays
-         */
         $holidays = [];
         $i = 0;
         $start = $dates[$i]->day;
