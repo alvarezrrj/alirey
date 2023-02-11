@@ -179,18 +179,20 @@
                 </div>
                   
                 {{-- Restore booking date and time to initial state --}}
-                <x-primary-button 
-                  class="mt-2"
-                  :small="true"
-                  data-tooltip="{{ __('Restore booking\'s date and time') }}"
-                  data-placement="right"
-                  type="button"
-                  x-on:click="
-                    day = '{{ $booking->day->toDateString() }}';
-                    slot_id = {{ $booking->slot->id }};
-                  ">
-                  ↩ {{ __('restore') }}
-                </x-primary-button>
+                <div class="w-full flex justify-end">
+                  <x-primary-button 
+                    class="mt-2"
+                    :small="true"
+                    data-tooltip="{{ __('Restore booking\'s date and time') }}"
+                    data-placement="left"
+                    type="button"
+                    x-on:click="
+                      day = '{{ $booking->day->toDateString() }}';
+                      slot_id = {{ $booking->slot->id }};
+                    ">
+                    ↩ {{ __('restore') }}
+                  </x-primary-button>
+                </div>
             </div> {{-- End Alpine object --}}
 
             {{-- Paid amount --}}
@@ -211,7 +213,7 @@
             </div>
 
             <div class="flex justify-between mt-8">
-              <a href="{{ route('bookings.index', $booking->id) }}">
+              <a href="{{ route('bookings.show', $booking->id) }}">
                 <x-secondary-button type="button">{{ __('Cancel') }}</x-secondary-button>
               </a>
               <x-primary-button>{{ __('Save') }}</x-primary-button>

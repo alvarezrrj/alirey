@@ -43,3 +43,7 @@ Route::resource('bookings', BookingController::class)
 Route::patch('bookings/complete/{id}', [BookingController::class, 'complete'])
     ->name('booking.complete')
     ->middleware(['auth', 'admin', 'web']);
+
+Route::patch('bookings/paid/{id}', [BookingController::class, 'paid'])
+    ->name('booking.paid')
+    ->middleware(['auth', 'admin', 'web']);

@@ -65,6 +65,8 @@ class BookingController extends Controller
         return view('bookings.show', [
             'booking' => $booking,
             'payment_refunded' => SD::PAYMENT_REFUNDED,
+            'payment_mp' => SD::PAYMENT_MP,
+            'payment_pending' => SD::PAYMENT_PENDING,
             'booking_pending' => SD::BOOKING_PENDING,
             'booking_completed' => SD::BOOKING_COMPLETED,
         ]);
@@ -193,6 +195,19 @@ class BookingController extends Controller
         $booking->status = SD::BOOKING_COMPLETED;
 
         $booking->save();
+
+        return back();
+    }
+
+    public function paid(int $id)
+    {
+        $booking = Booking::find($id);
+
+        $this->authorize('update', $booking);
+
+        $booking->payment->status = SD::PAYMENT_CASH;
+
+        $booking->payment->save();
 
         return back();
     }

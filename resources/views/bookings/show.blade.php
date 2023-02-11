@@ -163,9 +163,35 @@
 
           <div class="flex justify-between mt-6">
 
-            <x-danger-button>
-              {{ __('Refund') }}
-            </x-danger-button>
+            @if ($booking->payment->status == $payment_mp)
+              <form 
+                action="{{ route('booking.refund', $booking->id) }}" 
+                method="POST">
+                @csrf
+                @method('patch')
+              <x-danger-button 
+                class="h-full" 
+                type="submit">
+                {{ __('Refund') }}
+              </x-danger-button>
+            </form>
+            @elseif ($booking->payment->status == $payment_pending)
+              <form 
+                action="{{ route('booking.paid', $booking->id) }}" 
+                method="POST">
+                @csrf
+                @method('patch')
+              <x-danger-button 
+                class="h-full" 
+                type="submit">
+                {{ __('Confirm payment') }}
+              </x-danger-button>
+            </form>
+            @else
+            {{-- Just a placeholder to keep the following buttons pushed to the
+               right --}}
+              <div></div>
+            @endif
 
             <div>
 
