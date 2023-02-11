@@ -21,7 +21,7 @@ class BookingsTable extends Component
 
     public function render()
     {
-        $bookings = Booking::where('is_booking', true);
+        $bookings = Booking::where('is_booking', true)->latest('day');
         $bookings = $this->filter 
         ? $bookings->where('status', $this->filter)->get()
         : $bookings->get();

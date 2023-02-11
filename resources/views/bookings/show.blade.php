@@ -134,6 +134,10 @@
                   {{ __('Payment status') }}
                 </th>
                 <td class="text-right p-2 ">
+                  @if ($booking->payment->status == $payment_mp
+                    || $booking->payment->status == $payment_cash)
+                    {{ __('Paid')}} -
+                  @endif
                   {{ __($booking->payment->status) }}
                 </td>
               </tr>
@@ -229,8 +233,8 @@
   </div>
 
   @push('libraries')
-    <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" type="text/javascript"></script>
-    <script src="{{ Vite::asset('resources/libraries/notif/notif.js') }}" type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"></script>
+    <script src="{{ Vite::asset('resources/libraries/notif/notif.js') }}"></script>
   @endpush
 
 </x-app-layout>

@@ -44,26 +44,27 @@
                 </li>
             @foreach($bookings as $booking)
 
-                <li class="p-2 grid gap-y-2 gap-x-1 grid-cols-4 sm:grid-cols-7 grid-rows-3 sm:grid-rows-2 md:grid-rows-1 md:grid-cols-9 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700  text-gray-900 dark:text-gray-100">
+                <li class="p-2 grid gap-y-2 gap-x-1 grid-cols-7 sm:grid-cols-7 grid-rows-3 sm:grid-rows-2 md:grid-rows-1 md:grid-cols-9 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700  text-gray-900 dark:text-gray-100">
                     <div class="row-span-2 md:row-span-1">
                         {{ $booking->id }}
                     </div>
-                    <div>
+                    <div class="col-span-2 sm:col-span-1">
                         {{ $booking->user->firstName }}
                     </div>
                     <div class="col-span-4 sm:col-span-2">
                         {{ $booking->day->format('d/m/y') }}&nbsp;&middot;
                         {{ $booking->slot->start->format('h:i') }}
                     </div>
-                    <div>
+                    <div class="col-span-2 sm:col-span-1">
                         {{ $booking->virtual ? __('Virtual') : __('In-person') }}
                     </div>
-                    <div>
+                    <div class="col-span-2 sm:col-span-1">
                         {{ __($booking->payment->status) }}
                     </div>
-                    <div>
+                    <div class="col-span-2 sm:col-span-1">
                         {{ __($booking->status) }}
                     </div>
+                    <div class="col-span-1 sm:hidden"></div>
                     <div class="md:mt-0 col-span-6 md:col-span-2 flex items-center justify-between md:justify-evenly md:grid-cols-2">
                         <a href="{{ route('bookings.show', $booking->id) }}"
                           class="w-2/5">
@@ -100,7 +101,6 @@
                                 </x-secondary-button>
 
                                 <x-danger-button 
-                                    :small="true" 
                                     class="ml-3"
                                     wire:click.prevent="delete({{ $booking->id }})">
                                     {{ __('Delete') }}

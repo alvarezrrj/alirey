@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateBookingRequest;
 use App\Models\Booking;
 use App\Models\Code;
 use App\Models\Holiday;
@@ -66,6 +67,7 @@ class BookingController extends Controller
             'booking' => $booking,
             'payment_refunded' => SD::PAYMENT_REFUNDED,
             'payment_mp' => SD::PAYMENT_MP,
+            'payment_cash' => SD::PAYMENT_CASH,
             'payment_pending' => SD::PAYMENT_PENDING,
             'booking_pending' => SD::BOOKING_PENDING,
             'booking_completed' => SD::BOOKING_COMPLETED,
@@ -82,12 +84,10 @@ class BookingController extends Controller
     {
         $this->authorize('update', $booking);
 
-        // Retrieve last day
+        $now = Carbon::today();
         $last_day = Auth::user()->config->allways_open 
         ? Carbon::today()->addDays(Auth::user()->config->anticipation)
         : Carbon::create(Auth::user()->config->open_until);
-
-        $now = Carbon::today();
         $holidays = Holiday::where('user_id', Auth::user()->id)
                     ->whereDate('day', '>=', $now)
                     ->whereDate('day', '<=', $last_day) 
@@ -131,41 +131,26 @@ class BookingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateBookingRequest $request
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(UpdateBookingRequest $request, Booking $booking)
     {
         $this->authorize('update', $booking);
         
-        $validated_user = $request->validate([
-            'firstName' => 'required|string',
-            'lastName' => 'required|string',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->ignore($request->user()->id)
-            ],
-            'code_id' => 'required|int',
-            'phone' => 'required|numeric',
+        $validated_user = $request->safe()->only([
+            'firstName',
+            'lastName',
+            'email',
+            'code_id',
+            'phone'
         ]);
-        $validated_payment = $request->validate([
-            'amount' => 'required|int|min:0',
-        ]);
-        
-        $last_day = $request->user()->config->allways_open 
-        ? Carbon::today()->addDays($request->user()->config->anticipation)
-        : Carbon::create($request->user()->config->open_until);
-        $last_day_string = $last_day->toDateString();
-
-        $validated_booking = $request->validate([
-            'day' => "required|date|after_or_equal:today|before_or_equal:$last_day_string",
-            'slot_id' => [
-                'required',
-                'int',
-                Rule::in(Slot::pluck('id')->all())
-            ]
+        $validated_payment = $request->safe()->only(['amount']);
+        $validated_booking = $request->safe()->only([
+            'virtual', 
+            'day', 
+            'slot_id'
         ]);
 
         $booking->user()->update($validated_user);

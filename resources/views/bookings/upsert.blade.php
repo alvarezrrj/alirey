@@ -93,7 +93,7 @@
               </legend>
               <x-radio-input 
                 id="virtual"
-                name="type" 
+                name="virtual" 
                 :checked="$booking->virtual"
                 value="1" />
               <x-input-label 
@@ -104,7 +104,7 @@
 
               <x-radio-input
                 id="in-person"
-                name="type" 
+                name="virtual" 
                 :checked="! $booking->virtual"
                 value="0" />
               <x-input-label class="inline-block" 

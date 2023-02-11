@@ -11,18 +11,19 @@ bookings.upsert
 - Display dates in spanish
 
 bookings.show
-- Display refund button according to payment status:
-    + payment == PAYMENT_MP -> 'refund'
-    + payment == PAYMENT_PENDING -> 'mark as paid'
-    + payment == PAYMENT_REFUNDED || payment == PAYMENT_CASH -> remove button
 - Implement 'refund'
-- Hide 'edit' button when status == BOOKING_COMPLETED || status == BOOKING_CANCELLED
+- Display 'cancel booking' button when status == BOOKING_PENDING
+- Move 'edit' button to oposite side of booking number, leave action buttons at the bottom
+- Turn the view into a Livewire component to avoid refreshing the hole page when clicking 'refund', 'confirm payment', 'mark as complete' or 'cancel'.
 
 bookings.destroy
 - Test it
 
 bookings.index
 - Test filter()
+
+BookingController->edit()
+- Find another way to see if day is full inside while loop to avoid so many round trips to DB
 
 config.slots
 - These are rendering as am/pm instead of 24h format. Take a look
