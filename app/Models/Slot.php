@@ -22,7 +22,7 @@ class Slot extends Model
 
     public function serializeDate(DateTimeInterface $date)
     {
-        return $date->format('h:i');
+        return $date->format('H:i');
     }
 
 

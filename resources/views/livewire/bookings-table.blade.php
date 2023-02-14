@@ -18,11 +18,11 @@
             </span>
         </div>
 
-        <div class="md:pl-8 space-y-2 mt-8">
+        <div class="lg:pl-8 space-y-2 mt-8">
 
             <ul class=>
                 {{-- Header --}}
-                <li class="hidden sm:grid grid-cols-7 md:grid-cols-9 p-2 text-gray-900 font-bold dark:text-gray-100">
+                <li class="px-1 py-3 hidden sm:grid grid-cols-7 md:grid-cols-9 p-2 text-gray-900 font-bold dark:text-gray-100">
                     <div>
                         {{ __('ID') }}
                     </div>
@@ -44,8 +44,8 @@
                 </li>
             @foreach($bookings as $booking)
 
-                <li class="p-2 grid gap-y-2 gap-x-1 grid-cols-7 sm:grid-cols-7 grid-rows-3 sm:grid-rows-2 md:grid-rows-1 md:grid-cols-9 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700  text-gray-900 dark:text-gray-100">
-                    <div class="row-span-2 md:row-span-1">
+                <li class="px-1 py-3 grid gap-y-2 gap-x-1 grid-cols-7 sm:grid-cols-7 md:grid-cols-9 grid-rows-3 sm:grid-rows-2 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700  text-gray-900 dark:text-gray-100">
+                    <div class="row-span-3 sm:row-span-2 md:row-span-1">
                         {{ $booking->id }}
                     </div>
                     <div class="col-span-2 sm:col-span-1">
@@ -59,15 +59,20 @@
                         {{ $booking->virtual ? __('Virtual') : __('In-person') }}
                     </div>
                     <div class="col-span-2 sm:col-span-1">
+                      <span class="text-sm text-gray-600 dark:text-gray-400 sm:hidden">
+                        {{ __('Payment') }}
+                      </span>
                         {{ __($booking->payment->status) }}
                     </div>
                     <div class="col-span-2 sm:col-span-1">
+                      <span class="text-sm text-gray-600 dark:text-gray-400 sm:hidden">
+                        {{ __('Status') }}
+                      </span>
                         {{ __($booking->status) }}
                     </div>
-                    <div class="col-span-1 sm:hidden"></div>
-                    <div class="md:mt-0 col-span-6 md:col-span-2 flex items-center justify-between md:justify-evenly md:grid-cols-2">
+                    <div class="md:mt-0 col-span-6 md:col-span-2 flex items-center justify-between md:justify-end md:grid-rows-2">
                         <a href="{{ route('bookings.show', $booking->id) }}"
-                          class="w-2/5">
+                          class="w-2/5 mr-1">
                           <x-primary-button :small="true" class="w-full ">
                             {{ __('View') }}
                           </x-primary-button>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,8 @@ Route::get('/config', [ConfigController::class, 'index'])
     ->name('config')
     ->middleware(['auth']);
 
+//=== Bookings ===
+// admin
 Route::resource('bookings', BookingController::class)
     ->only(['index', 'show', 'create', 'store', 'edit', 'update'])
     ->middleware(['auth', 'admin']);

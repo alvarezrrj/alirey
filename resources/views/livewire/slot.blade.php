@@ -1,9 +1,9 @@
 {{-- Success is as dangerous as failure. --}}
 <tr class="even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700">
 
-    <td class="p-2">{{ $slot->start->format('h:i') }}</td>
+    <td class="p-2">{{ $slot->start->format('H:i') }}</td>
 
-    <td class="p-2">{{ $slot->end->format('h:i') }}</td>
+    <td class="p-2">{{ $slot->end->format('H:i') }}</td>
 
     <td class="grid place-items-center p-2">
         <x-danger-button
@@ -23,7 +23,7 @@
                 </h2>
 
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {{ $slot->start }} - {{ $slot->end }}
+                    {{ $slot->start->format('H:i') }} - {{ $slot->end->format('H:i') }}
                 </p>
 
                 <div class="mt-6 flex justify-end">

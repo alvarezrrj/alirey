@@ -1,7 +1,11 @@
 <?php
-
+/**
+ * Request validation for admin updating a booking
+ */
 namespace App\Http\Requests;
 
+use App\Models\Booking;
+use App\Models\Code;
 use App\Models\Slot;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
@@ -42,7 +46,11 @@ class UpdateBookingRequest extends FormRequest
                 'email',
                 Rule::unique('users')->ignore($request->user()->id)
             ],
-            'code_id' => 'required|int',
+            'code_id' => [
+                'required',
+                'int',
+                Rule::in(Code::pluck('id')->all()),
+            ],
             'phone' => 'required|numeric',
             'amount' => 'required|int|min:0',
             'virtual' => 'required|boolean',
@@ -53,5 +61,19 @@ class UpdateBookingRequest extends FormRequest
                 Rule::in(Slot::pluck('id')->all())
             ]
         ];
+    }
+
+    // Ensure another booking doesn't exist for same day and slot
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $validated = $validator->safe()->only(['day', 'slot_id']);
+
+            if( count(Booking::whereDate('day', $validated['day'])
+                             ->where('slot_id', $validated['slot_id'])) )
+            {
+                $validator->errors()->add('overlap', 'Sorry, that slot is no longer available. Please try again.');
+            }
+        });
     }
 }

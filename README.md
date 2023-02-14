@@ -5,10 +5,13 @@ A booking management system. This doc describes what each section does.
 ## TO DO
 
 config
-- Dissallow deleting slots with pending bookings
+- Dissallow deleting slots with pending bookings. Offer to create dummy bookings on this slot forever
 
-bookings.upsert
-- Display dates in spanish
+bookings.update
+- Migrate form to match bookings.create
+
+bookings.update
+- Ensure booking is not being saved on same day and slot as another one
 
 bookings.show
 - Implement 'refund'
@@ -65,7 +68,23 @@ Can only be accessed by admin, displays a table which is filterable by booking s
 
 Displays booking details and allows admin to mark booking as 'complete', refund, mark as paid and edit it.
 
-## Bookings.upsert (/bookings/{id}/edit & /bookings/create)
+## Bookings.create (/bookings/create)
+
+This is the booking creation workflow for the different circumstances
+
+|User status          | User role | Display form                   | Action | Outcome                              |             |               |               |
+| ---                 | ---       | ---                            | ---    | ---                                  |---          |---            |---            |
+|A2:User is logged in | client    | C2: Booking type, date and slot|continue|Validate, check overlap, store booking|             |               |               |
+|                     | admin     | C3: User details + C2          |continue|Validate, check overlap               |user exists  | store booking |               |
+|                     |           |                                |        |                                      |guest exists | update guest  | store booking |
+|                     |           |                                |        |                                      |guest !exists| create guest  | store booking |
+|User ! logged in     |           |'log in', 'sing up' or guest    |log in  |Go to A2                              |             |               |               |
+|                     |           |                                |sign up |Go to A2                              |             |               |               |
+|                     |           |                                |guest   |Go to C3                              |             |               |               |
+
+Note: CreateBookingRequest is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario.
+
+## Bookings.update (/bookings/{id}/)
 
 Displays a form for updating/inserting bookings that have a state of BOOKING_PENDING
 

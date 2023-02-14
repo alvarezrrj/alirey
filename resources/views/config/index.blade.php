@@ -1,14 +1,13 @@
 {{-- Admin configurations --}}
 <x-app-layout>
-    @push('third-party-styles')
-        @livewireStyles
-    @endpush
+
     @push('styles')
         <link 
             href="{{ Vite::asset('resources/css/config.css') }}"
             rel="stylesheet" 
             type="text/css"  />
     @endpush
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Configuration') }}
@@ -29,7 +28,4 @@
 
     </div>
 
-    @push('libraries')
-        @livewireScripts
-    @endpush
 </x-app-layout>

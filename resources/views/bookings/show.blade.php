@@ -181,7 +181,7 @@
             </form>
             @elseif ($booking->payment->status == $payment_pending)
               <form 
-                action="{{ route('booking.paid', $booking->id) }}" 
+                action="{{ route('booking.paid', $booking) }}" 
                 method="POST">
                 @csrf
                 @method('patch')
@@ -200,10 +200,9 @@
             <div>
 
               @if($booking->status === $booking_pending)
-                <form 
-                  action="{{ route('booking.complete', $booking->id) }}" 
-                  class="inline-block w-full sm:w-auto"
-                  method="POST">
+                <a 
+                  href="{{ route('booking.complete', $booking) }}" 
+                  class="inline-block w-full sm:w-auto" >
                   @csrf
                   @method('patch')
                   <x-secondary-button class="w-full">
@@ -213,7 +212,7 @@
               @endif
 
               @unless($booking->status === $booking_completed)
-                <a href="{{ route('bookings.edit', $booking->id) }}">
+                <a href="{{ route('bookings.edit', $booking) }}">
                   <x-primary-button class="w-full sm:w-auto">
                     {{ __('Edit') }}
                   </x-primary-button>
@@ -238,10 +237,3 @@
   @endpush
 
 </x-app-layout>
-{{--
-    navigator.permissions.query({name: 'clipboard-write'})
-    .then(res => {
-        if (res.state == 'granted') {
-        }
-    })
---}}
