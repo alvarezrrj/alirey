@@ -24,6 +24,7 @@
   <div class="py-12 space-y-6">
 
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+      <x-alert-error key="overlap" />
       <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
 
         <div class="max-w-xl sm:pl-8 space-y-6">
@@ -41,6 +42,9 @@
           <form action={{ $action }} method="POST" class="">
             @csrf
             @method(isset($booking) ? 'patch' : 'post')
+
+            <input type="hidden" value="{{ $booking?->user->id }}" name="user_id">
+            <input type="hidden" value="{{ $booking?->id }}" name="booking_id">
 
             <x-input-label for="firstName" :value="__('Name')" />
             <x-text-input 

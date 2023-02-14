@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-span-4 sm:col-span-2">
                         {{ $booking->day->format('d/m/y') }}&nbsp;&middot;
-                        {{ $booking->slot->start->format('h:i') }}
+                        {{ $booking->slot->start->format('H:i') }}
                     </div>
                     <div class="col-span-2 sm:col-span-1">
                         {{ $booking->virtual ? __('Virtual') : __('In-person') }}

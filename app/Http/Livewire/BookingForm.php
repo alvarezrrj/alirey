@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Filament\Forms\Components\ViewField;
 use App\Models\Code;
+use App\Models\User;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
@@ -54,6 +55,18 @@ class BookingForm extends Component implements HasForms
     public function render()
     {
         return view('livewire.booking-form');
+    }
+
+    public function updatedEmail()
+    {
+        $user = User::where('email', $this->email)->first();
+        if($user)
+        {
+            $this->firstName = $user->firstName;
+            $this->lastName = $user->lastName;
+            $this->code_id = $user->code_id;
+            $this->phone = $user->phone;
+        }
     }
 
     public function calClickHandler()

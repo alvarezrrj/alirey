@@ -10,13 +10,11 @@
 
     <div class="py-12 space-y-6">
 
-      <x-alert-error key="overlap"/>
-
-        <livewire:booking-form 
-          :codes="$codes"
-          :booking="$booking"
-          :data="$data"
-        />
+      <livewire:booking-form 
+        :codes="$codes"
+        :booking="$booking"
+        :data="$data"
+      />
 
     </div>
 

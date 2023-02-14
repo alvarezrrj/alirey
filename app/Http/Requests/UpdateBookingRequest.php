@@ -39,12 +39,13 @@ class UpdateBookingRequest extends FormRequest
         $last_day_string = $last_day->toDateString();
 
         return [
+            'booking_id' => 'required|int',
             'firstName' => 'required|string',
             'lastName' => 'required|string',
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->ignore($request->user()->id)
+                Rule::unique('users')->ignore($request->user_id)
             ],
             'code_id' => [
                 'required',
@@ -67,10 +68,12 @@ class UpdateBookingRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $validated = $validator->safe()->only(['day', 'slot_id']);
+            $validated = $validator->safe()->only(['day', 'slot_id', 'booking_id']);
 
             if( count(Booking::whereDate('day', $validated['day'])
-                             ->where('slot_id', $validated['slot_id'])) )
+                             ->where('slot_id', $validated['slot_id'])
+                             ->where('id', '!=', $validated['booking_id'])
+                             ->get() ))
             {
                 $validator->errors()->add('overlap', 'Sorry, that slot is no longer available. Please try again.');
             }

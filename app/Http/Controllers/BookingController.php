@@ -97,6 +97,8 @@ class BookingController extends Controller
         // Store booking
         $booking = $user->bookings()->create($validated_booking);
 
+        $request->session()->flash('message', 'Booking saved.');
+
         return redirect(route('bookings.show', $booking));
     }
 
@@ -201,6 +203,8 @@ class BookingController extends Controller
         $booking->user()->update($validated_user);
         $booking->payment()->update($validated_payment);
         $booking->update($validated_booking);
+
+        $request->session()->flash('message', 'Booking updated.');
 
         return redirect(route('bookings.show', $booking->id));
     }

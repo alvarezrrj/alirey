@@ -76,13 +76,17 @@ This is the booking creation workflow for the different circumstances
 | ---                 | ---       | ---                            | ---    | ---                                  |---          |---            |---            |
 |A2:User is logged in | client    | C2: Booking type, date and slot|continue|Validate, check overlap, store booking|             |               |               |
 |                     | admin     | C3: User details + C2          |continue|Validate, check overlap               |user exists  | store booking |               |
-|                     |           |                                |        |                                      |guest exists | update guest  | store booking |
-|                     |           |                                |        |                                      |guest !exists| create guest  | store booking |
+|                     |           |                                |        |                                      |user !exists | create user   | store booking |
 |User ! logged in     |           |'log in', 'sing up' or guest    |log in  |Go to A2                              |             |               |               |
 |                     |           |                                |sign up |Go to A2                              |             |               |               |
 |                     |           |                                |guest   |Go to C3                              |             |               |               |
 
 Note: CreateBookingRequest is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario.
+
+When admin creates a new booking for a non existing user, an acount is opened with a random password. If user desires to access their account, they can be sent a password reset email from users table on admin panel.
+
+When admin is creating new booking, user details will be filled automatically after entering email address if a user exists for that email address.
+If a user's details have changed, admin could update them from users panel (the booking form cannot update a users details, if a user exists for the given email address, DB details will be used, esentially overriding the form's data for the user).
 
 ## Bookings.update (/bookings/{id}/)
 

@@ -1,6 +1,9 @@
 {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
 
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+
+  <x-alert-error key="overlap" />
+
   <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
 
     <div class="max-w-xl sm:pl-8 space-y-6">
@@ -20,6 +23,17 @@
         @csrf
         @method(isset($booking) ? 'patch' : 'post')
 
+        <x-input-label class="mt-6" for="email" :value="__('Email')" />
+        <x-text-input 
+          id="email" 
+          name="email" 
+          type="text" 
+          class="mt-1 block w-full" 
+          :value="old('email', $booking?->user->email)" 
+          required autofocus autocomplete="name" 
+          wire:model.lazy="email"/>
+        <x-input-error class="mt-2" :messages="$errors->get('email')" />
+
         <x-input-label for="firstName" :value="__('Name')" />
         <x-text-input 
           id="firstName" 
@@ -27,7 +41,8 @@
           type="text" 
           class="mt-1 block w-full" 
           :value="old('firstName', $booking?->user->firstName)" 
-          required autofocus autocomplete="name" />
+          required autofocus autocomplete="name" 
+          wire:model="firstName"/>
         <x-input-error class="mt-2" :messages="$errors->get('firstName')" />
 
         <x-input-label class="mt-6" for="lastName" :value="__('Last Name')" />
@@ -37,28 +52,34 @@
           type="text" 
           class="mt-1 block w-full" 
           :value="old('lastName', $booking?->user->lastName)" 
-          required autofocus autocomplete="name" />
+          required autofocus autocomplete="name"
+          wire:model="lastName"/>
         <x-input-error class="mt-2" :messages="$errors->get('lastName')" />
-
-        <x-input-label class="mt-6" for="email" :value="__('Email')" />
-        <x-text-input 
-          id="email" 
-          name="email" 
-          type="text" 
-          class="mt-1 block w-full" 
-          :value="old('email', $booking?->user->email)" 
-          required autofocus autocomplete="name" />
-        <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
         {{-- Telephone Number --}}
         <div class="mt-6">
             <x-input-label for="phone" :value="__('Telephone Number')" />
             <div class="flex">
-                <x-code-select :codes="$codes" :value="old('code_id', $booking?->user->code_id)" label="Country" id="code" name="code_id" rounded="rounded-l-md"
-                class="flexselect inline-block mt-1 w-2/5" required />
-                <x-text-input id="phone" inputmode="numeric" rounded="rounded-r-md"
-                class="inline-block mt-1 w-3/5" type="text" name="phone" 
-                :value="old('phone', $booking?->user->phone )" required />
+                <x-code-select 
+                  :codes="$codes" 
+                  :value="old('code_id', $booking?->user->code_id)" 
+                  label="Country" 
+                  id="code" 
+                  name="code_id" 
+                  rounded="rounded-l-md"
+                  class="flexselect inline-block mt-1 w-2/5" 
+                  required 
+                  wire:model="code_id"/>
+                <x-text-input 
+                  id="phone" 
+                  inputmode="numeric" 
+                  rounded="rounded-r-md"
+                  class="inline-block mt-1 w-3/5" 
+                  type="text" 
+                  name="phone" 
+                  :value="old('phone', $booking?->user->phone )" 
+                  required 
+                  wire:model="phone"/>
             </div>
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             <x-input-error :messages="$errors->get('code_id')" class="mt-2" />
