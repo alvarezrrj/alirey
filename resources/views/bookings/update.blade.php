@@ -1,5 +1,7 @@
 {{-- Edit booking --}}
 
+{{-- View is not currently being used, to be deleted --}}
+
 <x-app-layout>
 
   <x-slot name="header">

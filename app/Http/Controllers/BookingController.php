@@ -41,7 +41,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        return view('bookings.create', [
+        return view('bookings.upsert', [
             'booking' => null,
             'codes' => Code::all(),
             'data' => $this->getData(),
@@ -131,47 +131,10 @@ class BookingController extends Controller
     {
         $this->authorize('update', $booking);
 
-        $now = Carbon::today();
-        $last_day = Auth::user()->config->allways_open 
-        ? Carbon::today()->addDays(Auth::user()->config->anticipation)
-        : Carbon::create(Auth::user()->config->open_until);
-        $holidays = Holiday::where('user_id', Auth::user()->id)
-                    ->whereDate('day', '>=', $now)
-                    ->whereDate('day', '<=', $last_day) 
-                    ->get()
-                    ->pluck('id', 'day')
-                    ->all();
-        $bookings = Booking::with('slot')
-                    ->whereDate('day', '>=', $now)
-                    ->get();
-        $slots = Slot::all();
-
-        $days = [];
-
-        while($now->lte($last_day)) 
-        {
-            $is_holiday = isset($holidays[$now->toDateTimeString()]);
-            // Disable day if it's full
-            $is_full = (Booking::whereDate('day', $now)->count() >= count($slots)
-                    // But not if it's the booking's day
-                    && ! $booking->day->eq($now) );
-
-            array_push($days, [
-                'value' => $now->toDateString(),
-                'display' => $now->format('l j \d\e F Y'),
-                'disabled' => $is_holiday || $is_full,
-            ]);
-
-            $now->addDay();
-        }
-
-        return view('bookings.update', [
-            'booking'  => $booking,
-            'codes'    => Code::all(),
-            'bookings' => $bookings,
-            'days'     => $days,
-            'slots'    => $slots,
-            'holidays' => $holidays,
+        return view('bookings.upsert', [
+            'booking' => $booking,
+            'codes' => Code::all(),
+            'data' => $this->getData(),
         ]);
     }
 

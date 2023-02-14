@@ -35,7 +35,17 @@ class BookingForm extends Component implements HasForms
 
     public function mount()
     {
-        $this->selected_day = $this->booking?->day ?? 'foo';
+        $this->firstName = $this->booking?->user->firstName;
+        $this->lastName = $this->booking?->user->lastName;
+        $this->email = $this->booking?->user->email;
+        $this->code_id = $this->booking?->user->code_id;
+        $this->phone = $this->booking?->user->phone;
+        $this->virtual = $this->booking?->virtual;
+        $this->day = $this->booking?->day;
+        $this->slot_id = $this->booking?->slot_id;
+        $this->form->fill([
+            'datepicker' => $this->day,
+        ]);
     }
 
     protected function getFormSchema(): array

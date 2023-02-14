@@ -3,7 +3,6 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
   <x-alert-error key="overlap" />
-
   <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
 
     <div class="max-w-xl sm:pl-8 space-y-6">
@@ -23,6 +22,9 @@
         @csrf
         @method(isset($booking) ? 'patch' : 'post')
 
+        <input type="hidden" value="{{ $booking?->user->id }}" name="user_id">
+        <input type="hidden" value="{{ $booking?->id }}" name="booking_id">
+
         <x-input-label class="mt-6" for="email" :value="__('Email')" />
         <x-text-input 
           id="email" 
@@ -30,18 +32,18 @@
           type="text" 
           class="mt-1 block w-full" 
           :value="old('email', $booking?->user->email)" 
-          required autofocus autocomplete="name" 
+          required autofocus autocomplete="email" 
           wire:model.lazy="email"/>
         <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-        <x-input-label for="firstName" :value="__('Name')" />
+        <x-input-label class="mt-6" for="firstName" :value="__('Name')" />
         <x-text-input 
           id="firstName" 
           name="firstName" 
           type="text" 
           class="mt-1 block w-full" 
           :value="old('firstName', $booking?->user->firstName)" 
-          required autofocus autocomplete="name" 
+          required autocomplete="firstName" 
           wire:model="firstName"/>
         <x-input-error class="mt-2" :messages="$errors->get('firstName')" />
 
@@ -52,7 +54,7 @@
           type="text" 
           class="mt-1 block w-full" 
           :value="old('lastName', $booking?->user->lastName)" 
-          required autofocus autocomplete="name"
+          required autocomplete="lastName"
           wire:model="lastName"/>
         <x-input-error class="mt-2" :messages="$errors->get('lastName')" />
 
@@ -61,24 +63,24 @@
             <x-input-label for="phone" :value="__('Telephone Number')" />
             <div class="flex">
                 <x-code-select 
-                  :codes="$codes" 
-                  :value="old('code_id', $booking?->user->code_id)" 
-                  label="Country" 
-                  id="code" 
-                  name="code_id" 
-                  rounded="rounded-l-md"
                   class="flexselect inline-block mt-1 w-2/5" 
+                  :codes="$codes" 
+                  id="code" 
+                  label="Country" 
+                  name="code_id" 
                   required 
+                  rounded="rounded-l-md"
+                  :value="old('code_id', $booking?->user->code_id)" 
                   wire:model="code_id"/>
                 <x-text-input 
+                  class="inline-block mt-1 w-3/5" 
                   id="phone" 
                   inputmode="numeric" 
-                  rounded="rounded-r-md"
-                  class="inline-block mt-1 w-3/5" 
-                  type="text" 
                   name="phone" 
-                  :value="old('phone', $booking?->user->phone )" 
                   required 
+                  rounded="rounded-r-md"
+                  type="text" 
+                  :value="old('phone', $booking?->user->phone )" 
                   wire:model="phone"/>
             </div>
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
@@ -170,11 +172,38 @@
 
         </div> {{-- End Alpine slot --}}
 
-        <div class="mt-6 flex justify-end">
-          <x-primary-button>
-            {{__('Continue to checkout') }}
-          </x-primary-button>
+        @if(isset($booking))
+        {{-- Paid amount --}}
+        <x-input-label class="mt-6" for="amount" :value="__('Paid ammount')" />
+        <div class="w-full flex items-center justify-start">
+          <span class="text-gray-800 dark:text-gray-200 w-6">$</span>
+              <x-text-input 
+                class="mt-1 w-[calc(100%-1.5rem)]" 
+                id="amount" 
+                inputmode="numeric"
+                name="amount" 
+                required
+                step="100"
+                type="number" 
+                :value="old('amount', $booking?->payment->amount)" 
+                  />
+          <x-input-error :messages="$errors->get('amount')" class="mt-2" />
         </div>
+        @endif
+
+
+        @if(isset($booking))
+        @php($back = route('bookings.show', $booking))
+        @else
+        @php($back = route('dashboard'))
+        @endif
+
+        <div class="flex justify-between mt-8">
+          <a href="{{ $back }}">
+            <x-secondary-button type="button">{{ __('Cancel') }}</x-secondary-button>
+          </a>
+          <x-primary-button>{{ __('Save') }}</x-primary-button>
+          </div>
 
       </form>
 

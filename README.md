@@ -4,6 +4,9 @@ A booking management system. This doc describes what each section does.
 
 ## TO DO
 
+update.blade.php
+- Delete it
+
 config
 - Dissallow deleting slots with pending bookings. Offer to create dummy bookings on this slot forever
 
@@ -18,6 +21,7 @@ bookings.show
 - Display 'cancel booking' button when status == BOOKING_PENDING
 - Move 'edit' button to oposite side of booking number, leave action buttons at the bottom
 - Turn the view into a Livewire component to avoid refreshing the hole page when clicking 'refund', 'confirm payment', 'mark as complete' or 'cancel'.
+- Display confirm payment button. Show modal for user to input paid ammount.
 
 bookings.destroy
 - Test it
