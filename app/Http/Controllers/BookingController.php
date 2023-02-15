@@ -110,19 +110,8 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        $sd = [
-            'payment_refunded' => SD::PAYMENT_REFUNDED,
-            'payment_mp' => SD::PAYMENT_MP,
-            'payment_cash' => SD::PAYMENT_CASH,
-            'payment_pending' => SD::PAYMENT_PENDING,
-            'booking_pending' => SD::BOOKING_PENDING,
-            'booking_completed' => SD::BOOKING_COMPLETED,
-            'booking_cancelled' => SD::BOOKING_CANCELLED,
-        ];
-
         return view('bookings.show', [
             'booking' => $booking,
-            'sd' => $sd,
         ]);
     }
 

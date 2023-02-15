@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
-                  <h3>
+                  <h3 class="font-medium">
                     {{ __("Upcoming session") }}
                   </h3>
 
@@ -25,34 +25,9 @@
 
                   @elseif(!$is_admin)
 
-
-                  {{-- TO DO
-                  Remove this text and stick the table from bookings.show in its place
-                  If is_admin, display action buttons --}}
-                  <p class="mt-6">
-                    {{ __('Your next session is on') }}
-                    {{ $booking->day->locale('es')->dayName }}
-                    {{ $booking->day->day }}
-                    @switch($booking->day->day)
-                      @case(1)
-                        {{ __('st')}}
-                        @break
-                      @case(2)
-                        {{ __('nd')}}
-                        @break
-                      @case(3)
-                        {{ __('rd')}}
-                        @break
-                      @default
-                        {{ __('th')}}
-                    @endswitch
-
-                    {{ $booking->day->monthName }}
-                    {{ __(' ')}}
-                    {{ $booking->day->year }}
-                    {{ __('at') }}
-                    {{ $booking->slot->start->format('H:i') }}
-                  </p>
+                    <livewire:booking 
+                      :booking="$booking"
+                    />
 
                   @endif
 

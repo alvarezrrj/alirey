@@ -1,6 +1,6 @@
 <?php
 
-namespace StaticDetails;
+namespace App\SD;
 
 class SD {
     const admin  = 'admin';

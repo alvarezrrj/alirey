@@ -12,8 +12,8 @@
           <h3 class="text-gray-900 dark:text-gray-100 font-bold">
             {{ __('Booking number') }}:&nbsp;{{ $booking->id }}
           </h3>
-          @unless($booking->status === $sd['booking_completed']
-               || $booking->status === $sd['booking_cancelled']
+          @unless($booking->status === SD::BOOKING_COMPLETED
+               || $booking->status === SD::BOOKING_CANCELLED
                || ! Auth::user()->isAdmin())
             <a href="{{ route('bookings.edit', $booking) }}">
               <x-primary-button class="w-full sm:w-auto">
@@ -132,15 +132,15 @@
                 {{ __('Payment status') }}
               </th>
               <td class="text-right p-2 ">
-                @if ($booking->payment->status == $sd['payment_mp']
-                  || $booking->payment->status == $sd['payment_cash'])
+                @if ($booking->payment->status == SD::PAYMENT_MP
+                  || $booking->payment->status == SD::PAYMENT_CASH)
                   {{ __('Paid')}} -
                 @endif
                 {{ __($booking->payment->status) }}
               </td>
             </tr>
 
-            @if ($booking->payment->status == $sd['payment_refunded'])
+            @if ($booking->payment->status == SD::PAYMENT_REFUNDED)
               <tr>
                 <th class="text-left p-2 ">
                   {{ __('Refund date') }}
@@ -166,12 +166,12 @@
         {{-- Buttons --}}
         <div class="grid sm:grid-cols-3 grid-rows-2 mt-6 gap-x-2 gap-y-4">
 
-          @if ($booking->payment->status == $sd['payment_mp'])
+          @if ($booking->payment->status == SD::PAYMENT_MP)
             <x-danger-button 
               wire:click="refund">
               {{ __('Refund') }}
             </x-danger-button>
-          @elseif ($booking->payment->status == $sd['payment_pending'])
+          @elseif ($booking->payment->status == SD::PAYMENT_PENDING)
             <x-danger-button 
               x-data=""
               x-on:click.prevent="$dispatch('open-modal', 'payment-modal')">
@@ -182,7 +182,7 @@
             <div></div>
           @endif
 
-          @if($booking->status === $sd['booking_pending'])
+          @if($booking->status === SD::BOOKING_PENDING)
             <x-secondary-button 
               x-data=""
               x-on:click.prevent="$dispatch('open-modal', 'cancelation-modal')">
