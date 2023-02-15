@@ -16,6 +16,7 @@
           <div class="max-w-2xl">
             <h3 class="mb-6 font-bold text-xl">{{ __('Upcoming session') }}</h3>
 
+            @if(! $is_admin)
             <p class="mb-6">
               {{ __("Here are your next session's details, make sure your own details are correct so we have no trouble getting in touch with you. If you need to make any changes, you can") }}
               <a 
@@ -24,6 +25,7 @@
               {{ __("contact us")}}. 
               </a>
             </p>
+            @endif
           </div>
 
           @if(!$booking && !$is_admin)

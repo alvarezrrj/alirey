@@ -13,7 +13,7 @@ class UserBookingController extends Controller
      */
     public function index()
     {
-        //
+        return view('bookings.index');
     }
 
     /**
