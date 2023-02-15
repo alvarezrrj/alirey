@@ -156,7 +156,8 @@
               x-model="slot_id"
               class="inline-block mt-1 w-full" 
               type="text" 
-              name="slot_id" >
+              name="slot_id" 
+              wire:model="slot_id">
 
               <template x-for="slot in computedSlots" >
                 <option 
@@ -169,6 +170,24 @@
             </x-select-input>
             <x-input-error class="mt-2" :messages="$errors->get('slot_id')" />
           </div>
+
+          @if(isset($booking))
+          {{-- Restore booking date and time to initial state --}}
+          <div class="w-full flex justify-end">
+            <x-primary-button 
+              class="mt-2"
+              :small="true"
+              data-tooltip="{{ __('Restore booking\'s date and time') }}"
+              data-placement="left"
+              type="button"
+              x-on:click="
+                day = '{{ $booking->day->toDateString() }}';
+                slot_id = {{ $booking->slot->id }};
+              ">
+              ↩ {{ __('restore') }}
+            </x-primary-button>
+          </div>
+          @endif
 
         </div> {{-- End Alpine slot --}}
 
@@ -186,6 +205,7 @@
                 step="100"
                 type="number" 
                 :value="old('amount', $booking?->payment->amount)" 
+                wire:model="payment.amount"
                   />
           <x-input-error :messages="$errors->get('amount')" class="mt-2" />
         </div>

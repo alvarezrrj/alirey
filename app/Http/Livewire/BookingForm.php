@@ -44,7 +44,7 @@ class BookingForm extends Component implements HasForms
         $this->day = $this->booking?->day;
         $this->slot_id = $this->booking?->slot_id;
         $this->form->fill([
-            'datepicker' => $this->day,
+            'datepicker' => $this->booking?->day,
         ]);
     }
 
@@ -87,7 +87,6 @@ class BookingForm extends Component implements HasForms
          * render available days
          */
         
-        //$this->selected_day = $this->form->getState()['day'];
         $this->day = $this->form->getState()['datepicker'];
     }
 }

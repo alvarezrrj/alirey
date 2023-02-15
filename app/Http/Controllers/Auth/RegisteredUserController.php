@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use App\Models\Code;
 use App\Models\User;
 use App\Models\Role;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -66,5 +68,27 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function dashboard(Request $request)
+    {
+        if($request->user()->isAdmin()) {
+            $upcoming = Booking::where('user_id', $request->user()->id)
+                               ->whereDate('day', '>=', Carbon::today())
+                               ->oldest('day')
+                               ->limit(1)
+                               ->first();
+            $is_admin = true;
+        } else {
+            $upcoming = Booking::whereDate('day', '>=', Carbon::today())
+                               ->oldest('day')
+                               ->limit(1)
+                               ->first();
+        }
+
+        return view('dashboard', [
+            'booking' => $upcoming,
+            'is_admin' => $is_admin ?? false,
+        ]);
     }
 }

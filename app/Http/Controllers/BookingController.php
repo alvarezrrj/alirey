@@ -110,14 +110,19 @@ class BookingController extends Controller
      */
     public function show(Booking $booking)
     {
-        return view('bookings.show', [
-            'booking' => $booking,
+        $sd = [
             'payment_refunded' => SD::PAYMENT_REFUNDED,
             'payment_mp' => SD::PAYMENT_MP,
             'payment_cash' => SD::PAYMENT_CASH,
             'payment_pending' => SD::PAYMENT_PENDING,
             'booking_pending' => SD::BOOKING_PENDING,
             'booking_completed' => SD::BOOKING_COMPLETED,
+            'booking_cancelled' => SD::BOOKING_CANCELLED,
+        ];
+
+        return view('bookings.show', [
+            'booking' => $booking,
+            'sd' => $sd,
         ]);
     }
 
@@ -181,32 +186,6 @@ class BookingController extends Controller
     public function destroy(Booking $booking)
     {
         //
-    }
-
-    public function complete(int $id)
-    {
-        $booking = Booking::find($id);
-
-        $this->authorize('update', $booking);
-
-        $booking->status = SD::BOOKING_COMPLETED;
-
-        $booking->save();
-
-        return back();
-    }
-
-    public function paid(int $id)
-    {
-        $booking = Booking::find($id);
-
-        $this->authorize('update', $booking);
-
-        $booking->payment->status = SD::PAYMENT_CASH;
-
-        $booking->payment->save();
-
-        return back();
     }
 
     protected function getData($booking = null)

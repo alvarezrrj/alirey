@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ConfigController;
@@ -21,9 +22,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])
+    ->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -42,11 +42,3 @@ Route::get('/config', [ConfigController::class, 'index'])
 Route::resource('bookings', BookingController::class)
     ->only(['index', 'show', 'create', 'store', 'edit', 'update'])
     ->middleware(['auth', 'admin']);
-
-Route::patch('bookings/complete/{id}', [BookingController::class, 'complete'])
-    ->name('booking.complete')
-    ->middleware(['auth', 'admin', 'web']);
-
-Route::patch('bookings/paid/{id}', [BookingController::class, 'paid'])
-    ->name('booking.paid')
-    ->middleware(['auth', 'admin', 'web']);
