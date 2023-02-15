@@ -26,6 +26,12 @@
                         {{ __('Bookings') }}
                     </x-nav-link>
 
+                    @else
+
+                    <x-nav-link :href="route('user.bookings.index')" :active="request()->routeIs('user.bookings.index')">
+                        {{ __('My Bookings') }}
+                    </x-nav-link>
+
                     @endif
                 </div>
             </div>
@@ -84,13 +90,25 @@
             </x-responsive-nav-link>
 
             @if(Auth::user()->isAdmin())
-              <x-responsive-nav-link :href="route('config')" :active="request()->routeIs('config')">
+
+              <x-responsive-nav-link 
+                :href="route('config')" 
+                :active="request()->routeIs('config')">
                   {{ __('Configuration') }}
               </x-nav-link>
 
-              <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
+              <x-responsive-nav-link 
+                :href="route('bookings.index')" 
+                :active="request()->routeIs('bookings.index')">
                   {{ __('Bookings') }}
               </x-nav-link>
+
+            @else
+
+            <x-responsive-nav-link :href="route('user.bookings.index')" :active="request()->routeIs('user.bookings.index')">
+                {{ __('My Bookings') }}
+            </x-responsive-nav-link>
+
             @endif
         </div>
 

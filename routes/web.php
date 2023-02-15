@@ -44,9 +44,11 @@ Route::resource('bookings', BookingController::class)
     ->middleware(['auth', 'admin']);
 
 // user
-Route::resource('user/bookings', UserBookingController::class)
-    ->only(['index', 'show', 'create', 'store'])
-    ->middleware(['auth']);
+Route::name('user.')->group(function() {
+    Route::resource('user/bookings', UserBookingController::class)
+        ->only(['index', 'show', 'create', 'store'])
+        ->middleware(['auth']);
+});
 
 //=== Contact ===
 Route::get('/contact', [ContactController::class, 'index'])

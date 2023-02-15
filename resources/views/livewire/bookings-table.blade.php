@@ -25,16 +25,18 @@
         {{-- Header --}}
 
         @php($header_class = $is_admin
-        ? "px-1 py-3 hidden sm:grid grid-cols-7 md:grid-cols-9 p-2 text-gray-900 font-bold dark:text-gray-100"
-        : "px-1 py-3 hidden sm:grid grid-cols-5 md:grid-cols-7 p-2 text-gray-900 font-bold dark:text-gray-100")
+        ? "px-4 py-3 hidden sm:grid grid-cols-7 md:grid-cols-9 p-2 text-gray-900 font-bold dark:text-gray-100"
+        : "px-4 py-3 hidden sm:grid grid-cols-5 md:grid-cols-6 p-2 text-gray-900 font-bold dark:text-gray-100")
 
         <li class="{{ $header_class }}">
           <div>
             {{ __('ID') }}
           </div>
+          @if($is_admin)
           <div>
             {{ __('Name') }}
           </div>
+          @endif
           <div class="col-span-2">
             {{ __('Date') }}
           </div>
@@ -53,16 +55,18 @@
         @foreach($bookings as $booking)
 
         @php($li_class = $is_admin
-        ? "my-6 rounded-md border border-gray-300 dark:border-gray-700 md:border-0 md:my-0 md:rounded-none px-4 py-3 grid gap-y-2 gap-x-1 grid-cols-7 sm:grid-cols-7 md:grid-cols-9 grid-rows-3 sm:grid-rows-2 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100"
-        : "my-6 rounded-md border border-gray-300 dark:border-gray-700 md:border-0 md:my-0 md:rounded-none px-4 py-3 grid gap-y-2 gap-x-1 grid-cols-5 sm:grid-cols-5 md:grid-cols-7 grid-rows-3 sm:grid-rows-2 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100")
+        ? "my-6 rounded-md border border-gray-300 dark:border-gray-700 md:border-0 md:my-0 md:rounded-none px-4 py-3 grid gap-y-2 gap-x-1 grid-cols-7 md:grid-cols-9 grid-rows-3 sm:grid-rows-2 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100"
+        : "my-6 rounded-md border border-gray-300 dark:border-gray-700 md:border-0 md:my-0 md:rounded-none px-4 py-3 grid gap-y-2 gap-x-1 grid-cols-5 md:grid-cols-6 grid-rows-2 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100")
         <li
           class="{{ $li_class }}">
           <div class="row-span-3 sm:row-span-2 md:row-span-1">
             {{ $booking->id }}
           </div>
+          @if($is_admin)
           <div class="col-span-2 sm:col-span-1">
             {{ $booking->user->firstName }}
           </div>
+          @endif
           <div class="col-span-4 sm:col-span-2">
             {{ $booking->day->format('d/m/y') }}&nbsp;&middot;
             {{ $booking->slot->start->format('H:i') }}
@@ -79,15 +83,17 @@
           </div>
           @endif
           <div class="col-span-2 sm:col-span-1">
+            @if($is_admin)
             <span class="text-sm text-gray-600 dark:text-gray-400 sm:hidden">
               {{ __('Status') }}
             </span>
+            @endif
             {{ __($booking->status) }}
           </div>
 
           @php($buttons_wrapper = $is_admin
           ? "md:mt-0 col-span-6 md:col-span-2 flex items-center justify-between md:justify-end"
-          : "md:mt-0 col-span-5 md:col-span-1 flex items-center justify-between md:justify-end")
+          : "md:mt-0 col-span-4 md:col-span-1 flex items-center justify-between md:justify-end")
           @php($button_class = $is_admin
           ? "w-2/5"
           : "w-full")
