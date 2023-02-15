@@ -8,6 +8,7 @@ use App\Models\Code;
 use App\Models\User;
 use App\Models\Role;
 use App\Providers\RouteServiceProvider;
+use App\SD\SD;
 use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -17,7 +18,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use StaticDetails\SD;
 
 class RegisteredUserController extends Controller
 {
@@ -72,18 +72,18 @@ class RegisteredUserController extends Controller
 
     public function dashboard(Request $request)
     {
+        $upcoming = Booking::whereDate('day', '>=', Carbon::today())
+                           ->where('status', '!=', SD::BOOKING_CANCELLED)
+                           ->where('status', '!=', SD::BOOKING_COMPLETED)
+                           ->oldest('day')
+                           ->limit(1);
+
         if($request->user()->isAdmin()) {
-            $upcoming = Booking::where('user_id', $request->user()->id)
-                               ->whereDate('day', '>=', Carbon::today())
-                               ->oldest('day')
-                               ->limit(1)
-                               ->first();
+            $upcoming = $upcoming->first();
             $is_admin = true;
         } else {
-            $upcoming = Booking::whereDate('day', '>=', Carbon::today())
-                               ->oldest('day')
-                               ->limit(1)
-                               ->first();
+            $upcoming = $upcoming->where('user_id', $request->user()->id)
+                                ->first();
         }
 
         return view('dashboard', [

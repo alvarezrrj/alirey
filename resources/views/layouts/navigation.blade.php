@@ -83,13 +83,15 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('config')" :active="request()->routeIs('config')">
-                {{ __('Configuration') }}
-            </x-nav-link>
+            @if(Auth::user()->isAdmin())
+              <x-responsive-nav-link :href="route('config')" :active="request()->routeIs('config')">
+                  {{ __('Configuration') }}
+              </x-nav-link>
 
-            <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
-                {{ __('Bookings') }}
-            </x-nav-link>
+              <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
+                  {{ __('Bookings') }}
+              </x-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

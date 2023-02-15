@@ -11,12 +11,12 @@ use App\Models\Payment;
 use App\Models\Role;
 use App\Models\Slot;
 use App\Models\User;
+use App\SD\SD;
 use Carbon\Carbon;
 use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use StaticDetails\SD;
 
 class BookingController extends Controller
 {

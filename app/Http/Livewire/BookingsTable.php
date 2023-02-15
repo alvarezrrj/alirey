@@ -3,9 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Booking;
+use App\SD\SD;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
-use StaticDetails\SD;
 
 class BookingsTable extends Component
 {

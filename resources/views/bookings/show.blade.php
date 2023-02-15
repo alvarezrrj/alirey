@@ -1,5 +1,4 @@
 {{-- Booking details --}}
-
 <x-app-layout>
 
   <x-slot name="header">
@@ -15,9 +14,19 @@
     </div>
   </x-slot>
 
-  <livewire:booking 
-    :booking="$booking"
-    :sd="$sd"/>
+  <div class="py-12 space-y-6">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
+      <x-alert-message key="message" />
+
+      <div class="p-4 sm:p-8 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
+        <livewire:booking 
+          :booking="$booking"
+          />
+
+      </div>
+
+    </div>
+  </div>
 
 </x-app-layout>

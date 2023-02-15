@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BookingController;
-use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ConfigController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserBookingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,5 +41,13 @@ Route::get('/config', [ConfigController::class, 'index'])
 //=== Bookings ===
 // admin
 Route::resource('bookings', BookingController::class)
-    ->only(['index', 'show', 'create', 'store', 'edit', 'update'])
     ->middleware(['auth', 'admin']);
+
+// user
+Route::resource('user/bookings', UserBookingController::class)
+    ->only(['index', 'show', 'create', 'store'])
+    ->middleware(['auth']);
+
+//=== Contact ===
+Route::get('/contact', [ContactController::class, 'index'])
+    ->name('contact');

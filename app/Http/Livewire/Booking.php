@@ -3,12 +3,15 @@
 namespace App\Http\Livewire;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use StaticDetails\SD;
 
 class Booking extends Component
 {
     use AuthorizesRequests;
+    
+    public $is_admin;
 
     public $booking;
     public $sd;
@@ -18,6 +21,11 @@ class Booking extends Component
     public $payment_confirmed = false;
     public $cancelation_confirmed = false;
     public $completion_confirmed = false;
+
+    public function mount()
+    {
+        $this->is_admin = Auth::user()->isAdmin();
+    }
 
     public function render()
     {
