@@ -47,7 +47,7 @@ class BookingsTable extends Component
 
     public function filter($filter)
     {
-        $this->$filter = $filter;
+        $this->filter = $filter;
     }
 
     public function delete(Booking $booking)

@@ -2,26 +2,29 @@
 
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
   <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
-
-    <div
-      class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x">
-      <span class="table-select">
+    <div class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x overflow-y-scroll"
+      x-data="{filter: @entangle('filter')}">
+      <span 
+        class="table-select" 
+        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40': !filter }" 
+        wire:click="filter(null)">
         {{ __('All') }}
       </span>
-      <span class="table-select" wire:click="filter({{ $filters[0] }})">
-        {{ __($filters[0]) }}
+
+      @foreach($filters as $filt)
+      <span 
+        class="table-select" 
+        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40': filter == '{{ $filt }}' }" 
+        wire:click="filter('{{ $filt }}')">
+        {{ __($filt) }}
       </span>
-      <span class="table-select" wire:click="filter({{ $filters[1] }})">
-        {{ __($filters[1]) }}
-      </span>
-      <span class="table-select" wire:click="filter({{ $filters[2] }})">
-        {{ __($filters[2]) }}
-      </span>
+      @endforeach
+
     </div>
 
     <div class="lg:pl-8 space-y-2 mt-8">
 
-      <ul class=>
+      <ul>
         {{-- Header --}}
 
         @php($header_class = $is_admin
@@ -52,6 +55,13 @@
             {{ __('Status') }}
           </div>
         </li>
+
+        @if(count($bookings) == 0)
+          <li class="mt-6 my-6 md:my-0 px-4 py-3 text-gray-900 dark:text-gray-100">
+            {{ __('There\'s nothing over here')}}
+          </li>
+        @endif
+
         @foreach($bookings as $booking)
 
         @php($li_class = $is_admin

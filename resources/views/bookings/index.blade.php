@@ -8,11 +8,14 @@
             {{ __('Bookings') }}
         </h2>
 
+        @php($route = Auth::user()->isAdmin()
+        ? route('bookings.create')
+        : route('user.bookings.create'))
         <a 
           aria-label="{{ __('New booking') }}"
           data-tooltip="{{ __('New booking') }}"
           data-placement="left"
-          href="{{ route('bookings.create') }}">
+          href="{{ $route }}">
           <x-primary-button >
             <x-antdesign-plus-o width="22" height="22"/>
           </x-primary-button>

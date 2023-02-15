@@ -29,7 +29,7 @@
                     @else
 
                     <x-nav-link :href="route('user.bookings.index')" :active="request()->routeIs('user.bookings.index')">
-                        {{ __('My Bookings') }}
+                        {{ __('My bookings') }}
                     </x-nav-link>
 
                     @endif
@@ -106,7 +106,7 @@
             @else
 
             <x-responsive-nav-link :href="route('user.bookings.index')" :active="request()->routeIs('user.bookings.index')">
-                {{ __('My Bookings') }}
+                {{ __('My bookings') }}
             </x-responsive-nav-link>
 
             @endif
