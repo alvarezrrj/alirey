@@ -244,8 +244,15 @@
           <a href="{{ $back }}">
             <x-secondary-button type="button">{{ __('Cancel') }}</x-secondary-button>
           </a>
-          <x-primary-button>{{ __('Save') }}</x-primary-button>
-          </div>
+
+          <x-primary-button>
+            @if($is_admin)
+              {{ __('Save') }}
+            @else
+              {{ __('Continue to checkout') }}
+            @endif
+          </x-primary-button>
+        </div>
 
       </form>
 

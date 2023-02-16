@@ -4,6 +4,9 @@ A booking management system. This doc describes what each section does.
 
 ## TO DO
 
+UserBookingController::store()
+- Schedule booking deletion
+
 Error reporting form
 
 Keep admin from accessing /user/* routes
@@ -75,12 +78,17 @@ This is the booking creation workflow for the different circumstances
 |                     |           |                                |sign up |Go to A2                              |             |               |               |
 |                     |           |                                |guest   |Go to C3                              |             |               |               |
 
-Note: CreateBookingRequest is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario. So does BookingController::getData() and UserCreateBookingRequest::rules().
+Note: CreateBookingRequest is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario. Other places where this happens:
+- BookingController::getData() 
+- UserCreateBookingRequest::rules()
+- UserBookingController::checkout()
 
 When admin creates a new booking for a non existing user, an acount is opened with a random password. If user desires to access their account, they can be sent a password reset email from users table on admin panel.
 
 When admin is creating new booking, user details will be filled automatically after entering email address if a user exists for that email address.
 If a user's details have changed, admin could update them from users panel (the booking form cannot update a users details, if a user exists for the given email address, DB details will be used, esentially overriding the form's data for the user).
+
+Non-admin users creating bookings are redirected to checkout page (user.bookings.checkout) after the booking is validated and stored
 
 ## Bookings.update (/bookings/{id}/)
 

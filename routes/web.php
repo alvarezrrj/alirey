@@ -48,6 +48,9 @@ Route::name('user.')->group(function() {
     Route::resource('user/bookings', UserBookingController::class)
         ->only(['index', 'show', 'create', 'store'])
         ->middleware(['auth']);
+    Route::get('user/bookings/{booking}/checkout', [UserBookingController::class, 'checkout'])
+        ->name('bookings.checkout')
+        ->middleware(['auth']);
 });
 
 //=== Contact ===

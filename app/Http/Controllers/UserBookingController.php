@@ -6,6 +6,8 @@ use App\Http\Requests\UserCreateBookingRequest;
 use App\Models\Booking;
 use App\Models\Code;
 use App\Models\Payment;
+use App\Models\Role;
+use App\Models\User;
 use App\SD\SD;
 use Illuminate\Http\Request;
 
@@ -56,9 +58,23 @@ class UserBookingController extends Controller
 
         $booking = $request->user()->bookings()->create($validated);
 
-        $request->session()->flash('message', 'Booking saved.');
+        //$request->session()->flash('message', 'Booking saved.');
 
-        return redirect(route('user.bookings.show', $booking));
+        // TO DO 
+        // Schedule booking deletion
+
+        return redirect()->route('user.bookings.checkout', $booking);
+    }
+    
+    public function checkout(Booking $booking)
+    {
+        $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
+        // Create MP preference
+
+        return view('bookings.checkout', [
+            'booking' => $booking,
+            'price' => $admin->config->price,
+        ]);
     }
 
     /**
