@@ -4,36 +4,26 @@ A booking management system. This doc describes what each section does.
 
 ## TO DO
 
+Error reporting form
+
+Keep admin from accessing /user/* routes
+
+Send confirmation emails when booking is confirmed
+
 update.blade.php
-- Delete it
+- Delete it view, it is not being used anymore
 
 config
 - Dissallow deleting slots with pending bookings. Offer to create dummy bookings on this slot forever
 
-bookings.update
-- Migrate form to match bookings.create
-
-bookings.update
-- Ensure booking is not being saved on same day and slot as another one
-
 bookings.show
 - Implement 'refund'
-- Display 'cancel booking' button when status == BOOKING_PENDING
-- Move 'edit' button to oposite side of booking number, leave action buttons at the bottom
-- Turn the view into a Livewire component to avoid refreshing the hole page when clicking 'refund', 'confirm payment', 'mark as complete' or 'cancel'.
-- Display confirm payment button. Show modal for user to input paid ammount.
 
 bookings.destroy
 - Test it
 
-bookings.index
-- Test filter()
-
 BookingController->edit()
 - Find another way to see if day is full inside while loop to avoid so many round trips to DB
-
-config.slots
-- These are rendering as am/pm instead of 24h format. Take a look
 
 
 ## Config (/config)
@@ -85,7 +75,7 @@ This is the booking creation workflow for the different circumstances
 |                     |           |                                |sign up |Go to A2                              |             |               |               |
 |                     |           |                                |guest   |Go to C3                              |             |               |               |
 
-Note: CreateBookingRequest is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario.
+Note: CreateBookingRequest is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario. So does BookingController::getData() and UserCreateBookingRequest::rules().
 
 When admin creates a new booking for a non existing user, an acount is opened with a random password. If user desires to access their account, they can be sent a password reset email from users table on admin panel.
 

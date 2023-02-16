@@ -4,20 +4,20 @@
   <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
     <div class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x overflow-y-scroll"
       x-data="{filter: @entangle('filter')}">
-      <span 
+      <button 
         class="table-select" 
-        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40': !filter }" 
+        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40' : !filter }" 
         wire:click="filter(null)">
         {{ __('All') }}
-      </span>
+    </button>
 
       @foreach($filters as $filt)
-      <span 
+      <button 
         class="table-select" 
-        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40': filter == '{{ $filt }}' }" 
+        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40': filter == '{{ $filt }}' }" 
         wire:click="filter('{{ $filt }}')">
         {{ __($filt) }}
-      </span>
+      </button>
       @endforeach
 
     </div>
@@ -107,8 +107,13 @@
           @php($button_class = $is_admin
           ? "w-2/5"
           : "w-full")
+
           <div class="{{ $buttons_wrapper }}">
-            <a href="{{ route('bookings.show', $booking->id) }}" class={{ $button_class }}>
+            @php($view_path = $is_admin
+            ? route('bookings.show', $booking)
+            : route('user.bookings.show', $booking)
+            )
+            <a href="{{ $view_path }}" class={{ $button_class }}>
               <x-primary-button :small="true" class="w-full">
                 {{ __('View') }}
               </x-primary-button>
@@ -120,6 +125,7 @@
               {{ __('Delete') }}
             </x-danger-button>
             @endif
+
           </div>
 
           {{-- Delete booking modal --}}

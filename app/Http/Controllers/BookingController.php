@@ -177,14 +177,15 @@ class BookingController extends Controller
         //
     }
 
-    protected function getData($booking = null)
+    public function getData($booking = null)
     {
-        $working_days = Auth::user()->config->working_days;
+        $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
+        $working_days = $admin->config->working_days;
         $now = Carbon::today();
-        $last_day = Auth::user()->config->allways_open 
-        ? Carbon::today()->addDays(Auth::user()->config->anticipation)
-        : Carbon::create(Auth::user()->config->open_until);
-        $holidays = Holiday::where('user_id', Auth::user()->id)
+        $last_day = $admin->config->allways_open 
+        ? Carbon::today()->addDays($admin->config->anticipation)
+        : Carbon::create($admin->config->open_until);
+        $holidays = Holiday::where('user_id', $admin->id)
                     ->whereDate('day', '>=', $now)
                     ->whereDate('day', '<=', $last_day) 
                     ->get()

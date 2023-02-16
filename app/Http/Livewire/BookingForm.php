@@ -2,19 +2,18 @@
 
 namespace App\Http\Livewire;
 
-use Filament\Forms\Components\ViewField;
-use App\Models\Code;
 use App\Models\User;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class BookingForm extends Component implements HasForms
 {
     use InteractsWithForms;
+
+    public $is_admin;
 
     // Data coming from BookingController
     public $data;
@@ -33,8 +32,13 @@ class BookingForm extends Component implements HasForms
 
     public $datepicker;
 
+    // Booking type modal acknowledgement
+    public $ackowledged;
+
     public function mount()
     {
+        $this->is_admin = Auth::user()->isAdmin();
+
         $this->firstName = $this->booking?->user->firstName;
         $this->lastName = $this->booking?->user->lastName;
         $this->email = $this->booking?->user->email;

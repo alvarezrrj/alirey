@@ -4,7 +4,10 @@
   <x-slot name="header">
 
     <div class="flex items-center">
-      <a href="{{ route('bookings.index') }}">
+      @php($back_route = Auth::user()->isAdmin()
+      ? route('bookings.index')
+      : route('user.bookings.index'))
+      <a href="{{ $back_route }}">
           <x-bi-caret-left class="text-gray-800 dark:text-gray-200" width="20" height="20"/>
       </a>
 
@@ -20,6 +23,7 @@
       <x-alert-message key="message" />
 
       <div class="p-4 sm:p-8 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
+
         <livewire:booking 
           :booking="$booking"
           />

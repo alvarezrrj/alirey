@@ -13,14 +13,22 @@
         </h3>
       @endif
 
-      @php($action = isset($booking)
-      ? route('bookings.update', $booking->id)
-      : route('bookings.store')
-      )
+      @php
+
+      $action = $is_admin 
+      ? isset($booking)
+        ? route('bookings.update', $booking->id)
+        : route('bookings.store')
+      : route('user.bookings.store')
+
+      @endphp
+      
 
       <form action={{ $action }} method="POST" class="">
         @csrf
         @method(isset($booking) ? 'patch' : 'post')
+
+        @if($is_admin)
 
         <input type="hidden" value="{{ $booking?->user->id }}" name="user_id">
         <input type="hidden" value="{{ $booking?->id }}" name="booking_id">
@@ -87,6 +95,8 @@
             <x-input-error :messages="$errors->get('code_id')" class="mt-2" />
         </div>
 
+        @endif
+
         {{-- Booking type --}}
         <fieldset class="mt-6">
           <legend class="font-medium text-sm text-gray-800 dark:text-gray-200">
@@ -103,14 +113,25 @@
             :value="__('Virtual')" />
             <br>
 
-          <x-radio-input
-            id="in-person"
-            name="virtual" 
-            :checked="! ($booking?->virtual ?? true)"
-            value="0" />
-          <x-input-label class="inline-block" 
-            for="in-person" 
-            :value="__('In-person')" />
+          <div
+            x-data="{
+              ackowledged: @entangle('ackowledged'),
+              is_admin: @entangle('is_admin'),
+            }"
+            x-on:click="(!ackowledged && !is_admin) 
+            ? $dispatch('open-modal', 'booking-type-modal') 
+            : ''"
+            >
+            <x-radio-input
+              id="in-person"
+              name="virtual" 
+              :checked="! ($booking?->virtual ?? true)"
+              value="0"
+              />
+            <x-input-label class="inline-block" 
+              for="in-person" 
+              :value="__('In-person')" />
+          </div>
         </fieldset>
         <x-input-error class="mt-2" :messages="$errors->get('type')" />
 
@@ -230,4 +251,36 @@
     </div>
 
   </div>
+
+@if(! $is_admin)
+  {{-- Booking type modal --}}
+  <x-modal name="booking-type-modal" focusable>
+    <div class="p-6 text-gray-900 dark:text-gray-100" >
+      <h2 class="text-lg font-semibold">
+          {{ __('In-person sessions') }}
+      </h2>
+
+      <p class="mt-6">
+        {{ __('In-person sessions happen in Cosquin, Cordoba, Argenina. If you want to have an online session via video call, please select "Virtual".')}}
+      </p>
+
+      <div class="mt-6 flex justify-between">
+        <div class="flex items-center">
+          <x-checkbox id="dsa" value="1" wire:model="ackowledged" />
+          <x-input-label for="dsa" :value="__('Don\'t show again')"/>
+        </div>
+
+        <x-primary-button 
+          class="ml-3"
+          type="submit"
+          x-on:click="$dispatch('close')"
+          >
+          {{ __('Confirm') }}
+        </x-primary-button>
+      </div>
+
+    </div>
+  </x-modal>{{-- End Booking type modal --}}
+@endif
+
 </div>

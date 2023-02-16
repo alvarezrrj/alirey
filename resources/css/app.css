@@ -6,7 +6,7 @@
 
 @layer components {
     .table-select {
-        @apply p-2 hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer;
+        @apply p-2 hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer focus:bg-gray-200 dark:focus:bg-gray-600;
     }
 
     [data-tooltip]::after,
