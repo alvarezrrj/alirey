@@ -4,12 +4,13 @@
   <x-slot name="header">
 
     <div class="flex items-center">
-      @php($back_route = Auth::user()->isAdmin()
-      ? route('bookings.index')
-      : route('user.bookings.index'))
-      <a href="{{ $back_route }}">
-          <x-bi-caret-left class="text-gray-800 dark:text-gray-200" width="20" height="20"/>
-      </a>
+      {{-- Redirect back to bookings.index unless user comes 
+           from bookings.create --}}
+      @unless( substr_count(url()->previous(), 'create') )
+        <a href="{{ url()->previous() }}">
+            <x-bi-caret-left class="text-gray-800 dark:text-gray-200" width="20" height="20"/>
+        </a>
+      @endunless
 
       <h2 class="inline-block ml-2 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
         {{ __('Booking details') }}

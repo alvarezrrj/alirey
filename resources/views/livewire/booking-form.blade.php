@@ -233,11 +233,12 @@
         @endif
 
 
-        @if(isset($booking))
-        @php($back = route('bookings.show', $booking))
-        @else
-        @php($back = route('dashboard'))
-        @endif
+        @php($back = $is_admin
+        ? isset($booking)
+          ? route('bookings.show', $booking)
+          : route('dashboard')
+        : route('dashboard')
+        )
 
         <div class="flex justify-between mt-8">
           <a href="{{ $back }}">
@@ -282,5 +283,9 @@
     </div>
   </x-modal>{{-- End Booking type modal --}}
 @endif
+
+@push('libraries')
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+@endpush
 
 </div>
