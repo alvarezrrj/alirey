@@ -61,7 +61,8 @@ class UserBookingController extends Controller
         //$request->session()->flash('message', 'Booking saved.');
 
         // TO DO 
-        // Schedule booking deletion
+        // Schedule booking deletion: delete it if it has a pref_id and it is
+        // expired
 
         return redirect()->route('user.bookings.checkout', $booking);
     }
@@ -69,11 +70,23 @@ class UserBookingController extends Controller
     public function checkout(Booking $booking)
     {
         $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
+        $preference_id = MercadoPagoController::createPreference(
+            $booking, $admin->config->price
+        );
+
+        // MercadoPagoController returns false if a preference is expired 
+        // (10' passed ) since its creation, and deletes the booking.
+        if(! $preference_id)
+        {
+            return view('bookings.expired');
+        }
+
         // Create MP preference
 
         return view('bookings.checkout', [
             'booking' => $booking,
             'price' => $admin->config->price,
+            'preference_id' => $preference_id
         ]);
     }
 
@@ -122,5 +135,15 @@ class UserBookingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function confirmation($booking)
+    {
+
+    }
+
+    public function failure($booking)
+    {
+
     }
 }

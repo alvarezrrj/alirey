@@ -24,7 +24,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])
-    ->middleware(['auth', 'verified'])->name('dashboard');
+    ->middleware(['auth', 'verified', 'pending_payment'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,13 +44,19 @@ Route::resource('bookings', BookingController::class)
     ->middleware(['auth', 'admin']);
 
 // user
-Route::name('user.')->group(function() {
-    Route::resource('user/bookings', UserBookingController::class)
-        ->only(['index', 'show', 'create', 'store'])
-        ->middleware(['auth']);
-    Route::get('user/bookings/{booking}/checkout', [UserBookingController::class, 'checkout'])
-        ->name('bookings.checkout')
-        ->middleware(['auth']);
+Route::middleware(['auth', 'pending_payment'])->group(function() {
+    Route::name('user.')->group(function() {
+        Route::resource('user/bookings', UserBookingController::class)
+            ->only(['index', 'show', 'create', 'store']);
+        Route::get('user/bookings/{booking}/checkout', [UserBookingController::class, 'checkout'])
+            ->name('bookings.checkout');
+        Route::get('user/bookings/{booking}/confirmation', 
+                [UserBookingController::class, 'confirmation'])
+                ->name('bookings.confirmation');
+        Route::get('user/bookings/{booking}/failure', 
+                [UserBookingController::class, 'failure'])
+                ->name('bookings.failure');
+    });
 });
 
 //=== Contact ===

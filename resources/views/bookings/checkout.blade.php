@@ -55,10 +55,8 @@
           </div>
 
           <div class="flex justify-end">
-            <div id="pay-btn" class="mt-6 min-w-[10rem]">
-              <x-primary-button class="w-full">
-                {{ __('Pay') }}
-              </x-primary-button>
+            <div id="pay-btn" class="mt-6 min-w-[10rem] grid justify-items-stretch">
+
             </div>
           </div>
 
@@ -68,5 +66,32 @@
 
     </div>
   </div>
+
+  @push('libraries')
+    {{-- SDK MercadoPago.js --}} 
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+  @endpush
+
+  @push('scripts')
+    <script>
+      const mp = new MercadoPago('{{ env("MP_PUB_KEY") }}', {
+        locale: 'es-AR'
+      });
+    
+      mp.checkout({
+        preference: {
+          id: '{{ $preference_id }}'
+        },
+        render: {
+          container: '#pay-btn',
+          label: "{{ __('Pay') }}",
+        },
+        theme: {
+          elementsColor: '#F4903D',
+          headerColor: '#E6D2AA'
+        }
+      });
+    </script>
+  @endpush
 
 </x-app-layout>

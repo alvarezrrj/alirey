@@ -22,6 +22,7 @@ return array(
     'App\\Http\\Controllers\\ConfigController' => $baseDir . '/app/Http/Controllers/ConfigController.php',
     'App\\Http\\Controllers\\ContactController' => $baseDir . '/app/Http/Controllers/ContactController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Http\\Controllers\\MercadoPagoController' => $baseDir . '/app/Http/Controllers/MercadoPagoController.php',
     'App\\Http\\Controllers\\ProfileController' => $baseDir . '/app/Http/Controllers/ProfileController.php',
     'App\\Http\\Controllers\\UserBookingController' => $baseDir . '/app/Http/Controllers/UserBookingController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',

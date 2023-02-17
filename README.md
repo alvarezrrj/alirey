@@ -4,6 +4,28 @@ A booking management system. This doc describes what each section does.
 
 ## TO DO
 
+Create a policy to only allow users to see, pay and cancel their own bookings
+
+bookings.expired (view)
+- Create the view.
+
+bookings.confirmation (view)
+- Create the view
+
+bookings.failure (view)
+- Create the view
+
+RegisteredUserController
+- Non-admin users: if has pending payments (booking with pref_id and payment pending), display red notification dot on profile dropdown and include a link to checkout
+
+user.bookings.create
+- Let user know if they have a pending payment and tell them they have to either pay or cancel the booking to create a new one
+
+user.bookings.checkout
+- Display 'cancel' button:
+    + open modal explaining they'll loose the slot and have to start again: on confirmation, delete booking and redirect to dashboard
+- Display countdown indicating time left to pay
+
 UserBookingController::store()
 - Schedule booking deletion
 
@@ -11,16 +33,17 @@ Error reporting form
 
 Keep admin from accessing /user/* routes
 
-Send confirmation emails when booking is confirmed
+Send confirmation emails when booking is confirmed (from MP's IPN)
 
 update.blade.php
-- Delete it view, it is not being used anymore
+- Delete it, view is not being used anymore
 
 config
 - Dissallow deleting slots with pending bookings. Offer to create dummy bookings on this slot forever
 
 bookings.show
 - Implement 'refund'
+- Remind non-admin users that times are UTC-3
 
 bookings.destroy
 - Test it
@@ -88,7 +111,7 @@ When admin creates a new booking for a non existing user, an acount is opened wi
 When admin is creating new booking, user details will be filled automatically after entering email address if a user exists for that email address.
 If a user's details have changed, admin could update them from users panel (the booking form cannot update a users details, if a user exists for the given email address, DB details will be used, esentially overriding the form's data for the user).
 
-Non-admin users creating bookings are redirected to checkout page (user.bookings.checkout) after the booking is validated and stored
+Non-admin users creating bookings are redirected to checkout page (user.bookings.checkout) after the booking is validated and stored on DB. Users with pending payment are shown a notification badge on their username and prompted to pay or cancel the booking before being allowed to create a new one.
 
 ## Bookings.update (/bookings/{id}/)
 
@@ -99,6 +122,10 @@ Displays a form for updating/inserting bookings that have a state of BOOKING_PEN
 'time' &lt;select&gt; updates itself when a new day is selected, disabling any slots that have a booking on them, except if it corresponds to current booking.
 
 'restore' button restores date and time.
+
+## Notes
+
+
 
 ## Deployment TO DO
 
