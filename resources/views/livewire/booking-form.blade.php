@@ -3,12 +3,45 @@
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
   <x-alert-error key="overlap" />
-  <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
+  <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
 
-    <div class="max-w-xl sm:pl-8 space-y-6">
+    <div class="max-w-xl sm:pl-8 space-y-6 text-gray-900 dark:text-gray-100 ">
+
+      {{-- Booking instructions --}}
+      @if(! $is_admin)
+      <div x-data="{ open: false, height:'' }" class="relative">
+        <h3 x-on:click="open = !open" 
+          class="mb-6 font-bold text-lg flex items-center z-10 relative">
+          {{ __('How to book a bioconstelation session') }}
+          <span
+            class="inline-block ml-3 transition-all duration-500"
+            :class="{'-rotate-90': open}"
+            >
+            <x-bi-caret-down-fill 
+              width="20" 
+              height="20" 
+              />
+          </span>
+        </h3>
+        <p 
+        class="overflow-hidden transition-all duration-500 absolute"
+        x-cloak
+        x-init="
+          height = `${$el.getBoundingClientRect().height}px`; 
+          $el.style.height = 0;
+          $el.classList.remove('absolute');
+          $watch('open', value => {
+            if(value) $el.style.height = height;
+            else $el.style.height = 0;
+          });"
+          >
+          {{ __('Select your preferred type of booking (online or in-person), choose a day from the date picker, select one of the available slots and continue to checkout. We\'ll send an email with your booking\'s details once your payment is confirmed and a reminder a few minutes before your booking.') }}
+        </p>
+      </div>
+      @endif
 
       @if(isset($booking))
-        <h3 class="text-gray-900 dark:text-gray-100 font-bold">
+        <h3 class="font-bold">
           {{ __('Booking number') }}:&nbsp;{{ $booking->id }}
         </h3>
       @endif
@@ -175,7 +208,7 @@
             <x-input-label for="slot_id" :value="__('Slot')" class="mt-6"/>
             <x-select-input id="slot_id" 
               x-model="slot_id"
-              class="inline-block mt-1 w-full" 
+              class="inline-block mt-1 w-full mb-1" 
               type="text" 
               name="slot_id" 
               wire:model="slot_id">
@@ -189,6 +222,11 @@
               </template>
 
             </x-select-input>
+            @if(! $is_admin)
+            <span class="text-xs text-gray-600 dark:text-gray-400">
+              {{ __('Remember times are in UTC-3 (Argentinian time)') }}
+            </span>
+            @endif
             <x-input-error class="mt-2" :messages="$errors->get('slot_id')" />
           </div>
 

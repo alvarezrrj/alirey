@@ -20,6 +20,9 @@ class MercadoPagoController extends Controller
             if( Carbon::now()->gt($pref_expiration) )
             {
                 $booking->delete();
+                // remove booking id from session to keep navigation.blade.php
+                // from showing the notification badge 
+                session()->forget('pending_payment');
                 return false;
             } else {
                 return $booking->pref_id;

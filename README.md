@@ -6,6 +6,8 @@ A booking management system. This doc describes what each section does.
 
 Create a policy to only allow users to see, pay and cancel their own bookings
 
+Send email reminder 20' before booking
+
 bookings.expired (view)
 - Create the view.
 
