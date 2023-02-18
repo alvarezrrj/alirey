@@ -6,7 +6,10 @@
     <div class="flex items-center">
       {{-- Redirect back to bookings.index unless user comes 
            from bookings.create --}}
-      @unless( substr_count(url()->previous(), 'create') )
+      @unless( substr_count(url()->previous(), 'create') 
+            || substr_count(url()->previous(), 'checkout')
+            || substr_count(url()->previous(), 'confirmation')
+            || url()->previous() == url()->current())
         <a href="{{ url()->previous() }}">
             <x-bi-caret-left class="text-gray-800 dark:text-gray-200" width="20" height="20"/>
         </a>

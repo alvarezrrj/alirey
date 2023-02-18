@@ -115,6 +115,17 @@ If a user's details have changed, admin could update them from users panel (the 
 
 Non-admin users creating bookings are redirected to checkout page (user.bookings.checkout) after the booking is validated and stored on DB. Users with pending payment are shown a notification badge on their username and prompted to pay or cancel the booking before being allowed to create a new one.
 
+### Booking payment statuses
+
+SD::PAYMENT_PENDING: Booking needs to be paid for.
+SD::PAYMENT_CASH: Payment was confirmed by admin.
+SD::PAYMENT_MP and mp_id == null: Booking was paid for, but notification from MP hasn't arrived yet.
+SD::PAYMENT_MP and mp_id != null: Booking paid for and confirmation from MP received.
+
+## Booking checkout (user/bookings/{id}/checkout)
+
+Allows non-admin user to pay for their pending booking only if payment status is pending and booking status is not cancelled. Creates mp preference on first visit and retrieves it on subsequent visits. If preference is expired, booking is deleted and user notified.
+
 ## Bookings.update (/bookings/{id}/)
 
 Displays a form for updating/inserting bookings that have a state of BOOKING_PENDING
@@ -124,6 +135,8 @@ Displays a form for updating/inserting bookings that have a state of BOOKING_PEN
 'time' &lt;select&gt; updates itself when a new day is selected, disabling any slots that have a booking on them, except if it corresponds to current booking.
 
 'restore' button restores date and time.
+
+
 
 ## Notes
 

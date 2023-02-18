@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class MercadoPagoController extends Controller
 {
 
-    static function createPreference($booking, $price)
+    static function create_or_get_preference($booking, $price)
     {
         \MercadoPago\SDK::setAccessToken(env('MP_TOKEN'));
 

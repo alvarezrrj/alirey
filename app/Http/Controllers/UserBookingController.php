@@ -69,8 +69,10 @@ class UserBookingController extends Controller
     
     public function checkout(Booking $booking)
     {
+        $this->authorize('checkout', $booking);
+
         $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
-        $preference_id = MercadoPagoController::createPreference(
+        $preference_id = MercadoPagoController::create_or_get_preference(
             $booking, $admin->config->price
         );
 
@@ -98,6 +100,8 @@ class UserBookingController extends Controller
      */
     public function show(Booking $booking)
     {
+        $this->authorize('view', $booking);
+
         return view('bookings.show', [
             'booking' => $booking,
         ]);
@@ -137,13 +141,24 @@ class UserBookingController extends Controller
         //
     }
 
-    public function confirmation($booking)
+    public function confirmation(Booking $booking)
     {
+        $this->authorize('view', $booking);
 
+        session()->forget('pending_payment');
+        $booking->pref_id = null;
+        $booking->save();
+
+        $booking->payment->status = SD::PAYMENT_MP;
+        $booking->payment->save();
+
+        session()->flash('message', __('Thank you for your booking! Please check your details to make sure they are correct. You will be receiving a copy of this via email.'));
+
+        return redirect()->route('user.bookings.show', $booking);
     }
 
-    public function failure($booking)
+    public function failure()
     {
-
+        return view('bookings.failure');
     }
 }

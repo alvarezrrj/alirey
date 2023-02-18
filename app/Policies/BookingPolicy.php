@@ -4,8 +4,8 @@ namespace App\Policies;
 
 use App\Models\Booking;
 use App\Models\User;
+use App\SD\SD;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use StaticDetails\SD;
 
 class BookingPolicy
 {
@@ -31,7 +31,7 @@ class BookingPolicy
      */
     public function view(User $user, Booking $booking)
     {
-        //
+        return $booking->user()->is($user);
     }
 
     /**
@@ -93,5 +93,16 @@ class BookingPolicy
     public function forceDelete(User $user, Booking $booking)
     {
         //
+    }
+
+    /**
+     * Determin whether the user can pay for the booking
+     * 
+     */
+    public function checkout(User $user, Booking $booking)
+    {
+        return $this->view($user, $booking) 
+            && $booking->payment->status == SD::PAYMENT_PENDING
+            && $booking->status != SD::BOOKING_CANCELLED;
     }
 }
