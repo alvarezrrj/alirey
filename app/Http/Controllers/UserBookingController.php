@@ -72,6 +72,8 @@ class UserBookingController extends Controller
         $this->authorize('checkout', $booking);
 
         $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
+
+        // Create MP preferene
         $preference_id = MercadoPagoController::create_or_get_preference(
             $booking, $admin->config->price
         );
@@ -82,8 +84,6 @@ class UserBookingController extends Controller
         {
             return view('bookings.expired');
         }
-
-        // Create MP preference
 
         return view('bookings.checkout', [
             'booking' => $booking,
@@ -133,12 +133,16 @@ class UserBookingController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Booking $booking)
     {
-        //
+        $this->authorize('delete', $booking);
+
+        $booking->delete();
+
+        return redirect()->route('user.bookings.create');
     }
 
     public function confirmation(Booking $booking)

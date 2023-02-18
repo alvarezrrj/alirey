@@ -21,9 +21,27 @@
 
         <div class="max-w-lg sm:pl-8 space-y-6">
 
-          <p class="mt-6">
-            {{ __('Bioconstelation session - 1.5 hours') }}
-          </p>
+          <div class="mt-6 flex justify-between items-center">
+            <p class="">
+              {{ __('Bioconstelation session - 1.5 hours') }}
+            </p>
+            {{-- Delete booking --}}
+            <a 
+              class="cursor-pointer"
+              data-tooltip="{{ __('Delete booking') }}"
+              data-placement="left"
+              x-data=""
+              x-on:click="$dispatch('open-modal', 'delete-booking-modal')"
+              >
+              <x-bi-trash 
+                aria-label="{{ __('Delete booking') }}"
+                class="text-red-600"
+                height="18"
+                width="18"
+                />
+            </a>
+          </div>
+
           <hr>
           <div class="grid grid-cols-1 sm:grid-cols-2 grid-rows-3 sm:grid-rows-2">
             <p class="flex justify-between sm:justify-start">
@@ -54,9 +72,9 @@
 
           </div>
 
-          <div class="flex justify-end">
-            <div id="pay-btn" class="mt-6 min-w-[10rem] grid justify-items-stretch">
-
+          <div class="mt-6 flex justify-end">
+            {{-- MP pay button container --}}
+            <div id="pay-btn" class="min-w-[10rem] grid justify-items-stretch">
             </div>
           </div>
 
@@ -66,6 +84,38 @@
 
     </div>
   </div>
+
+  {{-- Delete booking modal --}}
+  <x-modal name="delete-booking-modal" focusable>
+    <div class="p-6 text-gray-900 dark:text-gray-100" >
+      <h2 class="text-lg font-semibold">
+        {{ __('Delete booking') }}
+      </h2>
+
+      <p class="mt-6">
+        {{ __('Are you sure you want to delete this booking? If you do, you\'ll loose your slot and have to re-start the reservation process.') }}
+      </p>
+
+      <div class="mt-6 flex justify-between">
+        <x-secondary-button
+          x-data="" 
+          x-on:click="$dispatch('close')">
+          {{ __('Cancel') }}
+        </x-secondary-button>
+
+        <form 
+          action="{{ route('user.bookings.destroy', $booking) }}"
+          method="POST" >
+          @csrf
+          @method('delete')
+          <x-danger-button type="submit">
+            {{ __('Confirm') }}
+          </x-danger-button>
+        </form>
+      </div>
+
+    </div>
+  </x-modal>{{-- End Delete booking modal --}}
 
   @push('libraries')
     {{-- SDK MercadoPago.js --}} 

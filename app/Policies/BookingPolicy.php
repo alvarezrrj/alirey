@@ -54,7 +54,7 @@ class BookingPolicy
      */
     public function update(User $user, Booking $booking)
     {
-        return $this->delete($user, $booking) 
+        return $user->isAdmin()
             && $booking->status == SD::BOOKING_PENDING
             && $booking->is_booking;
     }
@@ -68,7 +68,9 @@ class BookingPolicy
      */
     public function delete(User $user, Booking $booking)
     {
-        return $user->isAdmin();
+        return $user->isAdmin() || 
+            (  $booking->user()->is($user)
+            && $booking->payment->status == SD::PAYMENT_PENDING );
     }
 
     /**

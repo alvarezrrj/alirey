@@ -124,6 +124,15 @@
           {{ $booking->slot->start->format('h:i') }}
         </td>
       </tr>
+      @if(! $is_admin)
+      <tr>
+        <td>
+          <span class="text-xs text-gray-600 dark:text-gray-400">
+            {{ __('Remember times are in UTC-3 (Argentinian time)') }}
+          </span>
+        </td>
+      </tr>
+      @endif
 
       @if($is_admin)
         <tr>

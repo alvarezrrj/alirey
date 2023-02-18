@@ -47,7 +47,7 @@ Route::resource('bookings', BookingController::class)
 Route::middleware(['auth', 'pending_payment'])->group(function() {
     Route::name('user.')->group(function() {
         Route::resource('user/bookings', UserBookingController::class)
-            ->only(['index', 'show', 'create', 'store']);
+            ->only(['index', 'show', 'create', 'store', 'destroy']);
         Route::get('user/bookings/{booking}/checkout', [UserBookingController::class, 'checkout'])
             ->name('bookings.checkout');
         Route::get('user/bookings/{booking}/confirmation', 

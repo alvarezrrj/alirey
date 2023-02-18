@@ -8,17 +8,9 @@ Create a policy to only allow users to see, pay and cancel their own bookings
 
 Send email reminder 20' before booking
 
-bookings.expired (view)
-- Create the view.
-
-bookings.confirmation (view)
-- Create the view
 
 bookings.failure (view)
 - Create the view
-
-RegisteredUserController
-- Non-admin users: if has pending payments (booking with pref_id and payment pending), display red notification dot on profile dropdown and include a link to checkout
 
 user.bookings.create
 - Let user know if they have a pending payment and tell them they have to either pay or cancel the booking to create a new one
@@ -33,7 +25,7 @@ UserBookingController::store()
 
 Error reporting form
 
-Keep admin from accessing /user/* routes
+Create middleware to keep admin from accessing /user/* routes
 
 Send confirmation emails when booking is confirmed (from MP's IPN)
 
