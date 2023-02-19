@@ -86,10 +86,13 @@ class UserBookingController extends Controller
             return view('bookings.expired');
         }
 
+        $expires_in = Carbon::now()->diffInSeconds($booking->pref_expiry);
+
         return view('bookings.checkout', [
             'booking' => $booking,
             'price' => $admin->config->price,
-            'preference_id' => $preference_id
+            'preference_id' => $preference_id,
+            'expires_in' => $expires_in
         ]);
     }
 

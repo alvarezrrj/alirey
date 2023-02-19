@@ -13,7 +13,7 @@ class MercadoPagoController extends Controller
 
         if(isset($booking->pref_expiry))
         {
-            if( Carbon::now()->gt($booking->pref_expiry) )
+            if( Carbon::now()->gte($booking->pref_expiry) )
             {
                 $booking->delete();
                 // remove booking id from session to keep navigation.blade.php

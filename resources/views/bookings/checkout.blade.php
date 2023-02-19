@@ -15,9 +15,27 @@
 
       <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
 
-        <h3 class="font-semibold text-lg">
-          {{ __('Purchase details') }}
-        </h3>
+        <div class="flex justify-between items-center">
+          <h3 class="font-semibold text-lg">
+            {{ __('Purchase details') }}
+          </h3>
+
+          {{-- Countdown --}}
+          <div 
+            class="bg-gray-100 dark:bg-gray-600 rounded-md px-2"
+            x-data="{ 'expiresIn': {{ $expires_in }} }"
+            x-init="
+              setInterval(() => expiresIn--, 1000);
+              $watch('expiresIn', value => value == 0 && location.reload())">
+            <span x-text="~~(expiresIn / 60)"></span> :
+            <span x-text="
+              expiresIn < 0 
+              ? 0
+              : String(expiresIn % 60).length < 2 
+                ? '0' + (expiresIn % 60)
+                : expiresIn % 60"></span>
+          </div>
+        </div>
 
         <div class="max-w-lg sm:pl-8 space-y-6">
 

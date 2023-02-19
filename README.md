@@ -8,12 +8,6 @@ Create users table in admin panel
 
 Send email reminder 20' before booking
 
-bookings.failure (view)
-- Create the view
-
-user.bookings.checkout
-- Display countdown indicating time left to pay
-
 Error reporting form
 
 Send confirmation emails when booking is confirmed (from MP's IPN)
