@@ -53,8 +53,7 @@ Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
         Route::get('user/bookings/{booking}/confirmation', 
                 [UserBookingController::class, 'confirmation'])
                 ->name('bookings.confirmation');
-        Route::get('user/bookings/{booking}/failure', 
-                [UserBookingController::class, 'failure'])
+        Route::get('user/failed_payment', [UserBookingController::class, 'failure'])
                 ->name('bookings.failure');
     });
 });

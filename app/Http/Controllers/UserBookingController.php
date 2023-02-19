@@ -156,6 +156,7 @@ class UserBookingController extends Controller
 
         session()->forget('pending_payment');
         $booking->pref_id = null;
+        $booking->pref_expiry = null;
         $booking->save();
 
         $booking->payment->status = SD::PAYMENT_MP;
@@ -183,17 +184,9 @@ class UserBookingController extends Controller
      */
     static function purge_unpaid_bookings()
     {
-        \MercadoPago\SDK::setAccessToken(env('MP_TOKEN'));
-
-        $bookings = Booking::where('pref_id', '!=', null)->get();
-        foreach($bookings as $booking)
-        {
-            $pref = \MercadoPago\Preference::find_by_id($booking->pref_id);
-            // Give the preference an extra minute to avoid deleting it the 
-            // moment it gets paid for
-            $pref_expiration = Carbon::create($pref->expiration_date_to)->addMinute();
-
-            if( Carbon::now()->gt($pref_expiration) ) $booking->delete();
-        }
+        // Give the preference an extra minute to avoid deleting it the 
+        // moment it gets paid for
+        Booking::where('pref_expiry', '<', Carbon::now()->subMinute())
+            ->delete();
     }
 }

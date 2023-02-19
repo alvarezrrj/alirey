@@ -11,12 +11,9 @@ class MercadoPagoController extends Controller
     {
         \MercadoPago\SDK::setAccessToken(env('MP_TOKEN'));
 
-        if(isset($booking->pref_id))
+        if(isset($booking->pref_expiry))
         {
-            $pref = \MercadoPago\Preference::find_by_id($booking->pref_id);
-            $pref_expiration = Carbon::create($pref->expiration_date_to);
-
-            if( Carbon::now()->gt($pref_expiration) )
+            if( Carbon::now()->gt($booking->pref_expiry) )
             {
                 $booking->delete();
                 // remove booking id from session to keep navigation.blade.php
@@ -63,7 +60,7 @@ class MercadoPagoController extends Controller
 
         $pref->back_urls        = [
             'success' => route('user.bookings.confirmation', $booking),
-            'failure' => route('user.bookings.failure', $booking)
+            'failure' => route('user.bookings.failure'),
         ];
 
         $pref->notification_url = "https://aa44914e-dbc5-46d5-acf8-174fb163d2df.mock.pstmn.io";
@@ -71,6 +68,7 @@ class MercadoPagoController extends Controller
         $pref->save();
 
         $booking->pref_id = $pref->id;
+        $booking->pref_expiry = $pref->expiration_date_to;
         $booking->save();
 
         return $pref->id;

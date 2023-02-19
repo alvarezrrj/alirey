@@ -11,7 +11,8 @@ class Booking extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'day' => 'datetime'
+        'day' => 'datetime',
+        'pref_expiry' => 'datetime'
     ];
 
     use HasFactory;

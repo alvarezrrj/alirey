@@ -45,13 +45,13 @@
         <x-dropdown align="right" width="48">
           <x-slot name="trigger">
             <button tabindex="0"
-              class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300  transition ease-in-out duration-150">
-              <div class="relative">
+              class=" border-red-700 hover:border-red-600 inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300  transition ease-in-out duration-150">
+              <div class="relative border-inherit">
                 {{ Auth::user()->firstName }}
 
                 @if(session()->has('pending_payment'))
                 <div
-                  class="absolute top-0 left-0 border-4 border-red-700 rounded-full -translate-x-3/4 -translate-y-1/2">
+                  class="absolute top-0 left-0 border-4 border-inherit rounded-full -translate-x-3/4 -translate-y-1/2">
                 </div>
                 @endif
 

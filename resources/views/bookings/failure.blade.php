@@ -16,18 +16,17 @@
       <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
 
         <h3 class="font-semibold text-lg">
-          {{ __('Booking expired') }}
+          {{ __('Payment failed') }}
         </h3>
 
         <div class="max-w-lg sm:pl-8 space-y-6">
 
-          <div class="mt-6 grid grid-cols-5">
+          <div class="mt-6 grid grid-cols-5 gap-2">
             <div class="col-span-1 grid place-items-center border-l-2 border-orange">
-              <x-bi-hourglass-bottom height="32" width="32"/>
+              <x-bi-piggy-bank height="32" width="32"/>
             </div>
             <p class="col-span-4">
-              {{ __('Woops! It seems you have ran out of time to pay for this booking. But don\'t worry, you can') }}
-              <a href="{{ route('user.bookings.create') }}" class="text-brown underline">{{ __('get yourself another slot') }}</a>.
+              {{ __('Woops! Something went wrong whilst trying to take that payment.') }}
             </p>
           </div>
 
