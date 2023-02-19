@@ -44,7 +44,7 @@ Route::resource('bookings', BookingController::class)
     ->middleware(['auth', 'admin']);
 
 // user
-Route::middleware(['auth', 'pending_payment'])->group(function() {
+Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
     Route::name('user.')->group(function() {
         Route::resource('user/bookings', UserBookingController::class)
             ->only(['index', 'show', 'create', 'store', 'destroy']);

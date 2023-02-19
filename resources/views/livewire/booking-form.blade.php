@@ -28,7 +28,7 @@
         @if(! $is_admin)
         <div x-data="{ open: false, height:'' }" class="relative">
           <h3 x-on:click="open = !open" 
-            class="mb-6 font-bold text-lg flex items-center z-10 relative">
+            class="mb-6 font-bold text-lg flex items-center z-10 cursor-pointer">
             {{ __('How to book a bioconstelation session') }}
             <span
               class="inline-block ml-3 transition-all duration-500"
@@ -41,6 +41,7 @@
             </span>
           </h3>
           <p 
+          wire:ignore
           class="overflow-hidden transition-all duration-500 absolute"
           x-cloak
           x-init="

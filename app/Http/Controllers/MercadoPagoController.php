@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class MercadoPagoController extends Controller
 {
@@ -75,7 +74,6 @@ class MercadoPagoController extends Controller
         $booking->save();
 
         return $pref->id;
-
     }
 
 }

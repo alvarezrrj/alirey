@@ -34,7 +34,7 @@
           {{ __('Name') }}
         </th>
         <td class="text-right p-2 ">
-          {{ $booking->user->firstName }}&nbsp;
+          {{ $booking->user->firstName }}
           {{ $booking->user->lastName }}
         </td>
       </tr>

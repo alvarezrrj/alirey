@@ -9,6 +9,7 @@ use App\Models\Payment;
 use App\Models\Role;
 use App\Models\User;
 use App\SD\SD;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UserBookingController extends Controller
@@ -145,6 +146,10 @@ class UserBookingController extends Controller
         return redirect()->route('user.bookings.create');
     }
 
+    /**
+     * MP Payment confirmation
+     * MP redirects here after a successful payment
+     */
     public function confirmation(Booking $booking)
     {
         $this->authorize('view', $booking);
@@ -161,8 +166,34 @@ class UserBookingController extends Controller
         return redirect()->route('user.bookings.show', $booking);
     }
 
+    /**
+     * MP Payment failure
+     * MP redirects here after a failed payment
+     */
     public function failure()
     {
         return view('bookings.failure');
+    }
+
+    /**
+     * Delete bookings that have not been paid for after 10' of creating the
+     * MP preference
+     * 
+     * Gets called every minute by job scheduler \App\Console\Kernel::schedule()
+     */
+    static function purge_unpaid_bookings()
+    {
+        \MercadoPago\SDK::setAccessToken(env('MP_TOKEN'));
+
+        $bookings = Booking::where('pref_id', '!=', null)->get();
+        foreach($bookings as $booking)
+        {
+            $pref = \MercadoPago\Preference::find_by_id($booking->pref_id);
+            // Give the preference an extra minute to avoid deleting it the 
+            // moment it gets paid for
+            $pref_expiration = Carbon::create($pref->expiration_date_to)->addMinute();
+
+            if( Carbon::now()->gt($pref_expiration) ) $booking->delete();
+        }
     }
 }

@@ -1,31 +1,20 @@
 # Alirey
 
-A booking management system. This doc describes what each section does.
+A Laravel booking management system. This doc attempts to describe what each section does and how it works.
 
 ## TO DO
 
-Create a policy to only allow users to see, pay and cancel their own bookings
+Create users table in admin panel
 
 Send email reminder 20' before booking
-
 
 bookings.failure (view)
 - Create the view
 
-user.bookings.create
-- Let user know if they have a pending payment and tell them they have to either pay or cancel the booking to create a new one
-
 user.bookings.checkout
-- Display 'cancel' button:
-    + open modal explaining they'll loose the slot and have to start again: on confirmation, delete booking and redirect to dashboard
 - Display countdown indicating time left to pay
 
-UserBookingController::store()
-- Schedule booking deletion
-
 Error reporting form
-
-Create middleware to keep admin from accessing /user/* routes
 
 Send confirmation emails when booking is confirmed (from MP's IPN)
 
@@ -37,7 +26,6 @@ config
 
 bookings.show
 - Implement 'refund'
-- Remind non-admin users that times are UTC-3
 
 bookings.destroy
 - Test it
@@ -52,7 +40,7 @@ Can only be accessed by admin
 
 ### **Working days**
 
-Toggling each switches automatically updates 'config' column on database for the currently logged in admin
+Toggling switches automatically updates 'config' column on database for the currently logged in admin
 
 ### **Dates**
 
@@ -82,7 +70,7 @@ Can only be accessed by admin, displays a table which is filterable by booking s
 
 Displays booking details and allows admin to mark booking as 'complete', refund, mark as paid and edit it.
 
-## Bookings.create (/bookings/create)
+## Bookings.create (/bookings/create && /user/bookings/create)
 
 This is the booking creation workflow for the different circumstances
 
@@ -107,12 +95,16 @@ If a user's details have changed, admin could update them from users panel (the 
 
 Non-admin users creating bookings are redirected to checkout page (user.bookings.checkout) after the booking is validated and stored on DB. Users with pending payment are shown a notification badge on their username and prompted to pay or cancel the booking before being allowed to create a new one.
 
+### Unpaid booking purge
+
+A scheduled job runs every minute and deletes bookings with expired preferences. This prevents unpaid bookings from staying on the database. Scheduler logs are in /logs/scheduler.log
+
 ### Booking payment statuses
 
 SD::PAYMENT_PENDING: Booking needs to be paid for.
 SD::PAYMENT_CASH: Payment was confirmed by admin.
 SD::PAYMENT_MP and mp_id == null: Booking was paid for, but notification from MP hasn't arrived yet.
-SD::PAYMENT_MP and mp_id != null: Booking paid for and confirmation from MP received.
+SD::PAYMENT_MP and mp_id != null: Booking paid for and confirmation from MP received.o
 
 ## Booking checkout (user/bookings/{id}/checkout)
 
@@ -147,6 +139,13 @@ Cache icons with
 ```
 php artisan icons:cache
 ```
+
+Write cron entry
+```
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
+Update pref->notification_url on MercadoPagoController::create_or_get_preference()
 
 ## Built With
 
