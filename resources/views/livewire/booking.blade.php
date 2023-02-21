@@ -141,7 +141,8 @@
           </th>
           <td class="text-right p-2 ">
             @if ($booking->payment->status == SD::PAYMENT_MP
-              || $booking->payment->status == SD::PAYMENT_CASH)
+              || $booking->payment->status == SD::PAYMENT_CASH
+              || $booking->payment->status == SD::PAYMENT_MP_AWAIT)
               {{ __('Paid')}} -
             @endif
             {{ __($booking->payment->status) }}

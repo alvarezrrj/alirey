@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserBookingController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,8 @@ Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
                 ->name('bookings.failure');
     });
 });
+
+Route::get('hola', function() { return 'hola';})->name('hola');
 
 //=== Contact ===
 Route::get('/contact', [ContactController::class, 'index'])

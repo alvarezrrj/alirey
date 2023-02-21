@@ -4,13 +4,17 @@ A Laravel booking management system. This doc attempts to describe what each sec
 
 ## TO DO
 
+MercadoPagoController
+- Create config/mercadopago.php
+- Move notification url to config file
+- Move env function to config file
+- Send emails from webhook()
+
 Create users table in admin panel
 
-Send email reminder 20' before booking
+Send email reminder 20' before booking (scheduled task)
 
 Error reporting form
-
-Send confirmation emails when booking is confirmed (from MP's IPN)
 
 update.blade.php
 - Delete it, view is not being used anymore
@@ -88,6 +92,8 @@ When admin is creating new booking, user details will be filled automatically af
 If a user's details have changed, admin could update them from users panel (the booking form cannot update a users details, if a user exists for the given email address, DB details will be used, esentially overriding the form's data for the user).
 
 Non-admin users creating bookings are redirected to checkout page (user.bookings.checkout) after the booking is validated and stored on DB. Users with pending payment are shown a notification badge on their username and prompted to pay or cancel the booking before being allowed to create a new one.
+
+Once the payment goes trhough, MP redirects users to confirmation page. This controller removes preference details from booking to avoid it being deleted by booking purger and sets payment status to 'awaiting confirmation from MP' (changing payment status to anything other than 'pending' allows the BookingPolicy to keep the booking from beeing checked out twice). Payment confirmation is done by webhook, which sets payment status to 'MercadoPago', paid amount and mp_id (MercadoPago's payment ID, needed for refunds).
 
 ### Unpaid booking purge
 

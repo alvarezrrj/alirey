@@ -157,12 +157,20 @@ class UserBookingController extends Controller
     {
         $this->authorize('view', $booking);
 
+        // TO DO 
+        // See if there's any way of checking MP called this method and not just
+        // any human
+
         session()->forget('pending_payment');
+        // Removing preference attributes from booking keeps it from being deleted
+        // by scheduled task
         $booking->pref_id = null;
         $booking->pref_expiry = null;
         $booking->save();
 
-        $booking->payment->status = SD::PAYMENT_MP;
+        // This keeps the booking from checked out twice (BookingPolicy checks
+        // payment status to be == PENDING)
+        $booking->payment->status = SD::PAYMENT_MP_AWAIT;
         $booking->payment->save();
 
         session()->flash('message', __('Thank you for your booking! Please check your details to make sure they are correct. You will be receiving a copy of this via email.'));

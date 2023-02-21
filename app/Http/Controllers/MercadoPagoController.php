@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
+use App\SD\SD;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class MercadoPagoController extends Controller
 {
@@ -63,7 +66,13 @@ class MercadoPagoController extends Controller
             'failure' => route('user.bookings.failure'),
         ];
 
-        $pref->notification_url = "https://aa44914e-dbc5-46d5-acf8-174fb163d2df.mock.pstmn.io";
+        // Allows me to access the booking ID from the webhook notification
+        $pref->external_reference   = $booking->id;              
+
+        // Referencia en el resumen de tarjeta
+        $pref->statement_descriptor = "AR-Bioconstelaciones";   
+
+        $pref->notification_url = "https://aa44914e-dbc5-46d5-acf8-174fb163d2df.mock.pstmn.io?source_news=webhooks";
 
         $pref->save();
 
@@ -72,6 +81,33 @@ class MercadoPagoController extends Controller
         $booking->save();
 
         return $pref->id;
+    }
+
+    public function webhook(Request $request) 
+    {
+        if($request->input('type') == 'payment')
+        {
+            \MercadoPago\SDK::setAccessToken(env('MP_TOKEN'));
+            $payment = \MercadoPago\Payment::find_by_id($request->input('data.id'));
+            $paid_amount = $payment->transaction_details->total_paid_amount;
+            $mp_id = $payment->id;
+
+            if ($payment->status == "approved") {
+
+                $merchant_order = \MercadoPago\MerchantOrder::find_by_id($payment->order->id);
+                $booking_id = $merchant_order->external_reference;
+
+                Booking::find($booking_id)->payment()->update([
+                    'mp_id' => $mp_id,
+                    'amount' => $paid_amount,
+                    'status' => SD::PAYMENT_MP,
+                ]);
+
+                // TO DO
+                // Send emails
+            }
+        }
+        return response('', 200);
     }
 
 }
