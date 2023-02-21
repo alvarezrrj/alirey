@@ -2,7 +2,7 @@
 
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
   <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
-    <div class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x overflow-y-scroll"
+    <div class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x overflow-y-scroll max-w-[calc(100vw-2rem)]"
       x-data="{filter: @entangle('filter')}">
       <button 
         class="table-select" 
@@ -89,7 +89,9 @@
             <span class="text-sm text-gray-600 dark:text-gray-400 sm:hidden">
               {{ __('Payment') }}
             </span>
-            {{ __($booking->payment->status) }}
+            {{ __($booking->payment->status == SD::PAYMENT_MP
+                ? 'MP'
+                : $booking->payment->status) }}
           </div>
           @endif
           <div class="col-span-2 sm:col-span-1">
