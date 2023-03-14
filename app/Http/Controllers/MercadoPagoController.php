@@ -6,13 +6,14 @@ use App\Models\Booking;
 use App\SD\SD;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class MercadoPagoController extends Controller
 {
 
     static function create_or_get_preference($booking, $price)
     {
-        \MercadoPago\SDK::setAccessToken(env('MP_TOKEN'));
+        \MercadoPago\SDK::setAccessToken(config('mercadopago.mp_token'));
 
         if(isset($booking->pref_expiry))
         {
@@ -72,7 +73,10 @@ class MercadoPagoController extends Controller
         // Referencia en el resumen de tarjeta
         $pref->statement_descriptor = "AR-Bioconstelaciones";   
 
-        $pref->notification_url = "https://aa44914e-dbc5-46d5-acf8-174fb163d2df.mock.pstmn.io?source_news=webhooks";
+        // Retrieve url from config file, depends on environment
+        $pref->notification_url = App::environment('local')
+            ? config('mercadopago.local_notification_url')
+            : route(config('mercadopago.dist_notification_url_name'));
 
         $pref->save();
 
@@ -87,7 +91,7 @@ class MercadoPagoController extends Controller
     {
         if($request->input('type') == 'payment')
         {
-            \MercadoPago\SDK::setAccessToken(env('MP_TOKEN'));
+            \MercadoPago\SDK::setAccessToken(config('mercadopago.mp_token'));
             $payment = \MercadoPago\Payment::find_by_id($request->input('data.id'));
             $paid_amount = $payment->transaction_details->total_paid_amount;
             $mp_id = $payment->id;

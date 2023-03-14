@@ -4,10 +4,9 @@ A Laravel booking management system. This doc attempts to describe what each sec
 
 ## TO DO
 
+Move all calls to `env()` into config files.
+
 MercadoPagoController
-- Create config/mercadopago.php
-- Move notification url to config file
-- Move env function to config file
 - Send emails from webhook()
 
 Create users table in admin panel
@@ -147,19 +146,39 @@ Write cron entry
 
 Update pref->notification_url on MercadoPagoController::create_or_get_preference()
 
+## Development
+
+To start developing, from the root folder run the following to serve the app
+```
+$ php artisan serve
+```
+
+In a separate terminal run
+``` 
+$ npm run dev
+```
+to run the Vite server, which does the Tailwind magic and serves static assets
+
+And lastly, to run the scheduler locally
+```
+$ php artisan schedule:work
+```
+
 ## Built With
 
 * [Laravel 9](https://laravel.com/) - To make it work
 * [Tailwind CSS](https://maven.apache.org/) - To make it look cool
+* [Alpine JS](https://alpinejs.dev/) - For the browser to have something to do
+* [Livewire](https://laravel-livewire.com/) - For reactivity
 
 
 ## Authors
 
-* **Rodrigo Alvarez** - *Initial work* - [portfolio](https://rodrigoalvarez.co.uk)
+* **Rodrigo Alvarez** - *Initial work* - [website](https://rodrigoalvarez.co.uk)
 
 
 ## Acknowledgments
 
 * Hat tip to anyone whose code was used
-* Inspiration
+* Love to the open source community
 * etc
