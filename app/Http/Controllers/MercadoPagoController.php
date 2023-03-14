@@ -101,11 +101,20 @@ class MercadoPagoController extends Controller
                 $merchant_order = \MercadoPago\MerchantOrder::find_by_id($payment->order->id);
                 $booking_id = $merchant_order->external_reference;
 
-                Booking::find($booking_id)->payment()->update([
+                $booking = Booking::find($booking_id);
+                
+                // Update payment status
+                $booking->payment()->update([
                     'mp_id' => $mp_id,
                     'amount' => $paid_amount,
                     'status' => SD::PAYMENT_MP,
                 ]);
+
+                // Removing preference attributes from booking keeps it from being deleted
+                // by scheduled task
+                $booking->pref_id = null;
+                $booking->pref_expiry = null;
+                $booking->save();
 
                 // TO DO
                 // Send emails

@@ -142,7 +142,7 @@
 
   @push('scripts')
     <script>
-      const mp = new MercadoPago('{{ env("MP_PUB_KEY") }}', {
+      const mp = new MercadoPago('{{ config("mercadopago.mp_pub_key") }}', {
         locale: 'es-AR'
       });
     

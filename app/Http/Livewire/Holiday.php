@@ -121,9 +121,9 @@ class Holiday extends Component
             $params2 = explode('/', $b[0]);
 
             $first = Carbon::createFromDate(
-                $params1[2], $params1[1], $params1[0], env('TIMEZONE'));
+                $params1[2], $params1[1], $params1[0], config('app.timezone'));
             $second = Carbon::createFromDate(
-                $params2[2], $params2[1], $params2[0], env('TIMEZONE'));
+                $params2[2], $params2[1], $params2[0], config('app.timezone'));
 
             if($first->lt($second)) return -1;
             if($first->eq($second)) return 0;

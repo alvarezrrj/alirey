@@ -65,14 +65,14 @@ class Slots extends Component
             $params1[0], 
             $params1[1], 
             0, 
-            env('TIMEZONE')
+            config('app.timezone')
         );
         $params2 = explode(':', $this->slot['end']);
         $end = Carbon::createFromTime(
             $params2[0], 
             $params2[1], 
             0, 
-            env('TIMEZONE')
+            config('app.timezone')
         );
 
         if($end->lte($start)) {

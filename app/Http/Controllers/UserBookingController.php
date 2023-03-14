@@ -170,8 +170,10 @@ class UserBookingController extends Controller
 
         // This keeps the booking from checked out twice (BookingPolicy checks
         // payment status to be == PENDING)
-        $booking->payment->status = SD::PAYMENT_MP_AWAIT;
-        $booking->payment->save();
+        if($booking->payment->status == SD::PAYMENT_PENDING) {
+            $booking->payment->status = SD::PAYMENT_MP_AWAIT;
+            $booking->payment->save();
+        }
 
         session()->flash('message', __('Thank you for your booking! Please check your details to make sure they are correct. You will be receiving a copy of this via email.'));
 

@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'America/Argentina/Cordoba',
+    'timezone' => env('TIMEZONE'),
 
     /*
     |--------------------------------------------------------------------------
