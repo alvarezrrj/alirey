@@ -71,5 +71,5 @@ Route::get('/contact', [ContactController::class, 'index'])
 //=== Emaill testing ===
 Route::get('/email_test', function() {
     $booking = Booking::find(34);
-    return (new NewBooking($booking))->toMail($booking->therapist);
+    return (new BookingConfirmation($booking))->toMail($booking->therapist);
 });

@@ -13,6 +13,7 @@
 {{-- Intro Lines --}}
 @foreach ($introLines as $line)
   {{ $line }}
+
 @endforeach
 
 {{-- Action Button --}}
@@ -30,12 +31,14 @@
 
 {{-- Outro Lines --}}
 @foreach ($outroLines as $line)
-{{ $line }}
+  {{ $line }}
+
 @endforeach
 
 {{-- Salutation --}}
 @if (! empty($salutation))
   {{ $salutation }}
+
 @else
 @lang('Regards'),<br>
   {{ config('app.name') }}

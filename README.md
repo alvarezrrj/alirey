@@ -4,15 +4,6 @@ A Laravel booking management system. This doc attempts to describe what each sec
 
 ## TO DO
 
-Changes to commit
-- Notifications created
-- NewBooking event & handler
-- Adde therapist_id to bookings table
-- Add therapist property to Booking model
-
-MercadoPagoController
-- Send emails from webhook()
-
 Create users table in admin panel
 
 Send email reminder 20' before booking (scheduled task)
