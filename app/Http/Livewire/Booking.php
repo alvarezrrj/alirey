@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\MercadoPagoController;
+use App\SD\SD;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use StaticDetails\SD;
 
 class Booking extends Component
 {
@@ -14,13 +15,16 @@ class Booking extends Component
     public $is_admin;
 
     public $booking;
-    public $sd;
     public $paid_ammount;
 
     // Modal triggers
     public $payment_confirmed = false;
     public $cancelation_confirmed = false;
     public $completion_confirmed = false;
+
+    public $alert = [];
+
+    public $response;
 
     public function mount()
     {
@@ -46,7 +50,20 @@ class Booking extends Component
 
     public function refund()
     {
+        $this->authorize('refund', $this->booking);
+    
+        $response = MercadoPagoController::refund($this->booking->payment->mp_id);
 
+        if($response['status'] != 'approved') {
+           $this->alert['error'] = __('There was an error, please try again').' 😶‍🌫️';
+        }
+        else {
+           $this->alert['message'] = __('Payment refunded'). ' 👍';
+
+           $this->booking->payment->status = SD::PAYMENT_REFUNDED;
+           $this->booking->payment->save();
+        }
+        $this->response = $response;
     }
 
     public function cancel()

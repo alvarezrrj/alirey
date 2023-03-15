@@ -107,4 +107,10 @@ class BookingPolicy
             && $booking->payment->status == SD::PAYMENT_PENDING
             && $booking->status != SD::BOOKING_CANCELLED;
     }
+
+    public function refund(User $user, Booking $booking)
+    {
+        return $booking->therapist->is($user) 
+            && $booking->payment->status === SD::PAYMENT_MP;
+    }
 }

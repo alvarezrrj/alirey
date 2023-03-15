@@ -86,7 +86,7 @@
             @if($is_admin)
               <a href="https://api.whatsapp.com/send/?phone={{ $booking->user->code->code }}{{ $booking->user->phone }}&text&type=phone_number&app_absent=1"
                 class="ml-2"
-                title="{{ __('Call on Whatsapp') }}">
+                data-tooltip="{{ __('Call on Whatsapp') }}">
                 <x-primary-button :small="true">
                   <x-antdesign-whats-app-o width="22" height="22"/>
                 </x-primary-button>
@@ -177,16 +177,29 @@
   {{-- Buttons --}}
   <div class="grid sm:grid-cols-3 grid-rows-2 mt-6 gap-x-2 gap-y-4">
 
-    @if ($booking->payment->status == SD::PAYMENT_MP)
+    @if ($booking->payment->status == SD::PAYMENT_MP &&
+         // MP payments can only be refunded within 180 days since aproval
+         $booking->payment->created_at->diffInDays(Carbon\Carbon::now()) < 180)
       <x-danger-button 
-        wire:click="refund">
-        {{ __('Refund') }}
+        x-data=""
+        x-on:click.prevent="$dispatch('open-modal', 'refund-modal')">
+        <span wire:loading.class="hidden" wire:target="refund">
+          {{ __('Refund') }}
+        </span>
+        <span wire:loading wire:target="refund">
+          <x-spinner/>
+        </span>
       </x-danger-button>
     @elseif ($booking->payment->status == SD::PAYMENT_PENDING)
       <x-danger-button 
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'payment-modal')">
-        {{ __('Confirm payment') }}
+        <span wire:loading.class="hidden" wire:target="paid">
+          {{ __('Confirm payment') }}
+        </span>
+        <span wire:loading wire:target="paid">
+          <x-spinner/>
+        </span>
       </x-danger-button>
     @else 
       {{-- placeholder --}}
@@ -197,13 +210,23 @@
       <x-secondary-button 
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'cancelation-modal')">
-        {{ __('Cancel booking') }}
+        <span wire:loading.class="hidden" wire:target="cancel">
+          {{ __('Cancel booking') }}
+        </span>
+        <span wire:loading wire:target="cancel">
+          <x-spinner/>
+        </span>
       </x-secondary-button>
 
       <x-primary-button 
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'completion-modal')">
-        {{ __('Mark as completed') }}
+        <span wire:loading.class="hidden" wire:target="complete">
+          {{ __('Mark as completed') }}
+        </span>
+        <span wire:loading wire:target="complete">
+          <x-spinner/>
+        </span>
       </x-primary-button>
     @endif
 
@@ -221,7 +244,7 @@
           if(value) $dispatch('close');
         })"
         >
-          <h2 class="text-lg">
+          <h2 class="text-lg font-semibold">
               {{ __('Confirm payment') }}
           </h2>
 
@@ -273,7 +296,7 @@
         if(value) $dispatch('close');
       })"
       >
-        <h2 class="text-lg">
+        <h2 class="text-lg font-semibold">
             {{ __('Cancel booking') }}
         </h2>
 
@@ -316,7 +339,7 @@
           if(value) $dispatch('close');
         })"
         >
-          <h2 class="text-lg">
+          <h2 class="text-lg font-semibold">
               {{ __('Complete booking') }}
           </h2>
 
@@ -348,9 +371,52 @@
       </div>
   </x-modal>{{-- End Completion modal --}}
 
+  {{-- Refund modal --}}
+  <x-modal name="refund-modal" focusable>
+      <div class="p-6 text-gray-900 dark:text-gray-100">
+        <h2 class="text-lg font-semibold">
+            {{ __('Refund') }}
+        </h2>
+
+        <p class="mt-6">
+          {{ __('You are about to pay back') }} ${{ $booking->payment->amount }}
+          {{ __('to client') }} {{ $booking->user->firstName }} {{ $booking->user->lastName }}
+        </p>
+        <p>
+          {{ __('Are you sure?') }}
+        </p>
+
+        <div class="mt-6 flex justify-between">
+            <x-secondary-button 
+              type="button"
+              x-on:click="$dispatch('close')">
+                {{ __('Cancel') }}
+            </x-secondary-button>
+
+            <x-primary-button 
+              class="ml-3"
+              x-on:click="$dispatch('close')"
+              wire:click="refund"
+              >
+              {{ __('Confirm') }}
+            </x-primary-button>
+        </div>
+
+      </div>
+  </x-modal>{{-- End Completion modal --}}
+
   @push('libraries')
     <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"></script>
     <script src="{{ Vite::asset('resources/libraries/notif/notif.js') }}"></script>
   @endpush
+
+  {{-- Notify refund result --}}
+  <div 
+    x-data="{ alert: @entangle('alert') }"
+    x-init="$watch('alert', value => {
+      if(value['error']) notif.i(value['error'], false);
+      if(value['message']) notif.i(value['message'], true);
+  })">
+  </div>
 
 </div>

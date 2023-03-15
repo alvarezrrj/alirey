@@ -8,6 +8,7 @@ use App\SD\SD;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Http;
 
 class MercadoPagoController extends Controller
 {
@@ -88,6 +89,19 @@ class MercadoPagoController extends Controller
         return $pref->id;
     }
 
+    static function refund(int $id) : array
+    {
+        $response = Http::withHeaders([
+            'X-Idempotency-Key' => uniqid('', true),
+            'Authorization' => 'Bearer '.config('mercadopago.mp_token'),
+            'Content-Type' => 'application/json'
+        ])->post('https://api.mercadopago.com/v1/payments/'.$id.'/refunds', [
+            'amount' => null
+        ]);
+
+        return $response->json();
+    }
+
     public function webhook(Request $request) 
     {
         if($request->input('type') == 'payment')
@@ -119,7 +133,7 @@ class MercadoPagoController extends Controller
 
                 // Now that payment is confirmed, dispatch NewBookingEvent. 
                 // Sends emails.
-                NewBookingEvent::dispatch($booking);
+                //NewBookingEvent::dispatch($booking);
             }
         }
         return response('', 200);
