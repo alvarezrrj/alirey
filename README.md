@@ -19,9 +19,6 @@ config
 bookings.show
 - Implement 'refund'
 
-bookings.destroy
-- Test it
-
 BookingController->edit()
 - Find another way to see if day is full inside while loop to avoid so many round trips to DB
 

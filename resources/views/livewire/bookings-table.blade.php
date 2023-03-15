@@ -148,7 +148,10 @@
                   {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-danger-button class="ml-3" wire:click.prevent="delete({{ $booking->id }})">
+                <x-danger-button 
+                  class="ml-3" 
+                  x-on:click="$dispatch('close')"
+                  wire:click.prevent="delete({{ $booking->id }})">
                   {{ __('Delete') }}
                 </x-danger-button>
 
