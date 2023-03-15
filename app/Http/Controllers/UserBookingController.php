@@ -72,11 +72,9 @@ class UserBookingController extends Controller
     {
         $this->authorize('checkout', $booking);
 
-        $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
-
         // Create MP preferene
         $preference_id = MercadoPagoController::create_or_get_preference(
-            $booking, $admin->config->price
+            $booking, $booking->therapist->config->price
         );
 
         // MercadoPagoController returns false if a preference is expired 
@@ -90,7 +88,7 @@ class UserBookingController extends Controller
 
         return view('bookings.checkout', [
             'booking' => $booking,
-            'price' => $admin->config->price,
+            'price' => $booking->therapist->config->price,
             'preference_id' => $preference_id,
             'expires_in' => $expires_in
         ]);

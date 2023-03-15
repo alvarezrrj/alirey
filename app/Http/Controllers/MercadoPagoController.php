@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewBookingEvent;
 use App\Models\Booking;
 use App\SD\SD;
 use Carbon\Carbon;
@@ -116,8 +117,9 @@ class MercadoPagoController extends Controller
                 $booking->pref_expiry = null;
                 $booking->save();
 
-                // TO DO
-                // Send emails
+                // Now that payment is confirmed, dispatch NewBookingEvent. 
+                // Sends emails.
+                NewBookingEvent::dispatch($booking);
             }
         }
         return response('', 200);

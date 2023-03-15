@@ -616,6 +616,7 @@ class ComposerStaticInit34860bf8f76b4086a24ee60363f23369
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\Events\\NewBookingEvent' => __DIR__ . '/../..' . '/app/Events/NewBookingEvent.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Forms\\Components\\CodeSelect' => __DIR__ . '/../..' . '/app/Forms/Components/CodeSelect.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
@@ -662,6 +663,7 @@ class ComposerStaticInit34860bf8f76b4086a24ee60363f23369
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Http\\Requests\\UpdateBookingRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateBookingRequest.php',
         'App\\Http\\Requests\\UserCreateBookingRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UserCreateBookingRequest.php',
+        'App\\Listeners\\NewBookingHandler' => __DIR__ . '/../..' . '/app/Listeners/NewBookingHandler.php',
         'App\\Models\\Booking' => __DIR__ . '/../..' . '/app/Models/Booking.php',
         'App\\Models\\Code' => __DIR__ . '/../..' . '/app/Models/Code.php',
         'App\\Models\\Config' => __DIR__ . '/../..' . '/app/Models/Config.php',
@@ -670,6 +672,8 @@ class ComposerStaticInit34860bf8f76b4086a24ee60363f23369
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\Slot' => __DIR__ . '/../..' . '/app/Models/Slot.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Notifications\\BookingConfirmation' => __DIR__ . '/../..' . '/app/Notifications/BookingConfirmation.php',
+        'App\\Notifications\\NewBooking' => __DIR__ . '/../..' . '/app/Notifications/NewBooking.php',
         'App\\Policies\\BookingPolicy' => __DIR__ . '/../..' . '/app/Policies/BookingPolicy.php',
         'App\\Policies\\HolidayPolicy' => __DIR__ . '/../..' . '/app/Policies/HolidayPolicy.php',
         'App\\Policies\\SlotPolicy' => __DIR__ . '/../..' . '/app/Policies/SlotPolicy.php',

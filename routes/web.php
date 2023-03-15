@@ -7,6 +7,9 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserBookingController;
+use App\Models\Booking;
+use App\Notifications\BookingConfirmation;
+use App\Notifications\NewBooking;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,3 +67,9 @@ Route::get('hola', function() { return 'hola';})->name('hola');
 //=== Contact ===
 Route::get('/contact', [ContactController::class, 'index'])
     ->name('contact');
+
+//=== Emaill testing ===
+Route::get('/email_test', function() {
+    $booking = Booking::find(34);
+    return (new NewBooking($booking))->toMail($booking->therapist);
+});

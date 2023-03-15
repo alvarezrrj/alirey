@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
+    'App\\Events\\NewBookingEvent' => $baseDir . '/app/Events/NewBookingEvent.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Forms\\Components\\CodeSelect' => $baseDir . '/app/Forms/Components/CodeSelect.php',
     'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => $baseDir . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
@@ -53,6 +54,7 @@ return array(
     'App\\Http\\Requests\\ProfileUpdateRequest' => $baseDir . '/app/Http/Requests/ProfileUpdateRequest.php',
     'App\\Http\\Requests\\UpdateBookingRequest' => $baseDir . '/app/Http/Requests/UpdateBookingRequest.php',
     'App\\Http\\Requests\\UserCreateBookingRequest' => $baseDir . '/app/Http/Requests/UserCreateBookingRequest.php',
+    'App\\Listeners\\NewBookingHandler' => $baseDir . '/app/Listeners/NewBookingHandler.php',
     'App\\Models\\Booking' => $baseDir . '/app/Models/Booking.php',
     'App\\Models\\Code' => $baseDir . '/app/Models/Code.php',
     'App\\Models\\Config' => $baseDir . '/app/Models/Config.php',
@@ -61,6 +63,8 @@ return array(
     'App\\Models\\Role' => $baseDir . '/app/Models/Role.php',
     'App\\Models\\Slot' => $baseDir . '/app/Models/Slot.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
+    'App\\Notifications\\BookingConfirmation' => $baseDir . '/app/Notifications/BookingConfirmation.php',
+    'App\\Notifications\\NewBooking' => $baseDir . '/app/Notifications/NewBooking.php',
     'App\\Policies\\BookingPolicy' => $baseDir . '/app/Policies/BookingPolicy.php',
     'App\\Policies\\HolidayPolicy' => $baseDir . '/app/Policies/HolidayPolicy.php',
     'App\\Policies\\SlotPolicy' => $baseDir . '/app/Policies/SlotPolicy.php',

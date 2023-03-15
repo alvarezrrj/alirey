@@ -4,7 +4,11 @@ A Laravel booking management system. This doc attempts to describe what each sec
 
 ## TO DO
 
-Move all calls to `env()` into config files.
+Changes to commit
+- Notifications created
+- NewBooking event & handler
+- Adde therapist_id to bookings table
+- Add therapist property to Booking model
 
 MercadoPagoController
 - Send emails from webhook()
@@ -71,19 +75,11 @@ Displays booking details and allows admin to mark booking as 'complete', refund,
 
 This is the booking creation workflow for the different circumstances
 
-|User status          | User role | Display form                   | Action | Outcome                              |             |               |               |
-| ---                 | ---       | ---                            | ---    | ---                                  |---          |---            |---            |
-|A2:User is logged in | client    | C2: Booking type, date and slot|continue|Validate, check overlap, store booking|             |               |               |
-|                     | admin     | C3: User details + C2          |continue|Validate, check overlap               |user exists  | store booking |               |
-|                     |           |                                |        |                                      |user !exists | create user   | store booking |
-|User ! logged in     |           |'log in', 'sing up' or guest    |log in  |Go to A2                              |             |               |               |
-|                     |           |                                |sign up |Go to A2                              |             |               |               |
-|                     |           |                                |guest   |Go to C3                              |             |               |               |
+![Booking creation flow](./booking_diagram.svg "Booking diagram")
 
 Note: CreateBookingRequest is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario. Other places where this happens:
 - BookingController::getData() 
 - UserCreateBookingRequest::rules()
-- UserBookingController::checkout()
 
 When admin creates a new booking for a non existing user, an acount is opened with a random password. If user desires to access their account, they can be sent a password reset email from users table on admin panel.
 
