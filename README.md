@@ -4,9 +4,7 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Use databse transaction on booking.confirmation to avoid webhook running at same time and messing up
-
-Send email in background
+Check scheduled job logging stuff (It's not currently doing anything)
 
 Use fillament tables
 
@@ -14,15 +12,13 @@ Create users table in admin panel and allow admin to edit users
 
 Create big calendar in admin dashboard
 
-Send email reminder 20' before booking (scheduled task)
-
 Error reporting form
 
 update.blade.php
 - Delete it, view is not being used anymore
 
 config
-- Dissallow deleting slots with pending bookings. Offer to create dummy bookings on this slot forever
+- Dissallow deleting slots with pending bookings. Offer to create dummy bookings on this slot forever. Or delete the relationship between booking and slot and just give bookings a start time
 
 BookingController->edit()
 - Find another way to see if day is full inside while loop to avoid so many round trips to DB

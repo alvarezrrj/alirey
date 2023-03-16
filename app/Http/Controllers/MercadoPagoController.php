@@ -8,6 +8,7 @@ use App\SD\SD;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class MercadoPagoController extends Controller
@@ -119,11 +120,13 @@ class MercadoPagoController extends Controller
                 $booking = Booking::find($booking_id);
                 
                 // Update payment status
-                $booking->payment()->update([
-                    'mp_id' => $mp_id,
-                    'amount' => $paid_amount,
-                    'status' => SD::PAYMENT_MP,
-                ]);
+                DB::transaction(function () use ($booking, $mp_id, $paid_amount) {
+                    $booking->payment()->update([
+                        'mp_id' => $mp_id,
+                        'amount' => $paid_amount,
+                        'status' => SD::PAYMENT_MP,
+                    ]);
+                });
 
                 // Removing preference attributes from booking keeps it from being deleted
                 // by scheduled task
