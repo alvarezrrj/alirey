@@ -85,13 +85,12 @@
             {{ $booking->virtual ? __('Virtual') : __('In-person') }}
           </div>
           @if($is_admin)
-          <div class="col-span-2 sm:col-span-1">
+          <div class="col-span-2 sm:col-span-1 text-ellipsis overflow-hidden">
             <span class="text-sm text-gray-600 dark:text-gray-400 sm:hidden">
               {{ __('Payment') }}
             </span>
-            {{ __($booking->payment->status == SD::PAYMENT_MP
-                ? 'MP'
-                : $booking->payment->status) }}
+            
+            {{ __($booking->payment->status) }}
           </div>
           @endif
           <div class="col-span-2 sm:col-span-1">

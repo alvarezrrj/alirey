@@ -4,7 +4,9 @@ A Laravel booking management system. This doc attempts to describe what each sec
 
 ## TO DO
 
-Create users table in admin panel
+Create users table in admin panel and allow admin to edit users
+
+Create big calendar in admin dashboard
 
 Send email reminder 20' before booking (scheduled task)
 
@@ -15,9 +17,6 @@ update.blade.php
 
 config
 - Dissallow deleting slots with pending bookings. Offer to create dummy bookings on this slot forever
-
-bookings.show
-- Implement 'refund'
 
 BookingController->edit()
 - Find another way to see if day is full inside while loop to avoid so many round trips to DB
