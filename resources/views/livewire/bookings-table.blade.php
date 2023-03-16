@@ -2,24 +2,55 @@
 
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
   <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
-    <div class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x overflow-y-scroll max-w-[calc(100vw-2rem)]"
-      x-data="{filter: @entangle('filter')}">
-      <button 
-        class="table-select" 
-        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40' : !filter }" 
-        wire:click="filter(null)">
-        {{ __('All') }}
-    </button>
 
-      @foreach($filters as $filt)
+    <div class="text-gray-900 dark:text-gray-100">
+      {{ __('Status') }}
+      <span wire:loading wire:target="status_filter">
+        <x-spinner/>
+      </span>
+    </div>
+    <div class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x overflow-y-scroll max-w-[calc(100vw-2rem)]"
+      x-data="{status: @entangle('status_filter')}">
       <button 
         class="table-select" 
-        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40': filter == '{{ $filt }}' }" 
-        wire:click="filter('{{ $filt }}')">
-        {{ __($filt) }}
+        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40' : !status }" 
+        wire:click="status_filter(null)">
+        {{ __('All') }}
+      </button>
+
+      @foreach($statuses as $status)
+      <button 
+        class="table-select" 
+        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40': status == '{{ $status }}' }" 
+        wire:click="status_filter('{{ $status }}')">
+        {{ __($status) }}
       </button>
       @endforeach
+    </div>
 
+    <div class="text-gray-900 dark:text-gray-100 mt-3">
+      {{ __('Date') }}
+      <span wire:loading wire:target="date_filter">
+        <x-spinner/>
+      </span>
+    </div>
+    <div class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x overflow-y-scroll max-w-[calc(100vw-2rem)]"
+      x-data="{date: @entangle('date_filter')}">
+      <button 
+        class="table-select" 
+        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40' : !date }" 
+        wire:click="date_filter(null)">
+        {{ __('All') }}
+      </button>
+
+      @foreach($dates as $date => $value) 
+      <button 
+        class="table-select" 
+        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40': date == '{{ $date }}' }" 
+        wire:click="date_filter('{{ $date }}')">
+        {{ __($date) }}
+      </button>
+      @endforeach
     </div>
 
     <div class="lg:pl-8 space-y-2 mt-8">
@@ -93,7 +124,7 @@
             {{ __($booking->payment->status) }}
           </div>
           @endif
-          <div class="col-span-2 sm:col-span-1">
+          <div class="col-span-2 sm:col-span-1 text-ellipsis overflow-hidden">
             @if($is_admin)
             <span class="text-sm text-gray-600 dark:text-gray-400 sm:hidden">
               {{ __('Status') }}

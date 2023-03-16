@@ -1,6 +1,6 @@
 # Alirey
 
-A Laravel booking management system. This doc attempts to describe what each section does and how it works.
+A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Laravel & Livewire). This doc attempts to describe what each section does and how it works.
 
 ## TO DO
 
@@ -21,6 +21,15 @@ config
 BookingController->edit()
 - Find another way to see if day is full inside while loop to avoid so many round trips to DB
 
+### For a multi-therapist scenario
+
+Modify App\Http\Livewire\Booking to only show bookings where therapist_id == Auth::user()->id when Auth::user()->isTherapist
+
+Add therapist_id to booking form
+
+Modify BookingPolicy to only allow therapist to edit/delete their own bookings
+
+Allow therapist to access only their own config
 
 ## Config (/config)
 
