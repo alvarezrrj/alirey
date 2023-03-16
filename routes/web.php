@@ -9,6 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserBookingController;
 use App\Models\Booking;
 use App\Notifications\BookingConfirmation;
+use App\Notifications\BookingReminder;
 use App\Notifications\NewBooking;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +71,6 @@ Route::get('/contact', [ContactController::class, 'index'])
 
 //=== Emaill testing ===
 Route::get('/email_test', function() {
-    $booking = Booking::find(34);
-    return (new BookingConfirmation($booking))->toMail($booking->therapist);
+    $booking = Booking::find(38);
+    return (new BookingReminder($booking))->toMail($booking->user);
 });

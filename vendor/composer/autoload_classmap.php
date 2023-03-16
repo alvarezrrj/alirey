@@ -64,6 +64,7 @@ return array(
     'App\\Models\\Slot' => $baseDir . '/app/Models/Slot.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Notifications\\BookingConfirmation' => $baseDir . '/app/Notifications/BookingConfirmation.php',
+    'App\\Notifications\\BookingReminder' => $baseDir . '/app/Notifications/BookingReminder.php',
     'App\\Notifications\\NewBooking' => $baseDir . '/app/Notifications/NewBooking.php',
     'App\\Policies\\BookingPolicy' => $baseDir . '/app/Policies/BookingPolicy.php',
     'App\\Policies\\HolidayPolicy' => $baseDir . '/app/Policies/HolidayPolicy.php',

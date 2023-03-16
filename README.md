@@ -4,6 +4,12 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Use databse transaction on booking.confirmation to avoid webhook running at same time and messing up
+
+Send email in background
+
+Use fillament tables
+
 Create users table in admin panel and allow admin to edit users
 
 Create big calendar in admin dashboard
@@ -23,13 +29,10 @@ BookingController->edit()
 
 ### For a multi-therapist scenario
 
-Modify App\Http\Livewire\Booking to only show bookings where therapist_id == Auth::user()->id when Auth::user()->isTherapist
-
-Add therapist_id to booking form
-
-Modify BookingPolicy to only allow therapist to edit/delete their own bookings
-
-Allow therapist to access only their own config
++ Modify App\Http\Livewire\Booking to only show bookings where therapist_id == Auth::user()->id when Auth::user()->isTherapist
++ Add therapist_id to booking form
++ Modify BookingPolicy to only allow therapist to edit/delete their own bookings
++ Allow therapist to access only their own config
 
 ## Config (/config)
 

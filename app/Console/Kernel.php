@@ -21,7 +21,13 @@ class Kernel extends ConsoleKernel
             UserBookingController::purge_unpaid_bookings();
         })
         ->everyMinute()
-        ->appendOutputTo(base_path('logs/scheduler.log'));
+        ->appendOutputTo(base_path('logs/booking_purge_sch.log'));
+
+        $schedule->call(function() {
+            UserBookingController::send_reminder();
+        })
+        ->everyMinute()
+        ->appendOutputTo(base_path('logs/booking_reminder_sch.log'));
     }
 
     /**

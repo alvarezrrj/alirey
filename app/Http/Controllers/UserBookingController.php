@@ -8,9 +8,12 @@ use App\Models\Code;
 use App\Models\Payment;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\BookingReminder;
 use App\SD\SD;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use LengthException;
 
 class UserBookingController extends Controller
 {
@@ -199,5 +202,26 @@ class UserBookingController extends Controller
         // moment it gets paid for
         Booking::where('pref_expiry', '<', Carbon::now()->subMinute())
             ->delete();
+    }
+
+    static function send_reminder()
+    {
+        // All bookings happening within 20'
+        $bookings = Booking::whereHas('slot', function(Builder $query) {
+            $query->whereTime('start', '>=', Carbon::now())
+                  ->whereTime('start', '<=', Carbon::now()->addMinutes(20));
+        })
+        ->whereDate('day', Carbon::now())
+        ->where('reminder_sent', false)
+        ->where('status', SD::BOOKING_PENDING)
+        ->get();
+
+        if(!$bookings.count()) echo 'No bookings match';
+
+        foreach($bookings as $booking) {
+            $booking->user->notify(new BookingReminder($booking));
+            $booking->reminder_sent = true;
+            $booking->save();
+        }
     }
 }
