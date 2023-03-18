@@ -4,6 +4,10 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Livewire calendar 
++ dark mode
++ mobile version
+
 Check scheduled job logging stuff (It's not currently doing anything)
 
 Use fillament tables
@@ -117,6 +121,9 @@ Displays a form for updating/inserting bookings that have a state of BOOKING_PEN
 
 
 ## Deployment TO DO
+
+Uncomment line 139 on MercadoPagoController
+`NewBookingEvent::dispatch($booking);`
 
 Cache views with 
 

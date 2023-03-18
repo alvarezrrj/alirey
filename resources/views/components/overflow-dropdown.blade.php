@@ -1,4 +1,12 @@
-@props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-2 bg-white dark:bg-gray-700'])
+{{-- This dropdown doesn't have a relatively positioned parent, it needs to be
+given one. This is useful when the dropdown is inside an overflow-y-scroll 
+element, which makes the dropdown not show past the horizontal edges of the
+scrolling element. See https://css-tricks.com/popping-hidden-overflow/ --}}
+@props([
+  'align' => 'right', 
+  'width' => '48', 
+  'contentClasses' => 'py-2 bg-white dark:bg-gray-700',
+  'triggerClasses' => null])
 
 @php
 switch ($align) {
@@ -15,8 +23,8 @@ switch ($align) {
 }
 @endphp
 
-<div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
-    <div @click="open = ! open">
+<div class="" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+    <div @click="open = ! open" class="{{ $triggerClasses}}">
         {{ $trigger }}
     </div>
 

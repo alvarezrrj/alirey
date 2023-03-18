@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2221ab727c32f520a89312a1bd21e83",
+    "content-hash": "2d6c54bc56009252180e4b833a7db64c",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -3829,6 +3829,67 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.11.12"
             },
             "time": "2023-01-29T21:24:40+00:00"
+        },
+        {
+            "name": "rabol/livewire-calendar",
+            "version": "2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rabol/livewire-calendar.git",
+                "reference": "f535f8d544958edbf9240929470d259fd068240b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rabol/livewire-calendar/zipball/f535f8d544958edbf9240929470d259fd068240b",
+                "reference": "f535f8d544958edbf9240929470d259fd068240b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
+                "livewire/livewire": "^2.0",
+                "php": "^7.2|^8.0|^8.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^5.0|^6.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Rabol\\LivewireCalendar\\LivewireCalendarServiceProvider"
+                    ],
+                    "aliases": {
+                        "LivewireCalendar": "Rabol\\LivewireCalendar\\LivewireCalendarFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Rabol\\LivewireCalendar\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrés Santibáñez",
+                    "email": "santibanez.andres@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel Livewire calendar component",
+            "homepage": "https://github.com/asantibanez/livewire-calendar",
+            "keywords": [
+                "asantibanez",
+                "livewire-calendar"
+            ],
+            "support": {
+                "source": "https://github.com/rabol/livewire-calendar/tree/2.1.2"
+            },
+            "time": "2022-11-17T15:11:57+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '2d2a7b597e457c4b2e85142a1f713c0729e39cb1',
+        'reference' => 'fb31e8ad980a27868d01975a930286ccbf463f19',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -496,7 +496,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '2d2a7b597e457c4b2e85142a1f713c0729e39cb1',
+            'reference' => 'fb31e8ad980a27868d01975a930286ccbf463f19',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
@@ -906,6 +906,15 @@
             'install_path' => __DIR__ . '/../psy/psysh',
             'aliases' => array(),
             'reference' => '52cb7c47d403c31c0adc9bf7710fc355f93c20f7',
+            'dev_requirement' => false,
+        ),
+        'rabol/livewire-calendar' => array(
+            'pretty_version' => '2.1.2',
+            'version' => '2.1.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../rabol/livewire-calendar',
+            'aliases' => array(),
+            'reference' => 'f535f8d544958edbf9240929470d259fd068240b',
             'dev_requirement' => false,
         ),
         'ralouphie/getallheaders' => array(

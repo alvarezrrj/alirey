@@ -403,7 +403,7 @@
         </div>
 
       </div>
-  </x-modal>{{-- End Completion modal --}}
+  </x-modal>{{-- End Refund modal --}}
 
   @push('libraries')
     <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"></script>
