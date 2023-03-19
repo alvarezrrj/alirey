@@ -11,9 +11,12 @@ use Illuminate\Database\Eloquent\Builder;
 
 class AppointmentsCalendar extends LivewireCalendar
 {
+    public Carbon $today;
 
-    public Booking $modal_data;
-    public $open_modal = false;
+    public function afterMount($extras = [])
+    {
+        $this->today = Carbon::now()->locale($this->locale);   
+    }
 
     public function events(): Collection
     {

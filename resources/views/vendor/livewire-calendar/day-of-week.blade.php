@@ -2,11 +2,11 @@
 >
 
     <p class="text-sm hidden md:block font-semibold dark:font-bold">
-        {{ $day->format('l') }}
+        {{ $day->dayName }}
     </p>
 
     <p class="text-sm md:hidden font-semibold">
-        {{ Str::upper(Str::limit($day->format('l'), 1, '')) }}
+        {{ Str::upper(Str::limit($day->dayName, 1, '')) }}
     </p>
 
 </div>

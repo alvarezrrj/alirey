@@ -13,8 +13,8 @@
     blade renders as a whitespace for some reason I don't yet know how to 
     bypass
   --}}<span 
-  class="h-7 py-1 px-2 text-sm text-brown border border-brown rounded-md ">
-    {{ Carbon\Carbon::now()->format('j F')}}
+  class="min-w-[10em] h-7 py-1 px-2 text-sm text-brown border border-brown rounded-md flex items-center justify-center">
+    {{ $startsAt->monthName.' '.$startsAt->format('Y') }}
   </span>
 
   <button class="w-11 h-7 inline-flex items-center justify-center  border
@@ -28,7 +28,14 @@
   </button>
 
   <span 
-  class="inline-block text-center min-w-[10em] h-7 py-1 px-2 text-sm border border-gray-500 text-gray-500 rounded-md ">
-    {{ $startsAt->format('F Y') }}
+  class="text-center justify-center h-7 py-1 px-2 text-sm border border-gray-500 text-gray-500 rounded-md flex items-center">
+    {{ $today->format('j').' '.$today->monthName }}
+  </span>
+
+  <span 
+    wire:loading 
+    class="flex items-center h-7 justify-center" 
+    wire:loading.class="!flex">
+    <x-spinner />
   </span>
 </div>
