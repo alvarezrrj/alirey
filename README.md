@@ -4,13 +4,10 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Check dashboard text in non therapist user not translating
-
-Ensure dashboard grid also looks good for non-therapist users
-
 Livewire calendar 
 + Navigation
 + Clean up unused event click stuff
++ Translate carbon 
 
 Check scheduled job logging stuff (It's not currently doing anything)
 

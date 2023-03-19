@@ -20,13 +20,11 @@
 
             @if(! $is_admin)
             <p class="mb-6">
-              {{ __("Here are your next session's details, make sure your own
-              details are correct so we have no trouble getting in touch with
-              you. If you need to make any changes, you can") }}
+              {{ __("Here are your next session's details, make sure your own details are correct so we have no trouble getting in touch with you. If you need to make any changes, you can") }}
               <a 
                 class="text-brown underline hover:text-orange"
                 href="{{ route('contact') }}"> 
-              {{ __("contact us")}}. 
+              {{ __("contact us") }}. 
               </a>
             </p>
             @endif
@@ -35,7 +33,7 @@
           @if(!$booking && !$is_admin)
 
             <p class="mt-6">
-              {{ __('There\'s nothing over here')}}
+              {{ __('There\'s nothing over here') }}
               <x-primary-button class="mt-6">
                 {{ __('Book yourself a slot') }}
               </x-primary-button>
@@ -62,9 +60,11 @@
             <livewire:appointments-calendar
               week-starts-at="1"
               initialLocale="{{ config('app.locale') }}"
+              before-calendar-view="vendor/livewire-calendar/before"
               :drag-and-drop-enabled="false"
               :event-click-enabled="false"
-              :day-click-enabled="false"/>
+              :day-click-enabled="false"
+              :locale="config('app.locale')"/>
           </div>
         @endif
 
