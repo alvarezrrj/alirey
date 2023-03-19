@@ -11,8 +11,11 @@
           ||! $is_admin)
       <a href="{{ route('bookings.edit', $booking) }}">
         <x-primary-button class="w-full sm:w-auto">
-          <x-antdesign-edit-o width="18" height="18"/>&nbsp;
+          <x-antdesign-edit-o width="18" height="18"/>
+          &nbsp;
+          <span>
           {{ __('Edit') }}
+          </span>
         </x-primary-button>
       </a>
     @endunless
