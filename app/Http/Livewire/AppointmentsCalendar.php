@@ -17,8 +17,12 @@ class AppointmentsCalendar extends LivewireCalendar
 
     public function events(): Collection
     {
-        return Booking::join('slots', 'slots.id', '=', 'bookings.slot_id')->orderBy('slots.start')->select('bookings.*')->get()
-
+        return Booking::whereDate('day', '>', $this->gridStartsAt)
+            ->whereDate('day', '<', $this->gridEndsAt)
+            ->join('slots', 'slots.id', '=', 'bookings.slot_id')
+            ->orderBy('slots.start')
+            ->select('bookings.*')
+            ->get()
             ->map(function (Booking $booking) {
             return [
                 'id' => $booking->id,
@@ -27,27 +31,5 @@ class AppointmentsCalendar extends LivewireCalendar
                 'date' => $booking->day
             ];
         });
-        /*
-        return collect([
-            [
-                'id' => 1,
-                'title' => 'Breakfast',
-                'description' => 'Pancakes! 🥞',
-                'date' => Carbon::today(),
-            ],
-            [
-                'id' => 2,
-                'title' => 'Meeting with Pamela',
-                'description' => 'Work stuff',
-                'date' => Carbon::tomorrow(),
-            ],
-        ]);
-        */
-    }
-
-    public function onEventClick($id)
-    {
-        $this->modal_data = Booking::find($id);
-        $this->open_modal = !$this->open_modal;
     }
 }

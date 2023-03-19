@@ -5,8 +5,6 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 ## TO DO
 
 Livewire calendar 
-+ Navigation
-+ Clean up unused event click stuff
 + Translate carbon 
 
 Check scheduled job logging stuff (It's not currently doing anything)
