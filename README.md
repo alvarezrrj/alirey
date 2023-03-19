@@ -4,10 +4,13 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Check dashboard text in non therapist user not translating
+
+Ensure dashboard grid also looks good for non-therapist users
 
 Livewire calendar 
-+ dark mode
-+ mobile version
++ Navigation
++ Clean up unused event click stuff
 
 Check scheduled job logging stuff (It's not currently doing anything)
 
@@ -16,6 +19,8 @@ Use filament tables
 Create users table in admin panel and allow admin to edit users
 
 Error reporting form
+
+Contact form (route('contact'))
 
 update.blade.php
 - Delete it, view is not being used anymore
@@ -26,6 +31,13 @@ config
 
 BookingController->edit()
 - Find another way to see if day is full inside while loop to avoid so many round trips to DB
+
+### Future releases
+
++ Color calendar events according to booking/payment status
++ Support for multi day events (holidays)
++ Display holidays on calendar
++ Support for booking drag and drop on calendar
 
 ### For a multi-therapist scenario
 

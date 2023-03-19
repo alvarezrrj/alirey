@@ -9,9 +9,10 @@
     <x-alert-message key="message" />
 
     <div class="py-12 space-y-6 xl:space-y-0">
-      <div class="grid grid-cols-12 gap-8 mx-auto sm:px-6 lg:px-8 space-y-6 xl:space-y-0">
+      <div class="{{ $is_admin ? '' : 'max-w-7xl mx-auto '  }} grid grid-cols-12 gap-8 sm:px-6 lg:px-8 space-y-6 xl:space-y-0">
 
-        <div class="col-span-12  xl:col-span-5 2xl:col-span-4 p-4 sm:p-8 text-gray-900 dark:text-gray-100 bg-white
+        <div class="col-span-12 xl:col-span-5 {{ $is_admin ? '2xl:col-span-4' :
+        '' }} p-4 sm:p-8 text-gray-900 dark:text-gray-100 bg-white
         dark:bg-gray-800 shadow sm:rounded-lg ">
         
           <div class="max-w-2xl">
@@ -56,16 +57,16 @@
           
         </div>
 
-        <div class="col-span-12  xl:col-span-7 2xl:col-span-8 h-full"
-          @if($is_admin)
+        @if($is_admin)
+          <div class="col-span-12  xl:col-span-7 2xl:col-span-8 h-full">
             <livewire:appointments-calendar
               week-starts-at="1"
               initialLocale="{{ config('app.locale') }}"
               :drag-and-drop-enabled="false"
               :event-click-enabled="false"
               :day-click-enabled="false"/>
-          @endif
-        </div>
+          </div>
+        @endif
 
       </div>
     </div>
