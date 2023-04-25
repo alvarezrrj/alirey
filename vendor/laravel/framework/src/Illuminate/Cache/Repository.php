@@ -394,7 +394,9 @@ class Repository implements ArrayAccess, CacheContract
             return $value;
         }
 
-        $this->put($key, $value = $callback(), value($ttl));
+        $value = $callback();
+
+        $this->put($key, $value, value($ttl, $value));
 
         return $value;
     }
@@ -583,6 +585,19 @@ class Repository implements ArrayAccess, CacheContract
     public function getStore()
     {
         return $this->store;
+    }
+
+    /**
+     * Set the cache store implementation.
+     *
+     * @param  \Illuminate\Contracts\Cache\Store  $store
+     * @return static
+     */
+    public function setStore($store)
+    {
+        $this->store = $store;
+
+        return $this;
     }
 
     /**

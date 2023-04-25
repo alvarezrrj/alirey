@@ -45,7 +45,7 @@
       <tr x-data="">
         <th class="text-left p-2 ">
           {{ __('Email') }}<br>
-          <small 
+          <small
             class="text-gray-500 dark:text-gray-500 font-normal"
             x-show="@js($is_admin)" >
             {{ __('Tap to message') }}
@@ -61,25 +61,25 @@
       <tr x-data="">
         <th class="text-left p-2 ">
           {{ __('Phone') }}<br>
-            <small 
+            <small
               class="text-gray-500 dark:text-gray-500 font-normal"
               x-if="'clipboard' in navigator"
-              x-ref="tap" 
-              x-show="@js($is_admin)" 
+              x-ref="tap"
+              x-show="@js($is_admin)"
               >
               {{ __('Tap to copy') }}
             </small>
         </th>
         <td class="text-right p-2">
           <div class="flex items-center justify-end h-full">
-            <span 
-              x-init="$refs.tap ? $el.style.cursor = 'pointer' : ''" 
+            <span
+              x-init="$refs.tap ? $el.style.cursor = 'pointer' : ''"
               x-ref="number"
               x-on:click="
                 navigator.clipboard?.writeText($el.innerText)
                 .then(notif.i(
-                    '{{ __('Copied') }}', 
-                    true, 
+                    '{{ __('Copied') }}',
+                    true,
                     3500)
                 )
               ">
@@ -124,7 +124,7 @@
           {{ __('Start time') }}
         </th>
         <td class="text-right p-2 ">
-          {{ $booking->slot->start->format('h:i') }}
+          {{ $booking->slot->start->format('H:i') }}
         </td>
       </tr>
       @if(! $is_admin)
@@ -183,7 +183,7 @@
     @if ($booking->payment->status == SD::PAYMENT_MP &&
          // MP payments can only be refunded within 180 days since aproval
          $booking->payment->created_at->diffInDays(Carbon\Carbon::now()) < 180)
-      <x-danger-button 
+      <x-danger-button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'refund-modal')">
         <span wire:loading.class="hidden" wire:target="refund">
@@ -194,7 +194,7 @@
         </span>
       </x-danger-button>
     @elseif ($booking->payment->status == SD::PAYMENT_PENDING)
-      <x-danger-button 
+      <x-danger-button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'payment-modal')">
         <span wire:loading.class="hidden" wire:target="paid">
@@ -204,13 +204,13 @@
           <x-spinner/>
         </span>
       </x-danger-button>
-    @else 
+    @else
       {{-- placeholder --}}
       <div></div>
     @endif
 
     @if($booking->status === SD::BOOKING_PENDING)
-      <x-secondary-button 
+      <x-secondary-button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'cancelation-modal')">
         <span wire:loading.class="hidden" wire:target="cancel">
@@ -221,7 +221,7 @@
         </span>
       </x-secondary-button>
 
-      <x-primary-button 
+      <x-primary-button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'completion-modal')">
         <span wire:loading.class="hidden" wire:target="complete">
@@ -238,7 +238,7 @@
 
   {{-- Payment confirmation modal --}}
   <x-modal name="payment-modal" focusable>
-      <div 
+      <div
         class="p-6 text-gray-900 dark:text-gray-100"
         x-data="{
           payment_confirmed: @entangle('payment_confirmed')
@@ -253,30 +253,30 @@
 
           <form wire:submit.prevent="paid">
 
-            <x-input-label 
-              class="mt-6" 
-              for="ammount" 
+            <x-input-label
+              class="mt-6"
+              for="ammount"
               :value="__('Paid ammount')" />
             <div class="mt-2 w-full grid grid-cols-12 items-center">
               <span class="col-span-1 text-center"> $ </span>
-              <x-text-input 
+              <x-text-input
                 class="col-span-11"
                 id="ammount"
                 inputmode="numeric"
                 required
-                type=number 
+                type=number
                 wire:model="paid_ammount"
                 />
             </div>
 
             <div class="mt-6 flex justify-between">
-                <x-secondary-button 
+                <x-secondary-button
                   type="button"
                   x-on:click="$dispatch('close')">
                     {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-danger-button 
+                <x-danger-button
                   class="ml-3"
                   type="submit"
                   >
@@ -290,7 +290,7 @@
 
   {{-- Cancelation modal --}}
   <x-modal name="cancelation-modal" focusable>
-    <div 
+    <div
       class="p-6 text-gray-900 dark:text-gray-100"
       x-data="{
         cancelation_confirmed: @entangle('cancelation_confirmed')
@@ -314,13 +314,13 @@
         </p>
 
         <div class="mt-6 flex justify-between">
-          <x-secondary-button 
+          <x-secondary-button
             type="button"
             x-on:click="$dispatch('close')">
               {{ __('Back') }}
           </x-secondary-button>
 
-          <x-danger-button 
+          <x-danger-button
             class="ml-3"
             type="submit"
             wire:click="cancel"
@@ -333,7 +333,7 @@
 
   {{-- Completion modal --}}
   <x-modal name="completion-modal" focusable>
-      <div 
+      <div
         class="p-6 text-gray-900 dark:text-gray-100"
         x-data="{
           completion_confirmed: @entangle('completion_confirmed')
@@ -357,13 +357,13 @@
         </p>
 
         <div class="mt-6 flex justify-between">
-            <x-secondary-button 
+            <x-secondary-button
               type="button"
               x-on:click="$dispatch('close')">
                 {{ __('Cancel') }}
             </x-secondary-button>
 
-            <x-primary-button 
+            <x-primary-button
               class="ml-3"
               wire:click="complete"
               >
@@ -390,13 +390,13 @@
         </p>
 
         <div class="mt-6 flex justify-between">
-            <x-secondary-button 
+            <x-secondary-button
               type="button"
               x-on:click="$dispatch('close')">
                 {{ __('Cancel') }}
             </x-secondary-button>
 
-            <x-primary-button 
+            <x-primary-button
               class="ml-3"
               x-on:click="$dispatch('close')"
               wire:click="refund"
@@ -414,7 +414,7 @@
   @endpush
 
   {{-- Notify refund result --}}
-  <div 
+  <div
     x-data="{ alert: @entangle('alert') }"
     x-init="$watch('alert', value => {
       if(value['error']) notif.i(value['error'], false);

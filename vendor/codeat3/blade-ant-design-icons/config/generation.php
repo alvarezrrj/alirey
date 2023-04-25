@@ -11,6 +11,7 @@ $svgNormalization = static function (string $tempFilepath, array $iconSet) {
             $svgLine = str_replace('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">', '', $svgLine);
             $svgLine = str_replace('stroke="black"', 'stroke="currentColor"', $svgLine);
             $svgLine = str_replace('fill="black"', 'fill="currentColor"', $svgLine);
+            $svgLine = str_replace('fill="#333"', 'fill="currentColor"', $svgLine);
 
             return $svgLine;
         })

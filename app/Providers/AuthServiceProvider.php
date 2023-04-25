@@ -30,7 +30,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
+        // Not necessary anymore since laravel 10
+        // $this->registerPolicies();
 
         Gate::define('admin-only', function(User $user) {
             return $user->isAdmin();

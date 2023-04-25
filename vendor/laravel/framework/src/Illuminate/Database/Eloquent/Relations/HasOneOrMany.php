@@ -98,8 +98,11 @@ abstract class HasOneOrMany extends Relation
     {
         $whereIn = $this->whereInMethod($this->parent, $this->localKey);
 
-        $this->getRelationQuery()->{$whereIn}(
-            $this->foreignKey, $this->getKeys($models, $this->localKey)
+        $this->whereInEager(
+            $whereIn,
+            $this->foreignKey,
+            $this->getKeys($models, $this->localKey),
+            $this->getRelationQuery()
         );
     }
 
@@ -362,6 +365,17 @@ abstract class HasOneOrMany extends Relation
         }
 
         return $instances;
+    }
+
+    /**
+     * Create a Collection of new instances of the related model without raising any events to the parent model.
+     *
+     * @param  iterable  $records
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function createManyQuietly(iterable $records)
+    {
+        return Model::withoutEvents(fn () => $this->createMany($records));
     }
 
     /**

@@ -4,12 +4,9 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Livewire calendar 
-+ Translate carbon 
+Once Rabol merges pull request, delete "repositories" filed from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
-Check scheduled job logging stuff (It's not currently doing anything)
-
-Use filament tables
+Upgrade to (https://laravel.com/docs/10.x/upgrade)[Laravel 10]
 
 Create users table in admin panel and allow admin to edit users
 
@@ -17,15 +14,23 @@ Error reporting form
 
 Contact form (route('contact'))
 
-update.blade.php
-- Delete it, view is not being used anymore
-
 config
 - Dissallow deleting slots with pending bookings. Offer to create dummy bookings on this slot forever. Or delete the relationship between booking and slot and just give bookings a start time
 - Allow therapist to create single-slot holidays
 
+External login
+
+Create landing page
+
+Add support for english language
+
 BookingController->edit()
 - Find another way to see if day is full inside while loop to avoid so many round trips to DB
+
+Check scheduled job logging stuff (It's not currently doing anything)
+
+update.blade.php
+- Delete it, view is not being used anymore
 
 ### Future releases
 
@@ -33,6 +38,7 @@ BookingController->edit()
 + Support for multi day events (holidays)
 + Display holidays on calendar
 + Support for booking drag and drop on calendar
++ Use filament tables
 
 ### For a multi-therapist scenario
 
@@ -167,6 +173,11 @@ to run the Vite server, which does the Tailwind magic and serves static assets
 And lastly, to run the scheduler locally
 ```
 $ php artisan schedule:work
+```
+
+To call the MP webhook use
+```
+$ curl -X POST -H 'Content-Type: application/json' 'http://127.0.0.1:8000/api/webhooks/mp' -d '{"data": {"id": 1312183340},"type":"payment"}'
 ```
 
 ## Built With

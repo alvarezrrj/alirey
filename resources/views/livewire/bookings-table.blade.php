@@ -11,17 +11,17 @@
     </div>
     <div class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x overflow-y-scroll max-w-[calc(100vw-2rem)]"
       x-data="{status: @entangle('status_filter')}">
-      <button 
-        class="table-select" 
-        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40' : !status }" 
+      <button
+        class="table-select"
+        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40' : !status }"
         wire:click="status_filter(null)">
         {{ __('All') }}
       </button>
 
       @foreach($statuses as $status)
-      <button 
-        class="table-select" 
-        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40': status == '{{ $status }}' }" 
+      <button
+        class="table-select"
+        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40': status == '{{ $status }}' }"
         wire:click="status_filter('{{ $status }}')">
         {{ __($status) }}
       </button>
@@ -36,17 +36,17 @@
     </div>
     <div class="inline-flex bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 border dark:border-gray-600 rounded-md divide-x overflow-y-scroll max-w-[calc(100vw-2rem)]"
       x-data="{date: @entangle('date_filter')}">
-      <button 
-        class="table-select" 
-        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40' : !date }" 
+      <button
+        class="table-select"
+        :class="{'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40' : !date }"
         wire:click="date_filter(null)">
         {{ __('All') }}
       </button>
 
-      @foreach($dates as $date => $value) 
-      <button 
-        class="table-select" 
-        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40': date == '{{ $date }}' }" 
+      @foreach($dates as $date => $value)
+      <button
+        class="table-select"
+        :class="{ 'bg-primary-500/30 font-semibold hover:bg-primary-500/40 focus:bg-primary-500/40': date == '{{ $date }}' }"
         wire:click="date_filter('{{ $date }}')">
         {{ __($date) }}
       </button>
@@ -120,7 +120,7 @@
             <span class="text-sm text-gray-600 dark:text-gray-400 sm:hidden">
               {{ __('Payment') }}
             </span>
-            
+
             {{ __($booking->payment->status) }}
           </div>
           @endif
@@ -170,7 +170,7 @@
               <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 {{ __('Booking number') }}:&nbsp;{{ $booking->id}}<br />
                 {{ __('Name') }}:&nbsp;{{ $booking->user->firstName }} {{ $booking->user->lastName }}<br />
-                {{ __('Date') }}:&nbsp;{{ $booking->day->format('d/m/y') }} - {{ $booking->slot->start->format('h:i') }}
+                {{ __('Date') }}:&nbsp;{{ $booking->day->format('d/m/y') }} - {{ $booking->slot->start->format('H:i') }}
               </p>
 
               <div class="mt-6 flex justify-end">
@@ -178,8 +178,8 @@
                   {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-danger-button 
-                  class="ml-3" 
+                <x-danger-button
+                  class="ml-3"
                   x-on:click="$dispatch('close')"
                   wire:click.prevent="delete({{ $booking->id }})">
                   {{ __('Delete') }}

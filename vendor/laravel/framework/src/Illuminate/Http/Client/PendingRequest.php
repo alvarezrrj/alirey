@@ -2,6 +2,7 @@
 
 namespace Illuminate\Http\Client;
 
+use Closure;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\CookieJar;
@@ -9,6 +10,7 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\UriTemplate\UriTemplate;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Client\Events\ConnectionFailed;
 use Illuminate\Http\Client\Events\RequestSending;
@@ -55,6 +57,13 @@ class PendingRequest
      * @var string
      */
     protected $baseUrl = '';
+
+    /**
+     * The parameters that can be substituted into the URL.
+     *
+     * @var array
+     */
+    protected $urlParameters = [];
 
     /**
      * The request body format.
@@ -122,7 +131,7 @@ class PendingRequest
     /**
      * The number of milliseconds to wait between retries.
      *
-     * @var int
+     * @var Closure|int
      */
     protected $retryDelay = 100;
 
@@ -250,7 +259,7 @@ class PendingRequest
      * @param  string  $contentType
      * @return $this
      */
-    public function withBody($content, $contentType)
+    public function withBody($content, $contentType = 'application/json')
     {
         $this->bodyFormat('body');
 
@@ -343,7 +352,9 @@ class PendingRequest
      */
     public function contentType(string $contentType)
     {
-        return $this->withHeaders(['Content-Type' => $contentType]);
+        $this->options['headers']['Content-Type'] = $contentType;
+
+        return $this;
     }
 
     /**
@@ -427,13 +438,26 @@ class PendingRequest
     /**
      * Specify the user agent for the request.
      *
-     * @param  string  $userAgent
+     * @param  string|bool  $userAgent
      * @return $this
      */
     public function withUserAgent($userAgent)
     {
         return tap($this, function () use ($userAgent) {
             $this->options['headers']['User-Agent'] = trim($userAgent);
+        });
+    }
+
+    /**
+     * Specify the URL parameters that can be substituted into the request URL.
+     *
+     * @param  array  $parameters
+     * @return $this
+     */
+    public function withUrlParameters(array $parameters = [])
+    {
+        return tap($this, function () use ($parameters) {
+            $this->urlParameters = $parameters;
         });
     }
 
@@ -533,12 +557,12 @@ class PendingRequest
      * Specify the number of times the request should be attempted.
      *
      * @param  int  $times
-     * @param  int  $sleepMilliseconds
+     * @param  Closure|int  $sleepMilliseconds
      * @param  callable|null  $when
      * @param  bool  $throw
      * @return $this
      */
-    public function retry(int $times, int $sleepMilliseconds = 0, ?callable $when = null, bool $throw = true)
+    public function retry(int $times, Closure|int $sleepMilliseconds = 0, ?callable $when = null, bool $throw = true)
     {
         $this->tries = $times;
         $this->retryDelay = $sleepMilliseconds;
@@ -713,7 +737,7 @@ class PendingRequest
      * @param  array  $data
      * @return \Illuminate\Http\Client\Response
      */
-    public function patch($url, $data = [])
+    public function patch(string $url, $data = [])
     {
         return $this->send('PATCH', $url, [
             $this->bodyFormat => $data,
@@ -727,7 +751,7 @@ class PendingRequest
      * @param  array  $data
      * @return \Illuminate\Http\Client\Response
      */
-    public function put($url, $data = [])
+    public function put(string $url, $data = [])
     {
         return $this->send('PUT', $url, [
             $this->bodyFormat => $data,
@@ -741,7 +765,7 @@ class PendingRequest
      * @param  array  $data
      * @return \Illuminate\Http\Client\Response
      */
-    public function delete($url, $data = [])
+    public function delete(string $url, $data = [])
     {
         return $this->send('DELETE', $url, empty($data) ? [] : [
             $this->bodyFormat => $data,
@@ -782,6 +806,8 @@ class PendingRequest
         if (! Str::startsWith($url, ['http://', 'https://'])) {
             $url = ltrim(rtrim($this->baseUrl, '/').'/'.ltrim($url, '/'), '/');
         }
+
+        $url = $this->expandUrlParameters($url);
 
         $options = $this->parseHttpOptions($options);
 
@@ -836,6 +862,17 @@ class PendingRequest
 
             return $result;
         });
+    }
+
+    /**
+     * Substitute the URL parameters in the given URL.
+     *
+     * @param  string  $url
+     * @return string
+     */
+    protected function expandUrlParameters(string $url)
+    {
+        return UriTemplate::expand($url, $this->urlParameters);
     }
 
     /**
@@ -922,11 +959,17 @@ class PendingRequest
 
         $laravelData = $this->parseRequestData($method, $url, $options);
 
+        $onStats = function ($transferStats) {
+            if (($callback = ($this->options['on_stats'] ?? false)) instanceof Closure) {
+                $transferStats = $callback($transferStats) ?: $transferStats;
+            }
+
+            $this->transferStats = $transferStats;
+        };
+
         return $this->buildClient()->$clientMethod($method, $url, $this->mergeOptions([
             'laravel_data' => $laravelData,
-            'on_stats' => function ($transferStats) {
-                $this->transferStats = $transferStats;
-            },
+            'on_stats' => $onStats,
         ], $options));
     }
 
