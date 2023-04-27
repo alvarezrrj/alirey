@@ -68,7 +68,7 @@
 
         $action = $is_admin
         ? isset($booking)
-          ? route('bookings.update', $booking->id)
+          ? route('bookings.update', $booking)
           : route('bookings.store')
         : route('user.bookings.store')
 

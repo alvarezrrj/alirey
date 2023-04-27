@@ -61,7 +61,7 @@ class BookingForm extends Component implements HasForms
         return [
             DatePicker::make('datepicker')
                 ->label(__('Date'))
-                ->displayFormat('l j F Y')
+                ->displayFormat('l jS F Y')
                 ->format('Y-m-d')
                 ->minDate($this->data['first_day'])
                 ->maxDate($this->data['last_day'])
