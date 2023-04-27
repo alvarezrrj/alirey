@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use LengthException;
 
+/**
+ * A controller for the users to manage their own bookings.
+ */
 class UserBookingController extends Controller
 {
     /**
@@ -65,13 +68,13 @@ class UserBookingController extends Controller
 
         //$request->session()->flash('message', 'Booking saved.');
 
-        // TO DO 
+        // TO DO
         // Schedule booking deletion: delete it if it has a pref_id and it is
         // expired
 
         return redirect()->route('user.bookings.checkout', $booking);
     }
-    
+
     public function checkout(Booking $booking)
     {
         $this->authorize('checkout', $booking);
@@ -81,7 +84,7 @@ class UserBookingController extends Controller
             $booking, $booking->therapist->config->price
         );
 
-        // MercadoPagoController returns false if a preference is expired 
+        // MercadoPagoController returns false if a preference is expired
         // (10' passed ) since its creation, and deletes the booking.
         if(! $preference_id)
         {
@@ -192,12 +195,12 @@ class UserBookingController extends Controller
     /**
      * Delete bookings that have not been paid for after 10' of creating the
      * MP preference
-     * 
+     *
      * Gets called every minute by job scheduler \App\Console\Kernel::schedule()
      */
     static function purge_unpaid_bookings()
     {
-        // Give the preference an extra minute to avoid deleting it the 
+        // Give the preference an extra minute to avoid deleting it the
         // moment it gets paid for
         Booking::where('pref_expiry', '<', Carbon::now()->subMinute())
             ->delete();

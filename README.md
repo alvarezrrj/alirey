@@ -4,11 +4,9 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Once Rabol merges pull request, delete "repositories" filed from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
+Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
-Upgrade to (https://laravel.com/docs/10.x/upgrade)[Laravel 10]
-
-Create users table in admin panel and allow admin to edit users
+Create clients table in admin panel and allow admin to edit users
 
 Error reporting form
 
@@ -36,7 +34,7 @@ update.blade.php
 
 + Color calendar events according to booking/payment status
 + Support for multi day events (holidays)
-+ Display holidays on calendar
++ Display holidays and non-working days on calendar
 + Support for booking drag and drop on calendar
 + Use filament tables
 
@@ -46,6 +44,8 @@ update.blade.php
 + Add therapist_id to booking form
 + Modify BookingPolicy to only allow therapist to edit/delete their own bookings
 + Allow therapist to access only their own config
++ Rewrite UsersController::index to only show non-admin users instead of everyone but the current user.
++ Restrict admin's ability to delete any user (create a moderator role that can do that)
 
 ## Config (/config)
 
@@ -182,7 +182,7 @@ $ curl -X POST -H 'Content-Type: application/json' 'http://127.0.0.1:8000/api/we
 
 ## Built With
 
-* [Laravel 9](https://laravel.com/) - To make it work
+* [Laravel 10](https://laravel.com/) - To make it work
 * [Tailwind CSS](https://maven.apache.org/) - To make it look cool
 * [Alpine JS](https://alpinejs.dev/) - For the browser to have something to do
 * [Livewire](https://laravel-livewire.com/) - For reactivity

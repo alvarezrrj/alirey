@@ -35,6 +35,10 @@ class BookingForm extends Component implements HasForms
     // Booking type modal acknowledgement
     public $ackowledged;
 
+    protected $rules = [
+        'booking.payment.amount' => 'Integer'
+    ];
+
     public function mount()
     {
         $this->is_admin = Auth::user()->isAdmin();
@@ -57,7 +61,7 @@ class BookingForm extends Component implements HasForms
         return [
             DatePicker::make('datepicker')
                 ->label(__('Date'))
-                ->displayFormat('l jS F Y')
+                ->displayFormat('l j F Y')
                 ->format('Y-m-d')
                 ->minDate($this->data['first_day'])
                 ->maxDate($this->data['last_day'])
@@ -90,7 +94,7 @@ class BookingForm extends Component implements HasForms
          * the currently selected day to the Alpine component 'slot' so it can
          * render available days
          */
-        
+
         $this->day = $this->form->getState()['datepicker'];
     }
 }

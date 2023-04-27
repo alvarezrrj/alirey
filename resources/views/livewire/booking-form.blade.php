@@ -27,25 +27,25 @@
         {{-- Booking instructions --}}
         @if(! $is_admin)
         <div x-data="{ open: false, height:'' }" class="relative">
-          <h3 x-on:click="open = !open" 
+          <h3 x-on:click="open = !open"
             class="mb-6 font-bold text-lg flex items-center z-10 cursor-pointer">
             {{ __('How to book a bioconstelation session') }}
             <span
               class="inline-block ml-3 transition-all duration-500"
               :class="{'-rotate-90': open}"
               >
-              <x-bi-caret-down-fill 
-                width="20" 
-                height="20" 
+              <x-bi-caret-down-fill
+                width="20"
+                height="20"
                 />
             </span>
           </h3>
-          <p 
+          <p
           wire:ignore
           class="overflow-hidden transition-all duration-500 absolute"
           x-cloak
           x-init="
-            height = `${$el.getBoundingClientRect().height}px`; 
+            height = `${$el.getBoundingClientRect().height}px`;
             $el.style.height = 0;
             $el.classList.remove('absolute');
             $watch('open', value => {
@@ -66,14 +66,14 @@
 
         @php
 
-        $action = $is_admin 
+        $action = $is_admin
         ? isset($booking)
           ? route('bookings.update', $booking->id)
           : route('bookings.store')
         : route('user.bookings.store')
 
         @endphp
-        
+
 
         <form action={{ $action }} method="POST" class="">
           @csrf
@@ -85,34 +85,34 @@
           <input type="hidden" value="{{ $booking?->id }}" name="booking_id">
 
           <x-input-label class="mt-6" for="email" :value="__('Email')" />
-          <x-text-input 
-            id="email" 
-            name="email" 
-            type="text" 
-            class="mt-1 block w-full" 
-            :value="old('email', $booking?->user->email)" 
-            required autofocus autocomplete="email" 
+          <x-text-input
+            id="email"
+            name="email"
+            type="text"
+            class="mt-1 block w-full"
+            :value="old('email', $booking?->user->email)"
+            required autofocus autocomplete="email"
             wire:model.lazy="email"/>
           <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
           <x-input-label class="mt-6" for="firstName" :value="__('Name')" />
-          <x-text-input 
-            id="firstName" 
-            name="firstName" 
-            type="text" 
-            class="mt-1 block w-full" 
-            :value="old('firstName', $booking?->user->firstName)" 
-            required autocomplete="firstName" 
+          <x-text-input
+            id="firstName"
+            name="firstName"
+            type="text"
+            class="mt-1 block w-full"
+            :value="old('firstName', $booking?->user->firstName)"
+            required autocomplete="firstName"
             wire:model="firstName"/>
           <x-input-error class="mt-2" :messages="$errors->get('firstName')" />
 
           <x-input-label class="mt-6" for="lastName" :value="__('Last Name')" />
-          <x-text-input 
-            id="lastName" 
-            name="lastName" 
-            type="text" 
-            class="mt-1 block w-full" 
-            :value="old('lastName', $booking?->user->lastName)" 
+          <x-text-input
+            id="lastName"
+            name="lastName"
+            type="text"
+            class="mt-1 block w-full"
+            :value="old('lastName', $booking?->user->lastName)"
             required autocomplete="lastName"
             wire:model="lastName"/>
           <x-input-error class="mt-2" :messages="$errors->get('lastName')" />
@@ -121,25 +121,25 @@
           <div class="mt-6">
               <x-input-label for="phone" :value="__('Telephone Number')" />
               <div class="flex">
-                  <x-code-select 
-                    class="flexselect inline-block mt-1 w-2/5" 
-                    :codes="$codes" 
-                    id="code" 
-                    label="Country" 
-                    name="code_id" 
-                    required 
+                  <x-code-select
+                    class="flexselect inline-block mt-1 w-2/5"
+                    :codes="$codes"
+                    id="code"
+                    label="Country"
+                    name="code_id"
+                    required
                     rounded="rounded-l-md"
-                    :value="old('code_id', $booking?->user->code_id)" 
+                    :value="old('code_id', $booking?->user->code_id)"
                     wire:model="code_id"/>
-                  <x-text-input 
-                    class="inline-block mt-1 w-3/5" 
-                    id="phone" 
-                    inputmode="numeric" 
-                    name="phone" 
-                    required 
+                  <x-text-input
+                    class="inline-block mt-1 w-3/5"
+                    id="phone"
+                    inputmode="numeric"
+                    name="phone"
+                    required
                     rounded="rounded-r-md"
-                    type="text" 
-                    :value="old('phone', $booking?->user->phone )" 
+                    type="text"
+                    :value="old('phone', $booking?->user->phone )"
                     wire:model="phone"/>
               </div>
               <x-input-error :messages="$errors->get('phone')" class="mt-2" />
@@ -153,14 +153,14 @@
             <legend class="font-medium text-sm text-gray-800 dark:text-gray-200">
               {{ __('Booking type') }}
             </legend>
-            <x-radio-input 
+            <x-radio-input
               id="virtual"
-              name="virtual" 
+              name="virtual"
               :checked="$booking?->virtual ?? true"
               value="1" />
-            <x-input-label 
-              class="inline-block" 
-              for="virtual" 
+            <x-input-label
+              class="inline-block"
+              for="virtual"
               :value="__('Virtual')" />
               <br>
 
@@ -169,18 +169,18 @@
                 ackowledged: @entangle('ackowledged'),
                 is_admin: @entangle('is_admin'),
               }"
-              x-on:click="(!ackowledged && !is_admin) 
-              ? $dispatch('open-modal', 'booking-type-modal') 
+              x-on:click="(!ackowledged && !is_admin)
+              ? $dispatch('open-modal', 'booking-type-modal')
               : ''"
               >
               <x-radio-input
                 id="in-person"
-                name="virtual" 
+                name="virtual"
                 :checked="! ($booking?->virtual ?? true)"
                 value="0"
                 />
-              <x-input-label class="inline-block" 
-                for="in-person" 
+              <x-input-label class="inline-block"
+                for="in-person"
                 :value="__('In-person')" />
             </div>
           </fieldset>
@@ -192,7 +192,7 @@
             {{ $this->form }}
           </div>
 
-          <input 
+          <input
             type="hidden"
             name="day"
             wire:model="day"
@@ -208,11 +208,11 @@
 
                 get computedSlots() {
                   this.slots.forEach(s => {
-                    if(this.bookings.some(b => 
-                          b.id != {{ $booking->id ?? -1 }} 
-                      && b.day == this.day 
+                    if(this.bookings.some(b =>
+                          b.id != {{ $booking->id ?? -1 }}
+                      && b.day == this.day
                       && b.slot.id == s.id
-                    )) 
+                    ))
                       s.disabled = true;
                     else
                       s.disabled = false;
@@ -224,17 +224,17 @@
 
             <div class="w-full">
               <x-input-label for="slot_id" :value="__('Slot')" class="mt-6"/>
-              <x-select-input id="slot_id" 
+              <x-select-input id="slot_id"
                 x-model="slot_id"
-                class="inline-block mt-1 w-full mb-1" 
-                type="text" 
-                name="slot_id" 
+                class="inline-block mt-1 w-full mb-1"
+                type="text"
+                name="slot_id"
                 wire:model="slot_id">
 
                 <template x-for="slot in computedSlots" >
-                  <option 
+                  <option
                     x-bind:selected="slot.id == slot_id"
-                    x-bind:value="slot.id" 
+                    x-bind:value="slot.id"
                     x-bind:disabled="slot.disabled ? true : false"
                     x-text="slot.start + ' - ' + slot.end">
                 </template>
@@ -251,7 +251,7 @@
             @if(isset($booking))
             {{-- Restore booking date and time to initial state --}}
             <div class="w-full flex justify-end">
-              <x-primary-button 
+              <x-primary-button
                 class="mt-2"
                 :small="true"
                 data-tooltip="{{ __('Restore booking\'s date and time') }}"
@@ -273,16 +273,16 @@
           <x-input-label class="mt-6" for="amount" :value="__('Paid ammount')" />
           <div class="w-full flex items-center justify-start">
             <span class="text-gray-800 dark:text-gray-200 w-6">$</span>
-                <x-text-input 
-                  class="mt-1 w-[calc(100%-1.5rem)]" 
-                  id="amount" 
+                <x-text-input
+                  class="mt-1 w-[calc(100%-1.5rem)]"
+                  id="amount"
                   inputmode="numeric"
-                  name="amount" 
+                  name="amount"
                   required
                   step="100"
-                  type="number" 
-                  :value="old('amount', $booking?->payment->amount)" 
-                  wire:model="payment.amount"
+                  type="number"
+                  :value="old('amount', $booking?->payment->amount)"
+                  wire:model="booking.payment.amount"
                     />
             <x-input-error :messages="$errors->get('amount')" class="mt-2" />
           </div>
@@ -335,7 +335,7 @@
           <x-input-label for="dsa" :value="__('Don\'t show again')"/>
         </div>
 
-        <x-primary-button 
+        <x-primary-button
           class="ml-3"
           type="submit"
           x-on:click="$dispatch('close')"

@@ -29,6 +29,10 @@
             {{ __('Bookings') }}
           </x-nav-link>
 
+          <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+            {{ __('Users') }}
+          </x-nav-link>
+
           @else
 
           <x-nav-link :href="route('user.bookings.index')" :active="request()->routeIs('user.bookings.index')">
@@ -45,7 +49,7 @@
 
       <!-- Settings Dropdown -->
       <div class="hidden sm:flex sm:items-center sm:ml-6">
-        <x-dropdown align="right" width="48">
+        <x-dropdown align="right">
           <x-slot name="trigger">
             <button tabindex="0"
               class=" border-red-700 hover:border-red-600 inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300  transition ease-in-out duration-150">
@@ -129,32 +133,36 @@
 
       <x-responsive-nav-link :href="route('config')" :active="request()->routeIs('config')">
         {{ __('Configuration') }}
-        </x-nav-link>
+      </x-responsive-nav-link>
 
-        <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
-          {{ __('Bookings') }}
-          </x-nav-link>
+      <x-responsive-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
+        {{ __('Bookings') }}
+      </x-responsivenav-link>
 
-          @else
+      <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+        {{ __('Users') }}
+      </x-responsive-nav-link>
 
-          @if(session()->has('pending_payment'))
-          <x-responsive-nav-link :href="route('user.bookings.checkout', session()->get('pending_payment'))"
-            class="border-l-3 border-red-700">
-            {{ __('Checkout') }}
-          </x-responsive-nav-link>
-          @endif
+      @else
 
-          <x-responsive-nav-link :href="route('user.bookings.index')"
-            :active="request()->routeIs('user.bookings.index')">
-            {{ __('My bookings') }}
-          </x-responsive-nav-link>
+      @if(session()->has('pending_payment'))
+      <x-responsive-nav-link :href="route('user.bookings.checkout', session()->get('pending_payment'))"
+        class="border-l-3 border-red-700">
+        {{ __('Checkout') }}
+      </x-responsive-nav-link>
+      @endif
 
-          <x-responsive-nav-link :href="route('user.bookings.create')"
-            :active="request()->routeIs('user.bookings.create')">
-            {{ __('New booking') }}
-          </x-responsive-nav-link>
+      <x-responsive-nav-link :href="route('user.bookings.index')"
+        :active="request()->routeIs('user.bookings.index')">
+        {{ __('My bookings') }}
+      </x-responsive-nav-link>
 
-          @endif
+      <x-responsive-nav-link :href="route('user.bookings.create')"
+        :active="request()->routeIs('user.bookings.create')">
+        {{ __('New booking') }}
+      </x-responsive-nav-link>
+
+      @endif
     </div>
 
     <!-- Responsive Settings Options -->

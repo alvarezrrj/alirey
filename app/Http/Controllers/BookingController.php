@@ -18,6 +18,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * A controller for the admin to manage bookings.
+ */
 class BookingController extends Controller
 {
     /**
@@ -64,8 +67,8 @@ class BookingController extends Controller
             'phone'
         ]);
         $validated_booking = $request->safe()->only([
-            'virtual', 
-            'day', 
+            'virtual',
+            'day',
             'slot_id'
         ]);
 
@@ -97,7 +100,7 @@ class BookingController extends Controller
         // Store booking
         $booking = $user->bookings()->create($validated_booking);
 
-        $request->session()->flash('message', 'Booking saved.');
+        session()->flash('message', 'Booking saved.');
 
         return redirect(route('bookings.show', $booking));
     }
@@ -142,7 +145,7 @@ class BookingController extends Controller
     public function update(UpdateBookingRequest $request, Booking $booking)
     {
         $this->authorize('update', $booking);
-        
+
         $validated_user = $request->safe()->only([
             'firstName',
             'lastName',
@@ -152,8 +155,8 @@ class BookingController extends Controller
         ]);
         $validated_payment = $request->safe()->only(['amount']);
         $validated_booking = $request->safe()->only([
-            'virtual', 
-            'day', 
+            'virtual',
+            'day',
             'slot_id'
         ]);
 
@@ -161,7 +164,7 @@ class BookingController extends Controller
         $booking->payment()->update($validated_payment);
         $booking->update($validated_booking);
 
-        $request->session()->flash('message', 'Booking updated.');
+        session()->flash('message', 'Booking updated.');
 
         return redirect(route('bookings.show', $booking->id));
     }
@@ -182,12 +185,12 @@ class BookingController extends Controller
         $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
         $working_days = $admin->config->working_days;
         $now = Carbon::today();
-        $last_day = $admin->config->allways_open 
+        $last_day = $admin->config->allways_open
         ? Carbon::today()->addDays($admin->config->anticipation)
         : Carbon::create($admin->config->open_until);
         $holidays = Holiday::where('user_id', $admin->id)
                     ->whereDate('day', '>=', $now)
-                    ->whereDate('day', '<=', $last_day) 
+                    ->whereDate('day', '<=', $last_day)
                     ->get()
                     ->pluck('id', 'day')
                     ->all();
@@ -198,7 +201,7 @@ class BookingController extends Controller
 
         $disabled = [];
 
-        while($now->lte($last_day)) 
+        while($now->lte($last_day))
         {
 
             $is_holiday = isset($holidays[$now->toDateTimeString()]);
@@ -208,8 +211,8 @@ class BookingController extends Controller
                     && ! $booking?->day->eq($now) );
 
             $is_working_day = $working_days[((int) $now->format('w') - 1) % 7] == '1';
-            
-            ($is_holiday || $is_full || !$is_working_day) 
+
+            ($is_holiday || $is_full || !$is_working_day)
             && array_push($disabled, $now->format('Y-m-d'));
 
             $now->addDay();

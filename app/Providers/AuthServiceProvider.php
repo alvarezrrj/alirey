@@ -4,10 +4,10 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
-//use App\Http\Livewire\Holiday;
 use App\Models\Holiday;
 use App\Models\User;
 use App\Policies\HolidayPolicy;
+use App\Policies\UsersPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -21,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         Holiday::class => HolidayPolicy::class,
+        User::class => UsersPolicy::class
     ];
 
     /**

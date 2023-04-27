@@ -4,14 +4,12 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserBookingController;
 use App\Models\Booking;
-use App\Notifications\BookingConfirmation;
 use App\Notifications\BookingReminder;
-use App\Notifications\NewBooking;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,8 +43,10 @@ Route::get('/config', [ConfigController::class, 'index'])
 
 //=== Bookings ===
 // admin
-Route::resource('bookings', BookingController::class)
-    ->middleware(['auth', 'admin']);
+Route::middleware(['auth', 'admin'])->group(function() {
+    Route::resource('bookings', BookingController::class);
+    Route::resource('users', UsersController::class);
+});
 
 // user
 Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
@@ -55,7 +55,7 @@ Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
             ->only(['index', 'show', 'create', 'store', 'destroy']);
         Route::get('user/bookings/{booking}/checkout', [UserBookingController::class, 'checkout'])
             ->name('bookings.checkout');
-        Route::get('user/bookings/{booking}/confirmation', 
+        Route::get('user/bookings/{booking}/confirmation',
                 [UserBookingController::class, 'confirmation'])
                 ->name('bookings.confirmation');
         Route::get('user/failed_payment', [UserBookingController::class, 'failure'])

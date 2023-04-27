@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * A request to validate a user's own profile update
+ */
+
 namespace App\Http\Requests;
 
 use App\Models\User;

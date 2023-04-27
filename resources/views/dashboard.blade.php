@@ -34,9 +34,11 @@
 
             <p class="mt-6">
               {{ __('There\'s nothing over here 🏜') }} <br>
-              <x-primary-button class="mt-6">
-                {{ __('Book yourself a slot') }}
-              </x-primary-button>
+              <a href="{{ route('user.bookings.create') }}">
+                <x-primary-button class="mt-6">
+                  {{ __('Book yourself a slot') }}
+                </x-primary-button>
+              </a>
             </p>
 
           @elseif(!$booking)
