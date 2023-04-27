@@ -6,14 +6,10 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
-Create clients table in admin panel and allow admin to edit users
-
 Error reporting form
 
 Contact form (route('contact'))
 
-config
-- Dissallow deleting slots with pending bookings. Offer to create dummy bookings on this slot forever. Or delete the relationship between booking and slot and just give bookings a start time
 - Allow therapist to create single-slot holidays
 
 External login
@@ -49,7 +45,7 @@ update.blade.php
 
 ## Config (/config)
 
-Can only be accessed by admin
+Can only be accessed by admin.
 
 ### **Working days**
 
@@ -73,11 +69,12 @@ Delete holiday plans by clicking 'delete' on the table rows.
 ### **Slots**
 
 Allows admin to manage session slots. These will be shown to clients and made available for booking.
+On deletion, slots are only soft deleted to avoid orphaning bookings.
 
 
 ## Bookings.index (/bookings)
 
-Can only be accessed by admin, displays a table which is filterable by booking status and allows for inpection and deletion of bookings (only admin can delete bookings as per BookingPolicy).
+Can only be accessed by admin, displays a table which is filterable by booking status and date, and allows for inspection and deletion of bookings (only admin can delete bookings as per BookingPolicy).
 
 ## Bookings.show (/bookings/{id})
 

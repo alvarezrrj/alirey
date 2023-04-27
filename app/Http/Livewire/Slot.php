@@ -21,6 +21,7 @@ class Slot extends Component
     {
         $this->authorize('delete', $this->slot);
 
+        // Slots are noly soft deleted to avoid bookings being orphaned.
         $this->slot->delete();
 
         $this->emit('slotDeleted');

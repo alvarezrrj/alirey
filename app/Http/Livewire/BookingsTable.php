@@ -46,7 +46,7 @@ class BookingsTable extends Component
         ? $bookings
         : $bookings->where('user_id', Auth::user()->id);
 
-        $bookings = $this->status_filter 
+        $bookings = $this->status_filter
         ? $bookings->where('status', $this->status_filter)
         : $bookings;
 

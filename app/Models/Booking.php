@@ -22,10 +22,11 @@ class Booking extends Model
         //return $date->format('d-m-Y');
         return $date->format('Y-m-d');
     }
-    
+
     public function slot()
     {
-        return $this->belongsTo(Slot::class);
+        // A slot may have been soft deleted, hence withTrashed()
+        return $this->belongsTo(Slot::class)->withTrashed();
     }
 
     public function user()
