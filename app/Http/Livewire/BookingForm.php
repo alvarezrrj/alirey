@@ -35,6 +35,9 @@ class BookingForm extends Component implements HasForms
     // Booking type modal acknowledgement
     public $ackowledged;
 
+    public $userFound = false;
+    public $is_booking = true;
+
     protected $rules = [
         'booking.payment.amount' => 'Integer'
     ];
@@ -72,7 +75,8 @@ class BookingForm extends Component implements HasForms
 
     public function render()
     {
-        return view('livewire.booking-form');
+        $form = $this->is_booking ? 'booking-form' : 'single-slot-holiday';
+        return view('livewire.'.$form);
     }
 
     public function updatedEmail()
@@ -80,11 +84,13 @@ class BookingForm extends Component implements HasForms
         $user = User::where('email', $this->email)->first();
         if($user)
         {
+            $this->userFound = true;
             $this->firstName = $user->firstName;
             $this->lastName = $user->lastName;
             $this->code_id = $user->code_id;
             $this->phone = $user->phone;
         }
+        else $this->userFound = false;
     }
 
     public function calClickHandler()
@@ -95,6 +101,7 @@ class BookingForm extends Component implements HasForms
          * render available days
          */
 
+        // $this->day = 'hola';
         $this->day = $this->form->getState()['datepicker'];
     }
 }

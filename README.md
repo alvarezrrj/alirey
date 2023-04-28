@@ -4,6 +4,10 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Remove ability to make a booking for earlier today
+
+In the calendar, replace the 'view booking' link on single slot holidays dropdowns for a 'open' button to reopen the slot
+
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
 Error reporting form
@@ -33,6 +37,7 @@ update.blade.php
 + Display holidays and non-working days on calendar
 + Support for booking drag and drop on calendar
 + Use filament tables
++ Instruct admin how user search works via notifications that pop up on disabled input click.
 
 ### For a multi-therapist scenario
 

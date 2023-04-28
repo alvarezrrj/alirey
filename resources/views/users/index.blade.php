@@ -8,7 +8,7 @@
           {{ __('Users') }}
       </h2>
 
-      <a
+      {{-- <a
         aria-label="{{ __('New user') }}"
         data-tooltip="{{ __('New user') }}"
         data-placement="left"
@@ -16,7 +16,7 @@
         <x-primary-button >
           <x-antdesign-plus-o width="22" height="22"/>
         </x-primary-button>
-      </a>
+      </a> --}}
     </div>
   </x-slot>
 

@@ -16,12 +16,12 @@
     @foreach ($codes as $code)
     <option value="{{ $code->id }}" @selected($value == $code->id)>
 
-        {!! 
+        {!!
         preg_replace(
-            '/U\+/', 
-            '&#x', 
+            '/U\+/',
+            '&#x',
             preg_replace('/ /', ';', trim($code->flag))
-            ) 
+            )
         !!}{!! $code->flag ? ';' : '&nbsp;&nbsp;&nbsp;&nbsp;' !!}
 
         &nbsp;+{{ $code->code }} {{ $code->country }}
@@ -35,18 +35,18 @@
 
 @push('libraries')
 
-<script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" 
+<script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
     type="text/javascript"></script>
-<script src="{{ Vite::asset('resources/libraries/flexselect/liquidmetal.js') }}" 
+<script src="{{ Vite::asset('resources/libraries/flexselect/liquidmetal.js') }}"
     type="text/javascript"></script>
-<script src="{{ Vite::asset('resources/libraries/flexselect/jquery.flexselect.js') }}" 
+<script src="{{ Vite::asset('resources/libraries/flexselect/jquery.flexselect.js') }}"
     type="text/javascript"></script>
 
 @endpush
 
 @push('scripts')
 
-<script src="{{ Vite::asset('resources/js/register.js') }}" 
+<script src="{{ Vite::asset('resources/js/register.js') }}"
     type="text/javascript"></script>
 
 @endpush

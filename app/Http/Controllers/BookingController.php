@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateBookingRequest;
+use App\Http\Requests\SingleSlotHolidayRequest;
 use App\Http\Requests\UpdateBookingRequest;
 use App\Models\Booking;
 use App\Models\Code;
@@ -14,9 +15,11 @@ use App\Models\User;
 use App\SD\SD;
 use Carbon\Carbon;
 use DateTimeZone;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * A controller for the admin to manage bookings.
@@ -103,6 +106,30 @@ class BookingController extends Controller
         session()->flash('message', 'Booking saved.');
 
         return redirect(route('bookings.show', $booking));
+
+    }
+
+    /**
+     * Store a single slot holiday.
+     */
+    public function singleSlotHoliday(SingleSlotHolidayRequest $request)
+    {
+        $data = $request->validated();
+        // Create dummy payment
+        $payment = Payment::create([
+            'amount' => 0,
+            'status' => SD::PAYMENT_PENDING,
+        ]);
+        $data['payment_id'] = $payment->id;
+        $data['status'] = SD::BOOKING_PENDING;
+        $data['is_booking'] = false;
+        $holiday = $request->user()->bookings()->create($data);
+
+        $holiday->save();
+
+        session()->flash('message', 'Changes saved.');
+
+        return Redirect::route('dashboard');
     }
 
     /**
@@ -142,7 +169,7 @@ class BookingController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBookingRequest $request, Booking $booking)
+    public function update(UpdateBookingRequest $request, Booking $booking): RedirectResponse
     {
         $this->authorize('update', $booking);
 
@@ -175,9 +202,13 @@ class BookingController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Booking $booking)
+    public function destroy(Booking $booking): RedirectResponse
     {
-        //
+        $this->authorize('delete', $booking);
+
+        $booking->delete();
+
+        return Redirect::back();
     }
 
     public function getData($booking = null)

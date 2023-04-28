@@ -45,6 +45,8 @@ Route::get('/config', [ConfigController::class, 'index'])
 // admin
 Route::middleware(['auth', 'admin'])->group(function() {
     Route::resource('bookings', BookingController::class);
+    Route::post('bookings/single-slot-holiday', [BookingController::class, 'singleSlotHoliday'])
+        ->name('bookings.singleSlotHoliday');
     Route::resource('users', UsersController::class);
 });
 

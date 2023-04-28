@@ -3,24 +3,26 @@
 namespace App\Http\Livewire;
 
 use App\Models\Booking;
-use App\Models\Slot;
 use Illuminate\Support\Collection;
 use Rabol\LivewireCalendar\LivewireCalendar;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentsCalendar extends LivewireCalendar
 {
+    use AuthorizesRequests;
+
     public Carbon $today;
 
     public function afterMount($extras = [])
     {
-        $this->today = Carbon::now()->locale($this->locale);   
+        $this->today = Carbon::now()->locale($this->locale);
     }
 
     public function events(): Collection
     {
-        return Booking::whereDate('day', '>', $this->gridStartsAt)
+        return Booking::whereDate('day', '>=', $this->gridStartsAt)
             ->whereDate('day', '<', $this->gridEndsAt)
             ->join('slots', 'slots.id', '=', 'bookings.slot_id')
             ->orderBy('slots.start')
@@ -29,10 +31,19 @@ class AppointmentsCalendar extends LivewireCalendar
             ->map(function (Booking $booking) {
             return [
                 'id' => $booking->id,
-                'title' => $booking->user->firstName ?? __('Holiday'),
+                'title' => $booking->user->firstName == Auth::user()->firstName
+                ? __('Closed')
+                : $booking->user->firstName,
                 'description' => $booking->slot->start->format('H:i'),
                 'date' => $booking->day
             ];
         });
+    }
+
+    public function destroy(Booking $booking)
+    {
+        $this->authorize('delete', $booking);
+
+        $booking->delete();
     }
 }

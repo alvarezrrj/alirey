@@ -1,5 +1,14 @@
 {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
 
+{{-- Toggle switch styles --}}
+@push('styles')
+<link
+    href="{{ Vite::asset('resources/css/config.css') }}"
+    rel="stylesheet"
+    type="text/css"  />
+@endpush
+
+
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
   <x-alert-error key="overlap" />
@@ -74,6 +83,21 @@
 
         @endphp
 
+        @if($is_admin)
+        <label class="form-check-label inline-block text-gray-800 dark:text-gray-200"
+        for="toggle_is_booking">
+          {{ __('Is booking') }}
+          <x-toggle
+            :checked="$is_booking"
+            id="toggle_is_booking"
+            value="1"
+            wire:model="is_booking">
+          </x-toggle>
+        </label>
+        <p class="!mt-0 text-sm text-gray-600 dark:text-gray-400">
+          {{ __('toggle this to choose between a holiday or a booking.')}}
+        </p>
+        @endif
 
         <form action={{ $action }} method="POST" class="">
           @csrf
@@ -83,6 +107,7 @@
 
           <input type="hidden" value="{{ $booking?->user->id }}" name="user_id">
           <input type="hidden" value="{{ $booking?->id }}" name="booking_id">
+
 
           <x-input-label class="mt-6" for="email" :value="__('Email')" />
           <x-text-input
@@ -95,8 +120,12 @@
             wire:model.lazy="email"/>
           <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-          <x-input-label class="mt-6" for="firstName" :value="__('Name')" />
+          <x-input-label class="mt-6 inline-block" for="firstName" :value="__('Name')" />
+          <span class="inline-block" wire:loading>
+            &nbsp;<x-spinner />
+          </span>
           <x-text-input
+            disabled="{{$userFound}}"
             id="firstName"
             name="firstName"
             type="text"
@@ -108,6 +137,7 @@
 
           <x-input-label class="mt-6" for="lastName" :value="__('Last Name')" />
           <x-text-input
+            disabled="{{$userFound}}"
             id="lastName"
             name="lastName"
             type="text"
@@ -124,6 +154,7 @@
                   <x-code-select
                     class="flexselect inline-block mt-1 w-2/5"
                     :codes="$codes"
+                    disabled="{{$userFound}}"
                     id="code"
                     label="Country"
                     name="code_id"
@@ -133,6 +164,7 @@
                     wire:model="code_id"/>
                   <x-text-input
                     class="inline-block mt-1 w-3/5"
+                    disabled="{{$userFound}}"
                     id="phone"
                     inputmode="numeric"
                     name="phone"

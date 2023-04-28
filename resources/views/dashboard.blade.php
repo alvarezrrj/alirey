@@ -6,10 +6,11 @@
         </h2>
     </x-slot>
 
-    <x-alert-message key="message" />
 
     <div class="py-12 space-y-6 xl:space-y-0">
+
       <div class="{{ $is_admin ? '' : 'max-w-7xl mx-auto '  }} grid grid-cols-12 gap-8 sm:px-6 lg:px-8 space-y-6 xl:space-y-0">
+        <x-alert-message key="message" class="col-span-12"/>
 
         <div class="col-span-12 xl:col-span-5 {{ $is_admin ? '2xl:col-span-4' :
         '' }} p-4 sm:p-8 text-gray-900 dark:text-gray-100 bg-white

@@ -18,10 +18,10 @@
                 wire:click="onDayClick({{ $day->year }}, {{ $day->month }}, {{ $day->day }})"
             @endif
             class="w-full h-full p-2 grid grid-cols-1 grid-rows-6
-            {{ $dayInMonth 
-            ?  $isToday 
+            {{ $dayInMonth
+            ?  $isToday
               ? 'bg-skin dark:bg-yellow-400/25'
-              : ' bg-white dark:bg-gray-800' 
+              : ' bg-white dark:bg-gray-800'
             : 'bg-gray-100 dark:bg-gray-700' }} ">
 
             {{-- Number of Day --}}
@@ -39,18 +39,20 @@
             </div>
 
             {{-- Events --}}
-            
+
             <div class="h-full flex flex-col relative row-span-5">
               <div class="mt-1 overflow-y-scroll">
                   <div class="pb-1 grid grid-cols-1 sm:grid-cols-1 grid-flow-row gap-2 ">
-                      @foreach($events as $event)
-                          <div 
+                    @foreach($events as $event)
+                          <div
                               @if($dragAndDropEnabled)
                                   draggable="true"
                               @endif
                               ondragstart="onLivewireCalendarEventDragStart(event, '{{ $event['id'] }}')">
                               @include($eventView, [
                                   'event' => $event,
+                                  'day' => $day,
+                                  'weekIndex' => $weekIndex,
                               ])
                           </div>
                       @endforeach

@@ -8,14 +8,11 @@ namespace App\Http\Requests;
 
 use App\Models\Booking;
 use App\Models\Code;
-use App\Models\Role;
 use App\Models\Slot;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use StaticDetails\SD;
 
 class CreateBookingRequest extends FormRequest
 {
@@ -36,7 +33,7 @@ class CreateBookingRequest extends FormRequest
      */
     public function rules(Request $request)
     {
-        $last_day = $request->user()->config->allways_open 
+        $last_day = $request->user()->config->allways_open
         ? Carbon::today()->addDays($request->user()->config->anticipation)
         : Carbon::create($request->user()->config->open_until);
 

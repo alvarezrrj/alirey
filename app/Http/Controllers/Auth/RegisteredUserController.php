@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
-use App\Models\Code;
 use App\Models\User;
 use App\Models\Role;
 use App\Providers\RouteServiceProvider;
@@ -75,6 +74,7 @@ class RegisteredUserController extends Controller
         $upcoming = Booking::whereDate('day', '>=', Carbon::today())
                            ->where('status', '!=', SD::BOOKING_CANCELLED)
                            ->where('status', '!=', SD::BOOKING_COMPLETED)
+                           ->where('is_booking', true)
                            ->oldest('day')
                            ->limit(1);
 
