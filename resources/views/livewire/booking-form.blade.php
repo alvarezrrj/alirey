@@ -223,6 +223,7 @@
             wire:click="calClickHandler">
             {{ $this->form }}
           </div>
+          <x-input-error class="mt-2" :messages="$errors->get('day')" />
 
           <input
             type="hidden"

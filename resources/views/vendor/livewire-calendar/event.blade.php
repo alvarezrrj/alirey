@@ -32,7 +32,7 @@ else {
       <p class="text-ellipsis overflow-hidden">
         {{ $event['title'] }}
       </p>
-      <x-overflow-dropdown align="{{ $alignment }}" width="40">
+      <x-overflow-dropdown align="{{ $alignment }}" width="w-40">
         <x-slot name="trigger">
           <x-bi-three-dots-vertical class="cursor-pointer"/>
         </x-slot>
@@ -40,24 +40,17 @@ else {
         <x-slot name="content" class="py-2">
 
           @unless($is_holiday)
-          <x-dropdown-link :href="route('bookings.show', $event['id'])"
-            class="flex justify-between">
-            <span>{{ __('View booking') }}</span>
-            <span><x-antdesign-swap-right-o class="h-4 inline-block ml-1"/></span>
-          </x-dropdown-link>
+            <x-dropdown-link :href="route('bookings.show', $event['id'])"
+              class="flex justify-between">
+              <span>{{ __('View booking') }}</span>
+              <span><x-antdesign-swap-right-o class="h-4 inline-block ml-1"/></span>
+            </x-dropdown-link>
           @else
-            {{-- <form action={{ route('bookings.destroy', $event['id']) }}
-            method="POST">
-              @csrf
-              @method('DELETE') --}}
-              <x-dropdown-link class="flex justify-between"
-                wire:click="destroy({{ $event['id'] }})">
-                {{-- <button type="submit"> --}}
-                <span>{{ __('Re-open') }}</span>
-                <span><x-antdesign-swap-right-o class="h-4 inline-block ml-1"/></span>
-                {{-- </button> --}}
-              </x-dropdown-link>
-            {{-- </form> --}}
+            <x-dropdown-link class="flex justify-between"
+              wire:click="destroy({{ $event['id'] }})">
+              <span>{{ __('Re-open') }}</span>
+              <span><x-antdesign-swap-right-o class="h-4 inline-block ml-1"/></span>
+            </x-dropdown-link>
           @endunless
         </x-slot>
       </x-overflow-dropdown>

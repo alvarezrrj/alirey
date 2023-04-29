@@ -4,9 +4,9 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Remove ability to make a booking for earlier today
+Test email verification notification goes out on registration (MustVerifyEmail trait has been added to \App\Models\User)
 
-In the calendar, replace the 'view booking' link on single slot holidays dropdowns for a 'open' button to reopen the slot
+Remove ability to make a booking for earlier today
 
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
@@ -14,21 +14,14 @@ Error reporting form
 
 Contact form (route('contact'))
 
-- Allow therapist to create single-slot holidays
-
 External login
 
 Create landing page
 
 Add support for english language
 
-BookingController->edit()
-- Find another way to see if day is full inside while loop to avoid so many round trips to DB
-
 Check scheduled job logging stuff (It's not currently doing anything)
 
-update.blade.php
-- Delete it, view is not being used anymore
 
 ### Future releases
 
@@ -38,6 +31,9 @@ update.blade.php
 + Support for booking drag and drop on calendar
 + Use filament tables
 + Instruct admin how user search works via notifications that pop up on disabled input click.
++ BookingController->edit()
+    - Find another way to see if day is full inside while loop to avoid so many round trips to DB
++ Link Google calendar and/or iCal
 
 ### For a multi-therapist scenario
 
@@ -47,6 +43,7 @@ update.blade.php
 + Allow therapist to access only their own config
 + Rewrite UsersController::index to only show non-admin users instead of everyone but the current user.
 + Restrict admin's ability to delete any user (create a moderator role that can do that)
++ Include therapist name and logo in contact form, do a separate form to contact site admin.
 
 ## Config (/config)
 
@@ -94,6 +91,8 @@ This is the booking creation workflow for the different circumstances
 Note: CreateBookingRequest is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario. Other places where this happens:
 - BookingController::getData() 
 - UserCreateBookingRequest::rules()
+
+A toggle switch allows admin (and only admin) to select between creating a booking and creating a single slot holiday, which creates an entry in the bookings table with the user set to him/herself and the is_booking flag set to false, effectively disabling bookings for that day/time
 
 When admin creates a new booking for a non existing user, an acount is opened with a random password. If user desires to access their account, they can be sent a password reset email from users table on admin panel.
 
@@ -152,12 +151,19 @@ Cache icons with
 php artisan icons:cache
 ```
 
-Write cron entry
+Write cron entry on server
 ```
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
 
+Run queue worker with
+```
+php artisan queue:work  --tries=3 --backoff=60
+```
+
 Update pref->notification_url on MercadoPagoController::create_or_get_preference()
+
+Update MAIL_ variables in .env file
 
 ## Development
 
@@ -181,6 +187,13 @@ To call the MP webhook use
 ```
 $ curl -X POST -H 'Content-Type: application/json' 'http://127.0.0.1:8000/api/webhooks/mp' -d '{"data": {"id": 1312183340},"type":"payment"}'
 ```
+
+Start the queue worker with
+``` 
+php artisan queue:listen --tries=3 --backoff=3
+```
+This alternative to `queue:work` listens for changes in the codebase and restarts the worker but is less efficient than the former.
+Learn how to keep the process running with [Supervisor](https://laravel.com/docs/10.x/queues#supervisor-configuration)
 
 ## Built With
 

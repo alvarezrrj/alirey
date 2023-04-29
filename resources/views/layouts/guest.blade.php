@@ -27,12 +27,14 @@
                 </a>
             </div>
 
+            {{ $header ?? '' }}
+
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>
 
-        {{-- Push stuff into this stack with @push('scripts') <foo> @endpush 
+        {{-- Push stuff into this stack with @push('scripts') <foo> @endpush
              from within the view --}}
         @stack('libraries')
         @stack('scripts')

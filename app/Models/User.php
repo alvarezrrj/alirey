@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
 use App\SD\SD;
+use Illuminate\Auth\MustVerifyEmail;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, MustVerifyEmail;
 
     /**
      * The attributes that are mass assignable.
@@ -47,12 +48,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function isAdmin() 
+    public function isAdmin()
     {
         return $this->role->role === SD::admin;
     }
 
-    public function role() 
+    public function role()
     {
         return $this->belongsTo(Role::class);
     }

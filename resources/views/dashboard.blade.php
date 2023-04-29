@@ -24,7 +24,7 @@
               {{ __("Here are your next session's details, make sure your own details are correct so we have no trouble getting in touch with you. If you need to make any changes, you can") }}
               <a
                 class="text-brown underline hover:text-orange"
-                href="{{ route('contact') }}">
+                href="{{ route('contact', $booking->therapist) }}">
               {{ __("contact us") }}.
               </a>
             </p>
