@@ -183,6 +183,7 @@ return [
         'restored_at'              => 'restaurado el',
         'result_text_under_image'  => 'texto bajo la imagen',
         'role'                     => 'rol',
+        'screenshot'               => 'captura de pantalla',
         'second'                   => 'segundo',
         'sex'                      => 'sexo',
         'short_text'               => 'texto corto',

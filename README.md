@@ -4,23 +4,13 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Test email verification notification goes out on registration (MustVerifyEmail trait has been added to \App\Models\User)
-
 Remove ability to make a booking for earlier today
 
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
-Error reporting form
-
-Contact form (route('contact'))
-
-External login
-
 Create landing page
 
 Add support for english language
-
-Check scheduled job logging stuff (It's not currently doing anything)
 
 
 ### Future releases
@@ -34,6 +24,8 @@ Check scheduled job logging stuff (It's not currently doing anything)
 + BookingController->edit()
     - Find another way to see if day is full inside while loop to avoid so many round trips to DB
 + Link Google calendar and/or iCal
++ Give the client an option not to enter their phone number (they will have to start the call instead of receiving it)
++ External login
 
 ### For a multi-therapist scenario
 
@@ -44,6 +36,7 @@ Check scheduled job logging stuff (It's not currently doing anything)
 + Rewrite UsersController::index to only show non-admin users instead of everyone but the current user.
 + Restrict admin's ability to delete any user (create a moderator role that can do that)
 + Include therapist name and logo in contact form, do a separate form to contact site admin.
++ Replace the logo in /contact/webmaster
 
 ## Config (/config)
 
@@ -128,13 +121,21 @@ Displays a form for updating/inserting bookings that have a state of BOOKING_PEN
 
 'restore' button restores date and time.
 
+## Contact (/contact/{therapist}/query)
+
+Allows a logged in user to get in touch with the therapist, both the client's message and confirmation email get queued to keep response times low.
+
+## Site admin contact (contact/error-reporting)
+
+Allows any user to contact site administrator regarding errors, suggestions or other queries.
 
 
 ## Notes
 
 
-
 ## Deployment TO DO
+
+Add 'verified' middleware to routes
 
 Uncomment line 139 on MercadoPagoController
 `NewBookingEvent::dispatch($booking);`

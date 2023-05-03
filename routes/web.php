@@ -50,17 +50,14 @@ Route::middleware(['auth', 'admin'])->group(function() {
         ->name('config');
 });
 
-// user
+// customer
 Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
-    // Contact forms
+    // Contact forms (for contacting therapist)
     Route::get('contact/{therapist}/query', [ContactController::class, 'contact'])
         ->name('contact');
     Route::post('contact/query', [ContactController::class, 'send'])
         ->name('contact.send');
-    Route::get('contact/error-reporting', [ContactController::class, 'errorReporting'])
-        ->name('contact.error-reporting');
-    Route::post('contact/error-reporting', [ContactController::class, 'sendError'])
-        ->name('contact.error-reporting.send');
+
     // Bookings
     Route::name('user.')->group(function() {
         Route::resource('user/bookings', UserBookingController::class)
@@ -75,11 +72,11 @@ Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
     });
 });
 
-Route::get('hola', function() { return 'hola';})->name('hola');
-
-//=== Contact ===
-// Route::get('/contact', [ContactController::class, 'index'])
-//     ->name('contact');
+//=== Contact (for contacting site admin) ===
+Route::get('contact/webmaster', [ContactController::class, 'webmaster'])
+    ->name('contact.webmaster');
+Route::post('contact/webmaster', [ContactController::class, 'webmasterSend'])
+    ->name('contact.webmaster.send');
 
 //=== Emaill testing ===
 Route::get('/email_test', function() {
@@ -90,7 +87,6 @@ Route::get('/email_test', function() {
         'message' => 'This is a test message',
         'user_id' => 7,
         'therapist_id' => 1,
-
     ]);
     return (new NewMessage($message))->toMail($message->user);
 });

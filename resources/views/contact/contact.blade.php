@@ -2,7 +2,7 @@
 
   <x-slot:header>
     <h1 class="text-left font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-      {{ __('Contact us') }}
+      {{ __('Contact your therapist') }}
     </h1>
   </x-slot>
 
@@ -34,7 +34,7 @@
       <!-- About -->
       <div class="mt-4">
         <x-input-label for="subject" :value="__('Subject')" />
-        <x-text-input id="subject" class="block mt-1 w-full" type="text" name="subject" :value="old('about')" required />
+        <x-text-input id="subject" class="block mt-1 w-full" type="text" name="subject" :value="old('subject')" required />
         <x-input-error :messages="$errors->get('subject')" class="mt-2" />
       </div>
 
