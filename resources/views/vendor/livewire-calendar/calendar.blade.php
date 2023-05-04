@@ -8,11 +8,11 @@
     @includeIf($beforeCalendarView)
   </div>
 
-  <div class="flex sm:rounded-lg overflow-hidden shadow">
-    <div class="overflow-x-auto w-full">
-      <div class="min-w-full overflow-hidden">
+  <div class="flex shadow">
+    {{-- <div class="overflow-x-auto w-full"> --}}
+      <div class="min-w-full">
 
-        <div class="w-full flex flex-row">
+        <div class="w-full flex flex-row sticky top-0">
           @foreach($monthGrid->first() as $day)
             @include($dayOfWeekView, ['day' => $day])
           @endforeach
@@ -32,7 +32,7 @@
           @endforeach
         </div>
         @endforeach
-      </div>
+      {{-- </div> --}}
     </div>
   </div>
 

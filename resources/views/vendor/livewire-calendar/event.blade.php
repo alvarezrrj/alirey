@@ -10,7 +10,9 @@ if ($day->dayOfWeek == 1
  || $day->dayOfWeek == 3
  || $day->dayOfWeek == 4) {
   if ($weekIndex == 0 || $weekIndex == 1 || $weekIndex == 2)
+    // $alignment = 'left';
     $alignment = 'top-left';
+  // if ($weekIndex == 3 || $weekIndex == 4) $alignment = 'left';
   if ($weekIndex == 3 || $weekIndex == 4) $alignment = 'bottom-left';
 }
 else {

@@ -1,4 +1,18 @@
-
+@php
+if ($weekIndex == 4) {
+  switch ($day->dayOfWeek) {
+    case 1:
+      $rounded = 'sm:rounded-es-md';
+      break;
+    case 0:
+      $rounded = 'sm:rounded-ee-md';
+      break;
+    default:
+      $rounded = '';
+      break;
+  }
+} else $rounded = '';
+@endphp
 <div
     ondragenter="onLivewireCalendarEventDragEnter(event, '{{ $componentId }}', '{{ $day }}', '{{ $dragAndDropClasses }}');"
     ondragleave="onLivewireCalendarEventDragLeave(event, '{{ $componentId }}', '{{ $day }}', '{{ $dragAndDropClasses }}');"
@@ -17,7 +31,7 @@
             @if($dayClickEnabled)
                 wire:click="onDayClick({{ $day->year }}, {{ $day->month }}, {{ $day->day }})"
             @endif
-            class="w-full h-full p-2 grid grid-cols-1 grid-rows-6
+            class="{{ $rounded }} w-full h-full p-2 grid grid-cols-1 grid-rows-6
             {{ $dayInMonth
             ?  $isToday
               ? 'bg-skin dark:bg-yellow-400/25'

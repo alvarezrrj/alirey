@@ -125,7 +125,7 @@
             &nbsp;<x-spinner />
           </span>
           <x-text-input
-            disabled="{{$userFound}}"
+            readonly="{{$userFound}}"
             id="firstName"
             name="firstName"
             type="text"
@@ -137,7 +137,7 @@
 
           <x-input-label class="mt-6" for="lastName" :value="__('Last Name')" />
           <x-text-input
-            disabled="{{$userFound}}"
+            readonly="{{$userFound}}"
             id="lastName"
             name="lastName"
             type="text"
@@ -154,7 +154,7 @@
                   <x-code-select
                     class="flexselect inline-block mt-1 w-2/5"
                     :codes="$codes"
-                    disabled="{{$userFound}}"
+                    readonly="{{$userFound}}"
                     id="code"
                     label="Country"
                     name="code_id"
@@ -164,7 +164,7 @@
                     wire:model="code_id"/>
                   <x-text-input
                     class="inline-block mt-1 w-3/5"
-                    disabled="{{$userFound}}"
+                    readonly="{{$userFound}}"
                     id="phone"
                     inputmode="numeric"
                     name="phone"

@@ -30,7 +30,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])
-    ->middleware(['auth', 'verified', 'pending_payment'])->name('dashboard');
+    // Add verified middleware
+    ->middleware(['auth', 'pending_payment'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,6 +42,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // admin
+// Add verified middleware
 Route::middleware(['auth', 'admin'])->group(function() {
     Route::resource('bookings', BookingController::class);
     Route::post('bookings/single-slot-holiday', [BookingController::class, 'singleSlotHoliday'])
@@ -51,6 +53,7 @@ Route::middleware(['auth', 'admin'])->group(function() {
 });
 
 // customer
+// Add verified middleware
 Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
     // Contact forms (for contacting therapist)
     Route::get('contact/{therapist}/query', [ContactController::class, 'contact'])
