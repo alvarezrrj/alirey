@@ -93,3 +93,15 @@ Route::get('/email_test', function() {
     ]);
     return (new NewMessage($message))->toMail($message->user);
 });
+
+Route::get('do_flags', function() {
+    $codes = \App\Models\Code::all();
+    foreach($codes as $code) {
+        if (!isset($code->flag)) {
+            $code->update(['flag' => '&nbsp;&nbsp;&nbsp;&nbsp;']);
+            $code->save;
+        }
+    }
+    echo 'Allisgood';
+    exit;
+});

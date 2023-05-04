@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Code;
 use App\Models\User;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Illuminate\Support\Facades\Auth;
@@ -30,8 +32,6 @@ class BookingForm extends Component implements HasForms
     public $day;
     public $slot_id;
 
-    public $datepicker;
-
     // Booking type modal acknowledgement
     public $ackowledged;
 
@@ -54,22 +54,53 @@ class BookingForm extends Component implements HasForms
         $this->virtual = $this->booking?->virtual;
         $this->day = $this->booking?->day;
         $this->slot_id = $this->booking?->slot_id;
-        $this->form->fill([
-            'datepicker' => $this->booking?->day,
+        $this->dayForm->fill([
+            'day' => $this->booking?->day,
+        ]);
+        $this->codeForm->fill([
+            'code_id' => $this->booking?->user->code->id,
         ]);
     }
 
-    protected function getFormSchema(): array
+    protected function getDayFormSchema(): array
     {
+
         return [
-            DatePicker::make('datepicker')
+            DatePicker::make('day')
                 ->label(__('Date'))
                 ->displayFormat('l jS F Y')
                 ->format('Y-m-d')
                 ->minDate($this->data['first_day'])
                 ->maxDate($this->data['last_day'])
                 ->disabledDates($this->data['disabled'])
-                ->extraAttributes(['class' => 'dark:text-gray-300'])
+                ->extraAttributes(['class' => 'dark:text-gray-300']),
+        ];
+    }
+
+    protected function getCodeFormSchema(): array
+    {
+        $codeOptions = $this->codes->keyBy('id')->map(function($code) {
+            return $code->flag.' +'.$code->code.' '.$code->country;
+        });
+        return [
+            Select::make('code_id')
+                ->label(__('Country code'))
+                ->allowHtml()
+                ->searchable()
+                ->placeholder(__('Country'))
+                ->disablePlaceholderSelection()
+                ->options($codeOptions)
+                ->extraAttributes(['class' => 'dark:text-gray-300 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-lg'])
+        ];
+    }
+
+    protected function getForms(): array
+    {
+        return [
+            'dayForm' => $this->makeForm()
+                ->schema($this->getDayFormSchema()),
+            'codeForm' => $this->makeForm()
+                ->schema($this->getCodeFormSchema()),
         ];
     }
 
@@ -90,18 +121,23 @@ class BookingForm extends Component implements HasForms
             $this->code_id = $user->code_id;
             $this->phone = $user->phone;
         }
-        else $this->userFound = false;
+        else {
+            $this->userFound = false;
+            $this->firstName = '';
+            $this->lastName = '';
+            $this->code_id = '';
+            $this->phone = '';
+        }
     }
 
     public function calClickHandler()
     {
         /* DatePicker is not automatically updating the value of $this->day on
-         * click, for this reason this property is being used to comunicate
+         * click, for this reason this funtion is being used to comunicate
          * the currently selected day to the Alpine component 'slot' so it can
          * render available days
          */
-
-        // $this->day = 'hola';
-        $this->day = $this->form->getState()['datepicker'];
+        $this->day = $this->dayForm->getState()['day'];
     }
+
 }

@@ -27,6 +27,8 @@ Add support for english language
 + Give the client an option not to enter their phone number (they will have to start the call instead of receiving it)
 + External login
 + Sort out calendar drop-down positioning
++ Give admin ability to dissallow last minute bookings
+
 
 ### For a multi-therapist scenario
 

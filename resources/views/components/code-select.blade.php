@@ -15,14 +15,15 @@
     <option value="" disabled @selected(!$value)>{{ __($label) }}</option>
     @foreach ($codes as $code)
     <option value="{{ $code->id }}" @selected($value == $code->id)>
-
+{{--
         {!!
         preg_replace(
             '/U\+/',
             '&#x',
             preg_replace('/ /', ';', trim($code->flag))
             )
-        !!}{!! $code->flag ? ';' : '&nbsp;&nbsp;&nbsp;&nbsp;' !!}
+        !!} --}}
+        {!! $code->flag ?? '&nbsp;&nbsp;&nbsp;&nbsp;' !!}
 
         &nbsp;+{{ $code->code }} {{ $code->country }}
     </option>

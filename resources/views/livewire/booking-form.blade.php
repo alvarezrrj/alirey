@@ -6,6 +6,28 @@
     href="{{ Vite::asset('resources/css/config.css') }}"
     rel="stylesheet"
     type="text/css"  />
+
+{{-- Fix searchable select dark mode issue untill filament team sort it out --}}
+<style>
+  .choices {
+    background: inherit;
+    border-color: inherit;
+    color: inherit;
+    border-radius: inherit;
+  }
+  .choices__inner {
+    background: inherit;
+    border-color: inherit;
+    color: inherit;
+    border-radius: inherit;
+  }
+  .choices__list--dropdown {
+    background: inherit !important;
+    border-color: inherit !important;
+    color: inherit !important;
+    border-radius: inherit !important;
+  }
+</style>
 @endpush
 
 
@@ -83,7 +105,7 @@
 
         @endphp
 
-        @if($is_admin)
+        @if($is_admin && ! isset($booking))
         <label class="form-check-label inline-block text-gray-800 dark:text-gray-200"
         for="toggle_is_booking">
           {{ __('Is booking') }}
@@ -109,23 +131,24 @@
           <input type="hidden" value="{{ $booking?->id }}" name="booking_id">
 
 
-          <x-input-label class="mt-6" for="email" :value="__('Email')" />
+          <x-input-label class="mt-6 inline-block" for="email" :value="__('Email')" />
+          <span class="inline-block text-sm" wire:loading wire:target="email">
+            &nbsp;<x-spinner />
+          </span>
           <x-text-input
             id="email"
             name="email"
             type="text"
             class="mt-1 block w-full"
             :value="old('email', $booking?->user->email)"
+            :readonly="$booking"
             required autofocus autocomplete="email"
             wire:model.lazy="email"/>
           <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-          <x-input-label class="mt-6 inline-block" for="firstName" :value="__('Name')" />
-          <span class="inline-block" wire:loading>
-            &nbsp;<x-spinner />
-          </span>
+          <x-input-label class="mt-6" for="firstName" :value="__('Name')" />
           <x-text-input
-            readonly="{{$userFound}}"
+            :readonly="$userFound"
             id="firstName"
             name="firstName"
             type="text"
@@ -137,7 +160,7 @@
 
           <x-input-label class="mt-6" for="lastName" :value="__('Last Name')" />
           <x-text-input
-            readonly="{{$userFound}}"
+            :readonly="$userFound"
             id="lastName"
             name="lastName"
             type="text"
@@ -147,35 +170,42 @@
             wire:model="lastName"/>
           <x-input-error class="mt-2" :messages="$errors->get('lastName')" />
 
+
+          {{-- Country code --}}
+          <div class="mt-6">
+            <div x-data="{
+                found: @entangle('userFound'),
+                booking: @entangle('booking')
+              }">
+              <template x-if="!found && !booking">
+                {{ $this->codeForm }}
+              </template>
+              <template x-if="found || booking">
+                {{ $this->codeForm->disabled() }}
+              </template>
+            </div>
+            <input
+            type="hidden"
+            name="code_id"
+            wire:model="code_id"
+            >
+            <x-input-error :messages="$errors->get('code_id')" class="mt-2" />
+          </div>
+
           {{-- Telephone Number --}}
           <div class="mt-6">
-              <x-input-label for="phone" :value="__('Telephone Number')" />
-              <div class="flex">
-                  <x-code-select
-                    class="flexselect inline-block mt-1 w-2/5"
-                    :codes="$codes"
-                    readonly="{{$userFound}}"
-                    id="code"
-                    label="Country"
-                    name="code_id"
-                    required
-                    rounded="rounded-l-md"
-                    :value="old('code_id', $booking?->user->code_id)"
-                    wire:model="code_id"/>
-                  <x-text-input
-                    class="inline-block mt-1 w-3/5"
-                    readonly="{{$userFound}}"
-                    id="phone"
-                    inputmode="numeric"
-                    name="phone"
-                    required
-                    rounded="rounded-r-md"
-                    type="text"
-                    :value="old('phone', $booking?->user->phone )"
-                    wire:model="phone"/>
-              </div>
-              <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-              <x-input-error :messages="$errors->get('code_id')" class="mt-2" />
+            <x-input-label for="phone" :value="__('Telephone Number')" />
+            <x-text-input
+              class="mt-1 block w-full"
+              :readonly="$userFound"
+              id="phone"
+              inputmode="numeric"
+              name="phone"
+              required
+              type="text"
+              :value="old('phone', $booking?->user->phone )"
+              wire:model="phone"/>
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
           </div>
 
           @endif
@@ -219,12 +249,10 @@
           <x-input-error class="mt-2" :messages="$errors->get('type')" />
 
           {{-- Date --}}
-          <div class="mt-6"
-            wire:click="calClickHandler">
-            {{ $this->form }}
+          <div class="mt-6" wire:click="calClickHandler">
+            {{ $this->dayForm }}
           </div>
           <x-input-error class="mt-2" :messages="$errors->get('day')" />
-
           <input
             type="hidden"
             name="day"
@@ -241,12 +269,13 @@
 
                 get computedSlots() {
                   this.slots.forEach(s => {
-                    if(this.bookings.some(b =>
-                          b.id != {{ $booking->id ?? -1 }}
-                      && b.day == this.day
-                      && b.slot.id == s.id
-                    ))
-                      s.disabled = true;
+                    if(this.bookings.some(
+                      b => b.id != {{ $booking->id ?? -1 }}
+                        && b.day == this.day
+                        && b.slot.id == s.id
+                    ) || (this.day == (new Date).toISOString().split('T')[0]
+                      && Number(s.start.split(':')[0]) <= (new Date).getHours())
+                    ) s.disabled = true;
                     else
                       s.disabled = false;
                   });
@@ -303,7 +332,7 @@
 
           @if(isset($booking))
           {{-- Paid amount --}}
-          <x-input-label class="mt-6" for="amount" :value="__('Paid ammount')" />
+          <x-input-label class="mt-0" for="amount" :value="__('Paid ammount')" />
           <div class="w-full flex items-center justify-start">
             <span class="text-gray-800 dark:text-gray-200 w-6">$</span>
                 <x-text-input

@@ -37,16 +37,16 @@
 
         {{-- <div wire:click="calClickHandler"> Hola </div> --}}
         {{-- Date --}}
-        <div class="mt-6" id="cal-wrapper"
-        wire:click="calClickHandler">
-        {{ $this->form }}
-        </div>
+        <div class="mt-6" wire:click="calClickHandler">
+        {{ $this->dayForm }}
+      </div>
 
         <input
-        type="hidden"
-        name="day"
-        wire:model="day"
-        >
+          type="hidden"
+          name="day"
+          wire:model="day"
+          >
+        <x-input-error class="mt-2" :messages="$errors->get('day')" />
 
         {{-- Alpine slot --}}
         <div class="mt-6"
@@ -58,12 +58,13 @@
 
             get computedSlots() {
               this.slots.forEach(s => {
-                if(this.bookings.some(b =>
-                      b.id != {{ $booking->id ?? -1 }}
-                  && b.day == this.day
-                  && b.slot.id == s.id
-                ))
-                  s.disabled = true;
+                if(this.bookings.some(
+                  b => b.id != {{ $booking->id ?? -1 }}
+                    && b.day == this.day
+                    && b.slot.id == s.id
+                ) || (this.day == (new Date).toISOString().split('T')[0]
+                  && Number(s.start.split(':')[0]) <= (new Date).getHours())
+                ) s.disabled = true;
                 else
                   s.disabled = false;
               });
