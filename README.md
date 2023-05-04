@@ -4,8 +4,6 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Remove ability to make a booking for earlier today
-
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
 Create landing page
@@ -28,7 +26,9 @@ Add support for english language
 + External login
 + Sort out calendar drop-down positioning
 + Give admin ability to dissallow last minute bookings
-
++ Move single slot holiday component into config
++ Add search in bookings table
++ Sort past bookings descendingly in bookings table
 
 ### For a multi-therapist scenario
 
@@ -128,9 +128,9 @@ Displays a form for updating/inserting bookings that have a state of BOOKING_PEN
 
 Allows a logged in user to get in touch with the therapist, both the client's message and confirmation email get queued to keep response times low.
 
-## Site admin contact (contact/error-reporting)
+## Contact webmaster (/contact/webmaster)
 
-Allows any user to contact site administrator regarding errors, suggestions or other queries.
+Allows anyone to contact the site admin, includes an optional screenshot field (usefull for bug reporting).
 
 
 ## Notes

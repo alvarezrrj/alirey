@@ -26,7 +26,7 @@ use App\Notifications\NewMessage;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])

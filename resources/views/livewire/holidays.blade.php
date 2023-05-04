@@ -14,26 +14,26 @@
 
             <form wire:submit.prevent="submit" class="space-y-4">
                 <x-input-label for="from">{{ __('From') }}
-                    <x-text-input 
-                        class="block mt-1" id="from" 
+                    <x-text-input
+                        class="block mt-1" id="from"
                         :min="date('Y-m-d')"
                         name="from"
                         required
-                        type="date" 
+                        type="date"
                         wire:model="from" />
                     </x-input-label>
                 <x-input-error :messages="$errors->get('from')" class="mt-2" />
-                
+
                 <x-input-label for="until">{{ __('Until') }}
                     <small class="text-gray-500 dark:text-gray-500">
                         &middot; {{ __("Omit it for one-day holidays")}}
                     </small>
                     <div class="flex items-center">
-                        <x-text-input 
-                            class="block mt-1" id="until" 
+                        <x-text-input
+                            class="block mt-1" id="until"
                             :min="date('Y-m-d')"
                             name="until"
-                            type="date" 
+                            type="date"
                             wire:model="until" />
                         <x-secondary-button  class="ml-2" :small="true" type="button"
                             wire:click="resetUntil" >
@@ -65,8 +65,8 @@
                 <tbody>
                 @foreach ($holidays as $holiday)
 
-                    <livewire:holiday-range 
-                        :range="$holiday" 
+                    <livewire:holiday-range
+                        :range="$holiday"
                         :wire:key="$holiday[0]"/>
 
                 @endforeach
