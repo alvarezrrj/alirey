@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'c45b1bde197f03808c673a4ac515524b1441a6fe',
+        'reference' => '7c6ee5692da937ab78ffc1014f1bdc791280e281',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -44,6 +44,15 @@
             'install_path' => __DIR__ . '/../codeat3/blade-ant-design-icons',
             'aliases' => array(),
             'reference' => 'f2ce6b585b103eaf0826b72f5d081137f97c775b',
+            'dev_requirement' => false,
+        ),
+        'codeat3/blade-phosphor-icons' => array(
+            'pretty_version' => '1.5.1',
+            'version' => '1.5.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../codeat3/blade-phosphor-icons',
+            'aliases' => array(),
+            'reference' => '1701dc22cb57b547c662a151e197254a4e46d600',
             'dev_requirement' => false,
         ),
         'cordoval/hamcrest-php' => array(
@@ -511,7 +520,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'c45b1bde197f03808c673a4ac515524b1441a6fe',
+            'reference' => '7c6ee5692da937ab78ffc1014f1bdc791280e281',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(

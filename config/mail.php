@@ -115,4 +115,10 @@ return [
         ],
     ],
 
+    /**
+     * The therapist's email address
+     */
+
+    'therapist_addr' => 'alisonrey.ar@gmail.com',
+
 ];

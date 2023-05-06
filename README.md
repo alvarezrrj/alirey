@@ -4,6 +4,8 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Add sign-up button to login form
+
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
 Create landing page
@@ -137,6 +139,8 @@ Allows anyone to contact the site admin, includes an optional screenshot field (
 
 
 ## Deployment TO DO
+
+Deffer loading of CSS when possible
 
 Add 'verified' middleware to routes
 

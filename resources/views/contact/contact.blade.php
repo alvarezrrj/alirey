@@ -10,7 +10,7 @@
     <x-alert-message key="message"/>
   </div>
 
-  <form method="POST" action="{{ route('contact.send') }}">
+  <form method="POST" action="{{ route('contact.therapist.send') }}">
       @csrf
 
       <input type="hidden" name="therapist_id" value="{{ $therapist->id }}">

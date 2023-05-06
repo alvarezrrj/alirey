@@ -202,6 +202,7 @@ return array(
     'Carbon\\TranslatorImmutable' => $vendorDir . '/nesbot/carbon/src/Carbon/TranslatorImmutable.php',
     'Carbon\\TranslatorStrongTypeInterface' => $vendorDir . '/nesbot/carbon/src/Carbon/TranslatorStrongTypeInterface.php',
     'Codeat3\\BladeAntDesignIcons\\BladeAntDesignIconsServiceProvider' => $vendorDir . '/codeat3/blade-ant-design-icons/src/BladeAntDesignIconsServiceProvider.php',
+    'Codeat3\\BladePhosphorIcons\\BladePhosphorIconsServiceProvider' => $vendorDir . '/codeat3/blade-phosphor-icons/src/BladePhosphorIconsServiceProvider.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Cron\\AbstractField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
     'Cron\\CronExpression' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',

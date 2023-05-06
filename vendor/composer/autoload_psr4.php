@@ -102,6 +102,7 @@ return array(
     'Database\\Factories\\' => array($baseDir . '/database/factories', $vendorDir . '/laravel/pint/database/factories'),
     'DanHarrin\\DateFormatConverter\\' => array($vendorDir . '/danharrin/date-format-converter/src'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
+    'Codeat3\\BladePhosphorIcons\\' => array($vendorDir . '/codeat3/blade-phosphor-icons/src'),
     'Codeat3\\BladeAntDesignIcons\\' => array($vendorDir . '/codeat3/blade-ant-design-icons/src'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),

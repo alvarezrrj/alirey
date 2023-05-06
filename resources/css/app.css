@@ -6,14 +6,14 @@
 
 @layer components {
     .table-select {
-        @apply px-2 py-1 hover:bg-gray-200 dark:hover:bg-gray-600 cursor-pointer focus:bg-gray-200 dark:focus:bg-gray-600;
+        @apply px-2 py-1 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 focus:bg-gray-200 dark:focus:bg-gray-600;
     }
 
     [data-tooltip]::after,
     [data-tooltip]::before,
     [data-tooltip][data-placement=top]::after,
     [data-tooltip][data-placement=top]::before {
-        @apply bg-gray-600  dark:bg-gray-200 text-gray-100 dark:text-gray-900 rounded-md;
+        @apply text-gray-100 bg-gray-600 rounded-md dark:bg-gray-200 dark:text-gray-900;
     }
 
     [data-tooltip]::after,
@@ -21,6 +21,41 @@
         @apply text-gray-600 dark:text-gray-200;
     }
 
+    .home-section-header {
+        @apply text-3xl dark:text-[#8fabc5] text-[#283d50] text-center font-semibold mb-20;
+    }
+
+    .testimonial-title {
+        @apply inline-block w-full mt-0 text-xl font-bold text-center text-gray-900 lg:w-auto me-1 dark:text-gray-100 lg:text-start;
+    }
+
+    .testimonial-subtitle {
+        @apply w-full text-center text-gray-600 dark:text-gray-400 lg:text-start;
+    }
+
+    .testimonial-text {
+        @apply mt-6 mb-4 italic text-center lg:text-start;
+    }
+
+    .testimonial-img {
+        @apply border-4 rounded-full border-skin max-w-[110px] h-auto mb-4;
+    }
+
+    .home-box {
+        @apply relative p-8 mt-0 mb-10 transition-all duration-300 bg-white rounded-lg shadow-lg me-2 ms-2 dark:bg-gray-800 hover:-translate-y-1;
+    }
+
+    .box-title {
+        @apply mb-4 text-lg font-bold ms-10 sm:ms-0;
+    }
+
+    .box-desc {
+        @apply mb-0 text-sm leading-6;
+    }
+
+    .home-card {
+        @apply flex flex-col py-4 text-center text-gray-200 transition-all duration-200 rounded-lg bg-brown dark:text-gray-300 hover:bg-[#9c4d0d];
+    }
 }
 
 [x-cloak] { visibility: hidden !important; }

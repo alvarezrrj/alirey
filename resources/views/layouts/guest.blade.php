@@ -19,17 +19,20 @@
         <!-- Own styles -->
         @stack('styles')
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+    <body class="min-h-screen font-sans antialiased text-gray-900 bg-gray-100 dark:bg-gray-900">
+      <header class="sticky top-0">
+        @include('layouts.guest-navigation')
+      </header>
+        <div class="flex flex-col items-center pt-6 mb-8 sm:justify-center sm:pt-0">
             <div>
                 <a href="/">
-                    <x-vertical-logo class="w-52 h-52 fill-current text-gray-500" />
+                    <x-vertical-logo class="text-gray-500 fill-current w-52 h-52" />
                 </a>
             </div>
 
             {{ $header ?? '' }}
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-md dark:bg-gray-800 sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>

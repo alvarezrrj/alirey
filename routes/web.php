@@ -10,6 +10,8 @@ use App\Models\Booking;
 use App\Notifications\BookingReminder;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Mail\ContactTherapist;
+use App\Mail\EmailConfirmation;
 use App\Models\ContactMessage;
 use App\Notifications\MessageConfirmation;
 use App\Notifications\NewMessage;
@@ -56,10 +58,10 @@ Route::middleware(['auth', 'admin'])->group(function() {
 // Add verified middleware
 Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
     // Contact forms (for contacting therapist)
-    Route::get('contact/{therapist}/query', [ContactController::class, 'contact'])
-        ->name('contact');
-    Route::post('contact/query', [ContactController::class, 'send'])
-        ->name('contact.send');
+    Route::get('contact/{therapist}/query', [ContactController::class, 'therapist'])
+        ->name('contact.therapist');
+    Route::post('contact/query', [ContactController::class, 'therapistSend'])
+        ->name('contact.therapist.send');
 
     // Bookings
     Route::name('user.')->group(function() {
@@ -75,23 +77,25 @@ Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
     });
 });
 
-//=== Contact (for contacting site admin) ===
+//=== Contact ===
+// site admin
 Route::get('contact/webmaster', [ContactController::class, 'webmaster'])
     ->name('contact.webmaster');
 Route::post('contact/webmaster', [ContactController::class, 'webmasterSend'])
     ->name('contact.webmaster.send');
+// therapist
+Route::post('contact', [ContactController::class, 'send'])
+    ->name('contact');
 
 //=== Emaill testing ===
 Route::get('/email_test', function() {
-    $message = new ContactMessage([
-        'name' => 'Test User',
-        'email' => 'alvarezrrj@gmail.com',
-        'about' => 'Test',
-        'message' => 'This is a test message',
-        'user_id' => 7,
-        'therapist_id' => 1,
-    ]);
-    return (new NewMessage($message))->toMail($message->user);
+
+    return new ContactTherapist(
+        name: 'Carlitos',
+        email:  'hello@example.com',
+        my_subject: 'consulta',
+        text: 'Hola como estas, este es el mensaje',
+    );
 });
 
 Route::get('do_flags', function() {

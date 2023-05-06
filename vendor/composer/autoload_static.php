@@ -187,6 +187,7 @@ class ComposerStaticInit34860bf8f76b4086a24ee60363f23369
         'C' => 
         array (
             'Cron\\' => 5,
+            'Codeat3\\BladePhosphorIcons\\' => 27,
             'Codeat3\\BladeAntDesignIcons\\' => 28,
             'Carbon\\' => 7,
         ),
@@ -597,6 +598,10 @@ class ComposerStaticInit34860bf8f76b4086a24ee60363f23369
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
+        'Codeat3\\BladePhosphorIcons\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/codeat3/blade-phosphor-icons/src',
+        ),
         'Codeat3\\BladeAntDesignIcons\\' => 
         array (
             0 => __DIR__ . '/..' . '/codeat3/blade-ant-design-icons/src',
@@ -831,6 +836,7 @@ class ComposerStaticInit34860bf8f76b4086a24ee60363f23369
         'Carbon\\TranslatorImmutable' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/TranslatorImmutable.php',
         'Carbon\\TranslatorStrongTypeInterface' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/TranslatorStrongTypeInterface.php',
         'Codeat3\\BladeAntDesignIcons\\BladeAntDesignIconsServiceProvider' => __DIR__ . '/..' . '/codeat3/blade-ant-design-icons/src/BladeAntDesignIconsServiceProvider.php',
+        'Codeat3\\BladePhosphorIcons\\BladePhosphorIconsServiceProvider' => __DIR__ . '/..' . '/codeat3/blade-phosphor-icons/src/BladePhosphorIconsServiceProvider.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',

@@ -1,0 +1,85 @@
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Regular.ttf);
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Bold.ttf);
+    font-weight: bold;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Italic.ttf);
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Light.ttf);
+    font-weight: lighter;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-BoldItalic.ttf);
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-LightItalic.ttf);
+    font-weight: lighter;
+    font-style: italic;
+    font-display: swap;
+}
+
+body {
+    font-family: 'Lato';
+}
+
+
+/*=== Hero ===*/
+/* #biodescodificacion-inicio { */
+main {
+    width: 100%;
+    position: relative;
+    background:
+        fixed
+        url(../img/sathy/fondo-web-01-01-02.jpg) center bottom no-repeat,
+        #fff5;
+    background-size: cover;
+    /* background-attachment: fixed; */
+    background-blend-mode: color;
+    padding: 80px 0 120px 0;
+}
+
+.webp main {
+    background:
+        fixed
+        url(../img/sathy/fondo-web-01-01-02.webp) center bottom no-repeat,
+        #fff5;
+}
+
+@media (prefers-color-scheme: dark) {
+    main {
+        background:
+            fixed
+            url(../img/sathy/fondo-web-01-01-02.jpg) center bottom no-repeat,
+            #0006;
+    }
+    .webp main {
+        background:
+            fixed
+            url(../img/sathy/fondo-web-01-01-02.webp) center bottom no-repeat,
+            #0006;
+    }
+}

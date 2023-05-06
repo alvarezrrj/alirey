@@ -46,5 +46,7 @@
         @livewire('notifications')
         @stack('libraries')
         @stack('scripts')
+
+
     </body>
 </html>
