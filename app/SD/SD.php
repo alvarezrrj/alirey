@@ -5,6 +5,7 @@ namespace App\SD;
 class SD {
     const admin  = 'admin';
     const client = 'client';
+    const therapist = 'therapist';
 
     const PAYMENT_PENDING   = 'Pending';
     const PAYMENT_CASH      = 'Cash';

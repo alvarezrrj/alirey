@@ -33,11 +33,9 @@ class DatabaseSeeder extends Seeder
 
             // Reinsert roles
             DB::table('roles')->insert([
-                'role' => SD::admin,
-            ]);
-
-            DB::table('roles')->insert([
-                'role' => SD::client,
+                ['role' => SD::admin],
+                ['role' => SD::client],
+                ['role' => SD::therapist]
             ]);
 
             // Insert admin
@@ -46,6 +44,7 @@ class DatabaseSeeder extends Seeder
                 'firstName' => 'admin',
                 'lastName' => 'admin',
                 'email' => 'admin@admin.com',
+                'code_id' => 1,
                 'phone' => '0000000000',
                 'password' => Hash::make('admin'),
             ]);
