@@ -22,7 +22,7 @@ class CodeSeeder extends Seeder
         $json = Storage::disk('local')->get('country_codes.json');
         $codes = json_decode($json, true);
         foreach($codes as $code) {
-            Code::create($code);
+            $code = Code::create($code);
             // Refactor codes from Unicode to HTML entity
             if (!isset($code->flag)) {
                 $code->update(['flag' => '&nbsp;&nbsp;&nbsp;&nbsp;']);
