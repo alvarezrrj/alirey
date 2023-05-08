@@ -16,11 +16,8 @@ return new class extends Migration
      */
     public function up()
     {
-        $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)
-            ->first();
-
-        Schema::table('bookings', function (Blueprint $table) use ($admin) {
-            $table->foreignId('therapist_id')->default($admin->id);
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->foreignId('therapist_id');
         });
     }
 

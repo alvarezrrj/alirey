@@ -2,3 +2,4 @@
 .~lock*
 xtrabackup_backupfiles/
 .env
+.env.prod.*
