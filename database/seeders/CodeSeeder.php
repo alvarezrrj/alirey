@@ -23,6 +23,16 @@ class CodeSeeder extends Seeder
         $codes = json_decode($json, true);
         foreach($codes as $code) {
             Code::create($code);
+            // Refactor codes from Unicode to HTML entity
+            if (!isset($code->flag)) {
+                $code->update(['flag' => '&nbsp;&nbsp;&nbsp;&nbsp;']);
+            } else {
+                $new = str_replace('U+', '&#x', $code->flag);
+                $new = str_replace(' ', ';', $new);
+                $new .= ';';
+                $code->update(['flag' => $new]);
+            }
+            $code->save();
         }
     }
 }

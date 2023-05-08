@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Role;
 use App\Models\User;
-use StaticDetails\SD;
+use App\SD\SD;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         if(! count(User::whereRelation('role', 'role', SD::admin)->get())) {
-    
+
             // Delete all roles
             Role::truncate();
 
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $this->call([ 
+        $this->call([
             CodeSeeder::class,
             ConfigSeeder::class,
          ]);

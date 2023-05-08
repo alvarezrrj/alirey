@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Config;
 use App\Models\User;
+use App\SD\SD;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use StaticDetails\SD;
 
 class ConfigSeeder extends Seeder
 {

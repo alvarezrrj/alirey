@@ -42,6 +42,10 @@
     font-display: swap;
 }
 
+:root {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Lato';
 }

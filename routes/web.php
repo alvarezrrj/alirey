@@ -104,8 +104,12 @@ Route::get('do_flags', function() {
         if (!isset($code->flag)) {
             $code->update(['flag' => '&nbsp;&nbsp;&nbsp;&nbsp;']);
             $code->save;
+        } else {
+            $new = str_replace('U+', '&#x', $code->flag);
+            $new = str_replace(' ', ';', $new);
+            $new .= ';';
+            $code->update(['flag' => $new]);
+            $code->save();
         }
     }
-    echo 'Allisgood';
-    exit;
 });

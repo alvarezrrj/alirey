@@ -138,40 +138,48 @@ Allows anyone to contact the site admin, includes an optional screenshot field (
 ## Notes
 
 
-## Deployment TO DO
+## Deployment
 
-Deffer loading of CSS when possible
+- Deffer loading of CSS when possible
+- Add 'verified' middleware to routes
+- Uncomment line 139 on MercadoPagoController `NewBookingEvent::dispatch($booking);`
+- Update pref->notification_url on MercadoPagoController::create_or_get_preference()
+- Update MAIL_ variables in .env file
+- Updata database variables in .env file 
+- Create database on server
+- Migrate database with
+```
+php artisan migrate
+```
 
-Add 'verified' middleware to routes
+- Seed db with
+```
+php artisan db:seed
+```
 
-Uncomment line 139 on MercadoPagoController
-`NewBookingEvent::dispatch($booking);`
-
-Cache views with 
+- Cache views with 
 
 ```
 php artisan view:cache
 ```
 
-Cache icons with
+- Cache icons with
 
 ```
 php artisan icons:cache
 ```
 
-Write cron entry on server
+- Write cron entry on server
 ```
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```
 
-Run queue worker with
+- Run queue worker with
 ```
 php artisan queue:work  --tries=3 --backoff=60
 ```
 
-Update pref->notification_url on MercadoPagoController::create_or_get_preference()
 
-Update MAIL_ variables in .env file
 
 ## Development
 
