@@ -1,9 +1,9 @@
 <?php
 
+use App\SD\SD;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use StaticDetails\SD;
 
 return new class extends Migration
 {
