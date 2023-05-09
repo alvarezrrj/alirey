@@ -12,10 +12,9 @@ window.Alpine = Alpine;
 Alpine.start();
 
 
-// Get Vite to version and serve these files
+// Get Vite to version theese files during build
 import.meta.glob([
-    '../libraries/**/*',
-    '../img/**/*',
-    '../icons/*',
+    '../libraries/**',
+    '../img/**',
     './*',
 ])

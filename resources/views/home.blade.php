@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Load webp feature detection by modernizer -->
-    @vite(['resources/libraries/modernizr/modernizr-webp.js'])
+    {{-- @vite(['resources/libraries/modernizr/modernizr-webp.js']) --}}
+    <script src="{{ Vite::asset('resources/libraries/modernizr/modernizr-webp.js') }}"></script>
     <!-- Remove noscript class from <html> (stays on on no JS browsers) -->
     <script>
       document.documentElement.classList.remove('noscript');
@@ -14,13 +15,18 @@
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 
     <!-- aos -->
-    @vite(['resources/libraries/aos/aos.css'])
+    {{-- @vite(['resources/libraries/aos/aos.css']) --}}
+    <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/aos/aos.css') }}">
 
     {{-- Loading atribute polyfill --}}
-    @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.css'])
+    {{-- @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.css']) --}}
+    <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.css') }}">
+
+    <!-- Home styles -->
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/home-styles.css') }}">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/css/home-styles.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
     @livewireScripts
@@ -489,7 +495,7 @@
           aria-label="Contactar por WhatsApp"/>
       </a>
 
-  </main>
+    </main>
 
     <!-- ======= Footer ======= -->
     <footer class="w-full text-sm text-gray-300 bg-black">
@@ -597,7 +603,8 @@
     </script>
 
     <!-- Loading attribute polyfill -->
-    @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.umd.js'])
+    {{-- @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.umd.js']) --}}
+    <script type="module" src="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.umd.js') }}"></script>
 
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
