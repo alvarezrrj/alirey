@@ -171,6 +171,7 @@ return [
         'name'                     => 'nombre',
         'national_code'            => 'código nacional',
         'number'                   => 'número',
+        'open_until'               => 'abierto hasta',
         'password'                 => 'contraseña',
         'password_confirmation'    => 'confirmación de la contraseña',
         'phone'                    => 'teléfono',

@@ -1,7 +1,7 @@
 {{-- The whole world belongs to you. --}}
 
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-  <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
+<div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
+  <div class="p-4 bg-white shadow sm:p-8 dark:bg-gray-800 sm:rounded-lg ">
 
     <div class="text-gray-900 dark:text-gray-100">
       {{ __('Status') }}
@@ -28,7 +28,7 @@
       @endforeach
     </div>
 
-    <div class="text-gray-900 dark:text-gray-100 mt-3">
+    <div class="mt-3 text-gray-900 dark:text-gray-100">
       {{ __('Date') }}
       <span wire:loading wire:target="date_filter">
         <x-spinner/>
@@ -53,7 +53,7 @@
       @endforeach
     </div>
 
-    <div class="lg:pl-8 space-y-2 mt-8">
+    <div class="mt-8 space-y-2 lg:pl-8">
 
       <ul>
         {{-- Header --}}
@@ -88,8 +88,8 @@
         </li>
 
         @if(count($bookings) == 0)
-          <li class="mt-6 my-6 md:my-0 px-4 py-3 text-gray-900 dark:text-gray-100">
-            {{ __('There\'s nothing over here')}}
+          <li class="px-4 py-3 my-6 mt-6 text-gray-900 md:my-0 dark:text-gray-100">
+            {{ __('There\'s nothing over here 🏜')}}
           </li>
         @endif
 
@@ -99,12 +99,13 @@
         ? "my-6 rounded-md border border-gray-300 dark:border-gray-700 md:border-0 md:my-0 md:rounded-none px-4 py-3 grid gap-x-1 grid-cols-7 md:grid-cols-9 grid-rows-5 sm:grid-rows-2 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100"
         : "my-6 rounded-md border border-gray-300 dark:border-gray-700 md:border-0 md:my-0 md:rounded-none px-4 py-3 grid gap-x-1 grid-cols-5 md:grid-cols-6 grid-rows-2 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100")
         <li
+          wire:key='{{ $booking->id }}-item'
           class="{{ $li_class }}">
           <div class="row-span-5 sm:row-span-2 md:row-span-1">
             {{ $booking->id }}
           </div>
           @if($is_admin)
-          <div class="col-span-2 sm:col-span-1 font-bold sm:font-normal">
+          <div class="col-span-2 font-bold sm:col-span-1 sm:font-normal">
             {{ $booking->user->firstName }}
           </div>
           @endif
@@ -119,7 +120,7 @@
             {{ $booking->virtual ? __('Virtual') : __('In-person') }}
           </div>
           @if($is_admin)
-          <div class="col-span-6 sm:col-span-1 text-ellipsis overflow-hidden">
+          <div class="col-span-6 overflow-hidden sm:col-span-1 text-ellipsis">
             <span class="text-sm text-gray-600 dark:text-gray-400 sm:hidden">
               {{ __('Payment') }}
             </span>
@@ -127,7 +128,7 @@
             {{ __($booking->payment->status) }}
           </div>
           @endif
-          <div class="col-span-6 sm:col-span-1 text-ellipsis overflow-hidden">
+          <div class="col-span-6 overflow-hidden sm:col-span-1 text-ellipsis">
             @if($is_admin)
             <span class="text-sm text-gray-600 dark:text-gray-400 sm:hidden">
               {{ __('Status') }}
@@ -171,12 +172,12 @@
               </h2>
 
               <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                {{ __('Booking number') }}:&nbsp;{{ $booking->id}}<br />
+                {{ __('Booking number') }}:&nbsp;{{ $booking->id }}<br />
                 {{ __('Name') }}:&nbsp;{{ $booking->user->firstName }} {{ $booking->user->lastName }}<br />
                 {{ __('Date') }}:&nbsp;{{ $booking->day->format('d/m/y') }} - {{ $booking->slot->start->format('H:i') }}
               </p>
 
-              <div class="mt-6 flex justify-end">
+              <div class="flex justify-end mt-6">
                 <x-secondary-button x-on:click="$dispatch('close')">
                   {{ __('Cancel') }}
                 </x-secondary-button>

@@ -437,7 +437,7 @@
                 <div>
                   <x-input-label for="name" :value="__('Name')" />
                   <x-text-input id="name" class="block w-full mt-1" type="text" name="name"
-                    :value="old('name')" required autofocus />
+                    :value="old('name')" required />
                   <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 

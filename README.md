@@ -4,11 +4,7 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Add sign-up button to login form
-
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
-
-Create landing page
 
 Add support for english language
 
@@ -16,11 +12,11 @@ Add support for english language
 ### Future releases
 
 + Color calendar events according to booking/payment status
-+ Support for multi day events (holidays)
++ Support for multi day events (holidays) in calendar
 + Display holidays and non-working days on calendar
 + Support for booking drag and drop on calendar
 + Use filament tables
-+ Instruct admin how user search works via notifications that pop up on disabled input click.
++ Instruct admin how user search works via notifications that pop up on disabled input click (booking-form.blade.php).
 + BookingController->edit()
     - Find another way to see if day is full inside while loop to avoid so many round trips to DB
 + Link Google calendar and/or iCal
@@ -31,6 +27,7 @@ Add support for english language
 + Move single slot holiday component into config
 + Add search in bookings table
 + Sort past bookings descendingly in bookings table
++ Auto delete soft deleted slots with no related bookings in a scheduled job
 
 ### For a multi-therapist scenario
 
@@ -157,19 +154,18 @@ php artisan migrate
 php artisan db:seed
 ```
 
-- Cache views with 
-
-```
-php artisan view:cache
-```
-
+- Create resources/svg directory (It can be empty - necesary for Blade Icons)
 - Cache icons with
-
 ```
 php artisan icons:cache
 ```
 
-- Write cron entry on server
+- Cache views with 
+```
+php artisan view:cache
+```
+
+- Write cron entry on server to run scheduler
 ```
 * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
 ```

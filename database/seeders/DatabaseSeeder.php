@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\User;
 use App\SD\SD;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -47,6 +48,7 @@ class DatabaseSeeder extends Seeder
                 'code_id' => 1,
                 'phone' => '0000000000',
                 'password' => Hash::make('admin'),
+                'email_verified_at' => Carbon::now(),
             ]);
         }
 

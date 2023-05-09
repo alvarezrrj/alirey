@@ -1,9 +1,9 @@
 {{-- In work, do what you enjoy. --}}
 
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-  <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg ">
+<div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
+  <div class="p-4 bg-white shadow sm:p-8 dark:bg-gray-800 sm:rounded-lg ">
 
-    <div class="lg:pl-8 space-y-2 mt-8">
+    <div class="mt-8 space-y-2 lg:pl-8">
 
       <x-text-input
 
@@ -13,7 +13,7 @@
 
       <ul>
         {{-- Header --}}
-        <li class="px-4 py-3 hidden sm:grid grid-cols-10 p-2 text-gray-900 font-bold dark:text-gray-100">
+        <li class="hidden grid-cols-10 p-2 px-4 py-3 font-bold text-gray-900 sm:grid dark:text-gray-100">
           <div class="col-span-1">{{ __('ID') }}</div>
           <div class="col-span-2">{{ __('Name') }}</div>
           <div class="col-span-3">{{ __('Email') }}</div>
@@ -22,26 +22,26 @@
         </li>
 
         @if(count($users) == 0)
-          <li class="mt-6 my-6 md:my-0 px-4 py-3 text-gray-900 dark:text-gray-100">
-            {{ __('There\'s nothing over here') }}
+          <li class="px-4 py-3 my-6 mt-6 text-gray-900 md:my-0 dark:text-gray-100">
+            {{ __('There\'s nothing over here 🏜') }}
           </li>
         @endif
 
         @foreach($users as $user)
-          <li class="my-6 rounded-md border border-gray-300 dark:border-gray-700 md:border-0 md:my-0 md:rounded-none px-4 py-3 grid gap-x-1 grid-cols-10 md:grid-cols-10 grid-rows-4 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">
-            <div class="row-span-4 col-span-1">
+          <li class="grid grid-cols-10 grid-rows-4 px-4 py-3 my-6 text-gray-900 border border-gray-300 rounded-md dark:border-gray-700 md:border-0 md:my-0 md:rounded-none gap-x-1 md:grid-cols-10 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-100">
+            <div class="col-span-1 row-span-4">
               {{ $user->id }}
             </div>
-            <div class="col-span-9 md:col-span-2 text-ellipsis overflow-hidden">
+            <div class="col-span-9 overflow-hidden md:col-span-2 text-ellipsis">
               {{ $user->firstName }} {{ $user->lastName }}
             </div>
-            <div class="col-span-9 md:col-span-3 text-ellipsis overflow-hidden">
+            <div class="col-span-9 overflow-hidden md:col-span-3 text-ellipsis">
               {{ $user->email }}
             </div>
-            <div class="col-span-9 md:col-span-2 text-ellipsis overflow-hidden">
+            <div class="col-span-9 overflow-hidden md:col-span-2 text-ellipsis">
               +{{ $user->code->code }} {{ $user->phone }}
             </div>
-            <div class="md:mt-0 col-span-9 md:col-span-2 flex items-center justify-between md:justify-end">
+            <div class="flex items-center justify-between col-span-9 md:mt-0 md:col-span-2 md:justify-end">
               <a href="{{ route('users.show', $user) }}" class="w-2/5">
                 <x-primary-button :small="true" class="w-full">
                   {{ __('View') }}
@@ -70,7 +70,7 @@
                   {{ __('Name') }}:&nbsp;{{ $user->firstName }} {{ $user->lastName }}<br />
                 </p>
 
-                <div class="mt-6 flex justify-end">
+                <div class="flex justify-end mt-6">
                   <x-secondary-button x-on:click="$dispatch('close')">
                     {{ __('Cancel') }}
                   </x-secondary-button>
