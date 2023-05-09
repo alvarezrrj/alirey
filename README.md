@@ -175,6 +175,12 @@ php artisan view:cache
 php artisan queue:work  --tries=3 --backoff=60
 ```
 
+Intall npm dependencies with
+```
+npm ci
+npm run build
+```
+
 
 
 ## Development
