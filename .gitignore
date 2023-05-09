@@ -4,3 +4,4 @@ xtrabackup_backupfiles/
 .env
 .env.prod.*
 hot
+.HEIC
