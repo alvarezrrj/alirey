@@ -7,12 +7,6 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-                'resources/img/*',
-                'resources/img/sathy/*',
-                'resources/libraries/aos/*',
-                'resources/libraries/loading-attr/*',
-                'resources/libraries/modernizr/*',
-                'resources/libraries/notif/*',
             ],
             refresh: [
                 ...refreshPaths,

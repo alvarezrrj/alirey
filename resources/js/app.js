@@ -14,8 +14,8 @@ Alpine.start();
 
 // Get Vite to version and serve these files
 import.meta.glob([
-    './libraries/**',
-    './img/**',
-    './icons/*',
+    '../libraries/**/*',
+    '../img/**/*',
+    '../icons/*',
     './*',
 ])
