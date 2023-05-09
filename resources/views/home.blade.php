@@ -6,7 +6,7 @@
 
     <!-- Load webp feature detection by modernizer -->
     {{-- @vite(['resources/libraries/modernizr/modernizr-webp.js']) --}}
-    <script src="{{ Vite::asset('resources/libraries/modernizr/modernizr-webp.js') }}"></script>
+    <script src="../resources/libraries/modernizr/modernizr-webp.js"></script>
     <!-- Remove noscript class from <html> (stays on on no JS browsers) -->
     <script>
       document.documentElement.classList.remove('noscript');
@@ -16,14 +16,14 @@
 
     <!-- aos -->
     {{-- @vite(['resources/libraries/aos/aos.css']) --}}
-    <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/aos/aos.css') }}">
+    <link rel="stylesheet" href="../resources/libraries/aos/aos.css">
 
     {{-- Loading atribute polyfill --}}
     {{-- @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.css']) --}}
-    <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.css') }}">
+    <link rel="stylesheet" href="../resources/libraries/loading-attr/loading-attribute-polyfill.css">
 
     <!-- Home styles -->
-    <link rel="stylesheet" href="{{ Vite::asset('resources/css/home-styles.css') }}">
+    <link rel="stylesheet" href="../resources/css/home-styles.css">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -84,12 +84,12 @@
               data-aos="zoom-out"
               data-aos-offset="0">
               <picture>
-                <source srcset="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.webp') }}" type="image/webp">
+                <source srcset="../resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.webp" type="image/webp">
                 <img
                   alt="Biodescodificación y Constelaciones | Alicia Rey"
                   class="w-[320px] max-w-full h-auto rounded-[7rem_5px_/_7rem_5px] border-4 border-skin"
                   height="717"
-                  src="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.jpg') }}"
+                  src="../resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.jpg"
                   title="Biodescodificación y Constelaciones | Alicia Rey"
                   width="528"
                   />
@@ -102,13 +102,13 @@
               data-aos="zoom-in"
               data-aos-offset="0" >
               <picture>
-                <source srcset="{{ Vite::asset('resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical.webp') }}" type="image/webp">
+                <source srcset="../resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical.webp" type="image/webp">
                 <img
                   alt="Biodescodificación y Constelaciones | Alicia Rey"
                   class="h-auto"
                   height="1778"
                   id="hero-logo"
-                  src="{{ Vite::asset('resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical.png') }}"
+                  src="../resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical.png"
                   title="Biodescodificación y Constelaciones | Alicia Rey"
                   width="1778"
                   />
@@ -152,13 +152,13 @@
                   <div class="flex flex-wrap justify-center lg:flex-nowrap testimonial-item lg:justify-start">
 										<noscript class="loading-lazy">
 											<picture>
-												<source srcset="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion.webp') }}" type="image/webp">
+												<source srcset="../resources/img/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion.webp" type="image/webp">
 												<img
 													 alt="Biodescodificación y Constelaciones | Alicia Rey"
 													 class="h-auto testimonial-img"
 													 height="693"
 													 loading="lazy"
-													 src="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion.jpg') }}"
+													 src="../resources/img/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion.jpg"
 													 title="Biodescodificación y Constelaciones | Alicia Rey"
 													 width="694"
 													 />
@@ -180,13 +180,13 @@
                   <div class="flex flex-wrap justify-center lg:flex-nowrap testimonial-item lg:justify-start">
 										<noscript class="loading-lazy">
 											<picture>
-												<source srcset="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.webp') }}" type="image/webp">
+												<source srcset="../resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.webp" type="image/webp">
 												<img
 													 alt="Biodescodificación y Constelaciones | Testimoniosy"
 													 class="h-auto testimonial-img"
 													 height="523"
 													 loading="lazy"
-													 src="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.jpg') }}"
+													 src="../resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.jpg"
 													 title="Biodescodificación y Constelaciones | Testimonios"
 													 width="540"
 													 />
@@ -226,13 +226,13 @@
                   <div class="flex flex-wrap justify-center lg:flex-nowrap testimonial-item lg:justify-start">
 										<noscript class="loading-lazy">
 											<picture>
-												<source srcset="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_testimonio2_beneficios_de_biodescodificacion.webp') }}" type="image/webp">
+												<source srcset="../resources/img/biodescodificacion_constelaciones_testimonio2_beneficios_de_biodescodificacion.webp" type="image/webp">
 												<img
 													 alt="Biodescodificación y Constelaciones | Testimoniosy"
 													 class="h-auto testimonial-img"
 													 height="814"
 													 loading="lazy"
-													 src="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_testimonio2_beneficios_de_biodescodificacion.jpg') }}"
+													 src="../resources/img/biodescodificacion_constelaciones_testimonio2_beneficios_de_biodescodificacion.jpg"
 													 title="Biodescodificación y Constelaciones | Testimonios"
 													 width="813"
 													 />
@@ -506,14 +506,14 @@
             <div class="col-span-3 p-4 pt-0 mb-8 border-l md:col-span-1">
               <noscript class="loading-lazy">
                 <picture>
-                  <source srcset="{{ Vite::asset('resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_footer.webp') }}"
+                  <source srcset="../resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_footer.webp"
                   type="image/webp">
                   <img
                     alt="Biodescodificación y Constelaciones | Alicia Rey"
                     class="h-auto max-w-[4rem]"
                     height="507"
                     loading="lazy"
-                    src="{{ Vite::asset('resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_footer.png') }}"
+                    src="../resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_footer.png"
                     title="Biodescodificación y Constelaciones | Alicia Rey"
                     width="507"
                     />
@@ -592,7 +592,7 @@
     </footer><!-- End Footer -->
 
     <!-- aos -->
-    <script src="{{ Vite::asset('resources/libraries/aos/aos.js') }}"></script>
+    <script src="../resources/libraries/aos/aos.js"></script>
     <script>
       AOS.init({
         duration: 1000,
@@ -604,7 +604,7 @@
 
     <!-- Loading attribute polyfill -->
     {{-- @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.umd.js']) --}}
-    <script type="module" src="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.umd.js') }}"></script>
+    <script type="module" src="../resources/libraries/loading-attr/loading-attribute-polyfill.umd.js"></script>
 
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
