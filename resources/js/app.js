@@ -14,8 +14,6 @@ Alpine.start();
 
 // Get Vite to version these files during build
 import.meta.glob([
-    '../libraries/**',
     '../img/**',
-    '../css/*',
     './*',
-])
+]);

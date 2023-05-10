@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Load webp feature detection by modernizer -->
-    {{-- @vite(['resources/libraries/modernizr/modernizr-webp.js']) --}}
-    <script src="{{ Vite::asset('resources/libraries/modernizr/modernizr-webp.js') }}"></script>
+    @vite('resources/libraries/modernizr/modernizr-webp.js')
+    {{-- <script src="{{ Vite::asset('resources/libraries/modernizr/modernizr-webp.js') }}"></script> --}}
+    {{-- <script src="{{ asset('build/assets/libraries/modernizr/modernizr-webp.js') }}"></script> --}}
     <!-- Remove noscript class from <html> (stays on on no JS browsers) -->
     <script>
       document.documentElement.classList.remove('noscript');
@@ -15,15 +16,18 @@
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 
     <!-- aos -->
-    {{-- @vite(['resources/libraries/aos/aos.css']) --}}
-    <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/aos/aos.css') }}">
+    {{-- @vite('resources/libraries/aos/aos.css') --}}
+    {{-- <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/aos/aos.css') }}"> --}}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     {{-- Loading atribute polyfill --}}
-    {{-- @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.css']) --}}
-    <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.css') }}">
+    @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.css'])
+    {{-- <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.css') }}"> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('build/assets/libraries/loading-attr/loading-attribute-polyfill.css') }}"> --}}
 
     <!-- Home styles -->
-    <link rel="stylesheet" href="{{ Vite::asset('resources/css/home-styles.css') }}">
+    @vite('resources/css/home-styles.css')
+    {{-- <link rel="stylesheet" href="{{ Vite::asset('resources/css/home-styles.css') }}"> --}}
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -82,7 +86,7 @@
             <div class="flex items-center justify-center w-4/5 md:w-1/2 lg:order-2"
               data-aos-delay="200"
               data-aos="zoom-out"
-              data-aos-offset="0">
+              >
               <picture>
                 <source srcset="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.webp') }}" type="image/webp">
                 <img
@@ -100,7 +104,7 @@
             <div class="flex flex-col items-center justify-center w-4/5 text-center lg:order-1 md:text-start md:w-1/2"
               data-aos-delay="100"
               data-aos="zoom-in"
-              data-aos-offset="0" >
+               >
               <picture>
                 <source srcset="{{ Vite::asset('resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical.webp') }}" type="image/webp">
                 <img
@@ -146,7 +150,7 @@
                 class="main-carousel"
                 data-flickity='{"prevNextButtons": false, "autoPlay": 4000}'
                 data-aos="fade-up"
-                data-aos-offset="0">
+                >
 
                 <div class="carousel-cell">
                   <div class="flex flex-wrap justify-center lg:flex-nowrap testimonial-item lg:justify-start">
@@ -263,7 +267,7 @@
 
         {{-- What is it --}}
         <section id="biodescodificacion-que-es" class="pb-20 border-b border-skin"
-          data-aos="fade-up" data-aos-offset="0">
+          data-aos="fade-up" >
 
           <header>
             <h3 class="home-section-header">¿Que es la Bioconstelación?</h3>
@@ -275,7 +279,7 @@
           <div class="flex flex-wrap justify-center">
 
             <div class="w-full md:w-1/2" data-aos="zoom-in" data-aos-delay="100"
-              data-aos-offset="0">
+              >
               <div class="home-box">
                 <h4 class="box-title">
                   Biodescodificación
@@ -287,7 +291,7 @@
             </div>
 
             <div class="w-full md:w-1/2" data-aos="zoom-in" data-aos-delay="200"
-              data-aos-offset="0">
+              >
               <div class="home-box">
                 <h4 class="box-title">
                   Constelación
@@ -299,7 +303,7 @@
             </div>
 
             <div class="w-full md:w-3/5" data-aos="zoom-in" data-aos-delay="100"
-              data-aos-offset="0">
+              >
               <div class="home-box">
                 <h4 class="box-title">
                   ¿Cómo se desarrolla una sesión de&nbsp;bioconstelación?
@@ -316,10 +320,7 @@
           </div>
 
           {{-- CTA --}}
-          <div class="flex justify-center mt-12"
-            data-aos="zoom-in"
-            data-aos-delay="200"
-            data-aos-offset="0">
+          <div class="flex justify-center mt-12">
             <a target="_blank" href="{{ route('user.bookings.create') }}">
               <x-primary-button>
                 Reservá tu consulta
@@ -344,7 +345,7 @@
           <div class="grid grid-rows-3 gap-4 md:grid-cols-5 lg:grid-rows-2 lg:grid-cols-12">
 
             <div class="row-start-1 row-end-2 md:col-start-2 md:col-span-3 lg:col-start-2 lg:col-span-5"
-              data-aos="fade-right" data-aos-delay="200" data-aos-offset="0">
+              data-aos="fade-right" data-aos-delay="200" >
               {{-- <div class="w-full mb-4 md:w-3/4 lg:w-1/2"> --}}
               <div class="h-full home-card">
                 <p class="flex justify-center">
@@ -364,7 +365,7 @@
             </div>
 
             <div class=" md:col-start-2 md:col-span-3 lg:col-span-5"
-              data-aos="fade-left" data-aos-delay="200" data-aos-offset="0">
+              data-aos="fade-left" data-aos-delay="200" >
               <div class="home-card">
                 <p class="flex justify-center">
                   <x-bi-chat-square-text class="w-12 h-12"/>
@@ -384,7 +385,7 @@
             </div>
 
             <div class="md:col-start-2 md:col-span-3 lg:col-span-8 lg:col-start-3"
-              data-aos="fade-up" data-aos-offset="-150" data-aos-delay="200">
+              data-aos="fade-up"  data-aos-delay="200">
               <div class="home-card">
                 <p class="flex justify-center">
                   <x-bi-arrow-clockwise class="w-12 h-12"/>
@@ -404,8 +405,7 @@
           </div>
 
           {{-- CTA --}}
-          <div class="flex justify-center mt-12"
-            data-aos="zoom-in" data-aos-delay="200" data-aos-offset="0">
+          <div class="flex justify-center mt-12">
             <a target="_blank" href="{{ route('user.bookings.create') }}">
               <x-primary-button>
                 Reservá tu consulta
@@ -420,7 +420,7 @@
 
         {{-- Contact --}}
         <section id="biodescodificacion-contacto" class="pb-20 border-b border-skin"
-          data-aos="fade-up" data-aos-offset="0">
+          data-aos="fade-up">
           <header>
             <h3 class="home-section-header">¡Hagamos Contacto!</h3>
             <p class="m-auto text-center text-gray-700 pb-14 dark:text-gray-300">
@@ -592,19 +592,23 @@
     </footer><!-- End Footer -->
 
     <!-- aos -->
-    <script src="{{ Vite::asset('resources/libraries/aos/aos.js') }}"></script>
+    {{-- @vite('resources/libraries/aos/aos.js') --}}
+    {{-- <script src="{{ Vite::asset('resources/libraries/aos/aos.js') }}"></script> --}}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init({
         duration: 1000,
         easing: 'ease-in-out',
         once: true,
-        mirror: false
+        mirror: false,
+        offset: -500,
+        anchorPlacement: 'center-center',
       })
     </script>
 
     <!-- Loading attribute polyfill -->
-    {{-- @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.umd.js']) --}}
-    <script type="module" src="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.umd.js') }}"></script>
+    @vite('resources/libraries/loading-attr/loading-attribute-polyfill.umd.js')
+    {{-- <script type="module" src="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.umd.js') }}"></script> --}}
 
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 

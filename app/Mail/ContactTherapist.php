@@ -32,7 +32,7 @@ class ContactTherapist extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject ?? 'New message from the web',
+            subject: $this->subject ?? __('New message from the web'),
             from: $this->email,
             replyTo: $this->email
         );

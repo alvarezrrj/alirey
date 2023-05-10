@@ -27,7 +27,7 @@ class EmailConfirmation extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: __('Email Confirmation'),
+            subject: __('We got your message'),
         );
     }
 

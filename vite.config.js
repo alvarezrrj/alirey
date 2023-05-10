@@ -7,6 +7,14 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/libraries/modernizr/modernizr-webp.js',
+                'resources/libraries/aos/aos.css',
+                'resources/libraries/loading-attr/loading-attribute-polyfill.css',
+                'resources/css/home-styles.css',
+                'resources/libraries/aos/aos.js',
+                'resources/libraries/loading-attr/loading-attribute-polyfill.umd.js',
+                'resources/libraries/notif/notif.js',
+                'resources/css/config.css',
             ],
             refresh: [
                 ...refreshPaths,
