@@ -5,6 +5,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
+                // Stick in here any assets you wanna inject into blade views using @vite
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/libraries/modernizr/modernizr-webp.js',
@@ -15,6 +16,7 @@ export default defineConfig({
                 'resources/libraries/loading-attr/loading-attribute-polyfill.umd.js',
                 'resources/libraries/notif/notif.js',
                 'resources/css/config.css',
+                'resources/libraries/flexselect/flexselect.css',
             ],
             refresh: [
                 ...refreshPaths,

@@ -144,10 +144,22 @@ Allows anyone to contact the site admin, includes an optional screenshot field (
 - Update MAIL_ variables in .env file
 - Updata database variables in .env file 
 - Create database on server
+- Install composer dependencies with
+``` 
+composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+```
+
+- Install npm dependencies and bundle assets with
+```
+npm ci
+npm run build
+```
+
 - Migrate database with
 ```
-php artisan migrate
+php artisan migrate --force
 ```
+(Use `--force` to allow migrating in production)
 
 - Seed db with
 ```
@@ -175,11 +187,6 @@ php artisan view:cache
 php artisan queue:work  --tries=3 --backoff=60
 ```
 
-Intall npm dependencies with
-```
-npm ci
-npm run build
-```
 
 
 
