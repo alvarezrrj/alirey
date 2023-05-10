@@ -8,6 +8,7 @@ export default defineConfig({
                 // Stick in here any assets you wanna inject into blade views using @vite
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/register.js',
                 'resources/libraries/modernizr/modernizr-webp.js',
                 'resources/libraries/aos/aos.css',
                 'resources/libraries/loading-attr/loading-attribute-polyfill.css',
