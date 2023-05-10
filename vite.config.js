@@ -17,6 +17,7 @@ export default defineConfig({
                 'resources/libraries/notif/notif.js',
                 'resources/css/config.css',
                 'resources/libraries/flexselect/flexselect.css',
+                'resources/libraries/flexselect/liquidmetal.js',
             ],
             refresh: [
                 ...refreshPaths,
