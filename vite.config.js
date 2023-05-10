@@ -18,6 +18,7 @@ export default defineConfig({
                 'resources/css/config.css',
                 'resources/libraries/flexselect/flexselect.css',
                 'resources/libraries/flexselect/liquidmetal.js',
+                'resources/libraries/flexselect/jquery.flexselect.js',
             ],
             refresh: [
                 ...refreshPaths,
