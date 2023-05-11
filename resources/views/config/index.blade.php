@@ -2,9 +2,9 @@
 <x-app-layout>
 
     @push('styles')
-        <link 
-            href="{{ Vite::asset('resources/css/config.css') }}"
-            rel="stylesheet" 
+        <link
+            href="{{ Vite::asset('resources/css/toggle.css') }}"
+            rel="stylesheet"
             type="text/css"  />
     @endpush
 

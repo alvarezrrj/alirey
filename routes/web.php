@@ -98,18 +98,18 @@ Route::get('/email_test', function() {
     );
 });
 
-Route::get('do_flags', function() {
-    $codes = \App\Models\Code::all();
-    foreach($codes as $code) {
-        if (!isset($code->flag)) {
-            $code->update(['flag' => '&nbsp;&nbsp;&nbsp;&nbsp;']);
-            $code->save;
-        } else {
-            $new = str_replace('U+', '&#x', $code->flag);
-            $new = str_replace(' ', ';', $new);
-            $new .= ';';
-            $code->update(['flag' => $new]);
-            $code->save();
-        }
-    }
-});
+// Route::get('do_flags', function() {
+//     $codes = \App\Models\Code::all();
+//     foreach($codes as $code) {
+//         if (!isset($code->flag)) {
+//             $code->update(['flag' => '&nbsp;&nbsp;&nbsp;&nbsp;']);
+//             $code->save;
+//         } else {
+//             $new = str_replace('U+', '&#x', $code->flag);
+//             $new = str_replace(' ', ';', $new);
+//             $new .= ';';
+//             $code->update(['flag' => $new]);
+//             $code->save();
+//         }
+//     }
+// });

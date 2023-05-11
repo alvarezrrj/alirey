@@ -2,11 +2,7 @@
 
 {{-- Toggle switch styles --}}
 @push('styles')
-<link
-    href="{{ Vite::asset('resources/css/config.css') }}"
-    rel="stylesheet"
-    type="text/css"  />
-
+  @vite('resources/css/toggle.css')
 {{-- Fix searchable select dark mode issue untill filament team sort it out --}}
 <style>
   .choices {

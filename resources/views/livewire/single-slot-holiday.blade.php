@@ -6,15 +6,15 @@
     type="text/css"  />
 @endpush
 
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+<div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
 
   <x-alert-error key="overlap" />
 
-  <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-    <div class="max-w-xl sm:pl-8 space-y-6 text-gray-900 dark:text-gray-100 ">
+  <div class="p-4 bg-white shadow sm:p-8 dark:bg-gray-800 sm:rounded-lg">
+    <div class="max-w-xl space-y-6 text-gray-900 sm:pl-8 dark:text-gray-100 ">
 
       @if($is_admin)
-      <label class="form-check-label inline-block text-gray-800 dark:text-gray-200"
+      <label class="inline-block text-gray-800 form-check-label dark:text-gray-200"
       for="toggle_is_booking">
         {{ __('Is booking') }}
         <x-toggle
@@ -77,7 +77,7 @@
             <x-input-label for="slot_id" :value="__('Slot')" class="mt-6"/>
             <x-select-input id="slot_id"
               x-model="slot_id"
-              class="inline-block mt-1 w-full mb-1"
+              class="inline-block w-full mt-1 mb-1"
               type="text"
               name="slot_id"
               wire:model="slot_id">

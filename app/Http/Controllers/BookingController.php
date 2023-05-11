@@ -33,10 +33,6 @@ class BookingController extends Controller
      */
     public function index()
     {
-        /**
-         * TO DO
-         *  pending, completed, cancelled
-         */
         return view('bookings.index');
     }
 
@@ -49,8 +45,6 @@ class BookingController extends Controller
     {
         return view('bookings.upsert', [
             'booking' => null,
-            'codes' => Code::all(),
-            'data' => $this->getData(),
         ]);
     }
 
@@ -211,7 +205,7 @@ class BookingController extends Controller
         return Redirect::back();
     }
 
-    public function getData($booking = null)
+    static function getData($booking = null)
     {
         $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
         $working_days = $admin->config->working_days;

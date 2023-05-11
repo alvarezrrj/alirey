@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\BookingController;
 use App\Models\Code;
 use App\Models\User;
 use Filament\Forms\Components\DatePicker;
@@ -44,6 +45,8 @@ class BookingForm extends Component implements HasForms
 
     public function mount()
     {
+        $this->data = BookingController::getData();
+        $this->codes = Code::all();
         $this->is_admin = Auth::user()->isAdmin();
 
         $this->firstName = $this->booking?->user->firstName;
@@ -135,9 +138,12 @@ class BookingForm extends Component implements HasForms
         /* DatePicker is not automatically updating the value of $this->day on
          * click, for this reason this funtion is being used to comunicate
          * the currently selected day to the Alpine component 'slot' so it can
-         * render available days
+         * render available days.
+         *
+         * Calling getState() validates the form and populates its corresponding
+         * public properties
          */
-        $this->day = $this->dayForm->getState()['day'];
+        $this->dayForm->getState();
     }
 
 }

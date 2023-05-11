@@ -3,7 +3,7 @@
 
     <x-slot name="header">
 
-      <h2 class="inline-block ml-2 font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+      <h2 class="inline-block ml-2 text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
         @if(isset($booking))
           {{ __('Edit booking') }}
         @else
@@ -15,11 +15,7 @@
 
     <div class="py-12 space-y-6">
 
-      <livewire:booking-form 
-        :codes="$codes"
-        :booking="$booking"
-        :data="$data"
-      />
+      <livewire:booking-form :booking="$booking" />
 
     </div>
 

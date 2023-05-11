@@ -4,6 +4,9 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Replace jquery.flexselect for filament Select
+Delete all felxselect related stuff
+
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
 Add support for english language
@@ -28,6 +31,7 @@ Add support for english language
 + Add search in bookings table
 + Sort past bookings descendingly in bookings table
 + Auto delete soft deleted slots with no related bookings in a scheduled job
++ Sort out the roles situation
 
 ### For a multi-therapist scenario
 
@@ -186,7 +190,7 @@ php artisan view:cache
 ```
 php artisan queue:work  --tries=3 --backoff=60
 ```
-
+Learn how to keep the process running with [Supervisor](https://laravel.com/docs/10.x/queues#supervisor-configuration)
 
 
 
@@ -217,9 +221,9 @@ $ curl -X POST -H 'Content-Type: application/json' 'http://127.0.0.1:8000/api/we
 
 Start the queue worker with
 ``` 
-php artisan queue:listen --tries=3 --backoff=3
+php artisan queue:work
 ```
-This alternative to `queue:work` listens for changes in the codebase and restarts the worker but is less efficient than the former.
+Needs to be restarted after changing the codebase
 Learn how to keep the process running with [Supervisor](https://laravel.com/docs/10.x/queues#supervisor-configuration)
 
 ## Built With

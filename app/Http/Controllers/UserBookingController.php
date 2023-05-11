@@ -40,8 +40,6 @@ class UserBookingController extends Controller
     {
         return view('bookings.upsert', [
             'booking' => null,
-            'codes' => Code::all(),
-            'data' => (new BookingController)->getData(),
         ]);
     }
 

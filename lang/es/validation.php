@@ -137,6 +137,7 @@ return [
         'birthday'                 => 'cumpleaños',
         'body'                     => 'contenido',
         'city'                     => 'ciudad',
+        'code_id'                  => 'código de pais',
         'content'                  => 'contenido',
         'country'                  => 'país',
         'created_at'               => 'creado el',
