@@ -1,6 +1,6 @@
 {{-- In work, do what you enjoy. --}}
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-    <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg space-y-6">
+<div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
+    <div class="p-4 space-y-6 bg-white shadow sm:p-8 dark:bg-gray-800 sm:rounded-lg">
 
         <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
             {{ __('Holidays') }}
@@ -9,6 +9,7 @@
         <x-alert-error key="bookings" />
         <x-alert-warning key="holiday" />
         <x-alert-message />
+
 
         <div class="max-w-xl sm:pl-8">
 
@@ -44,16 +45,17 @@
                 <x-input-error :messages="$errors->get('until')" class="mt-2" />
 
                 <x-primary-button
-                    :disabled="$bookings_exist || $holiday_overlap"
-                >{{ __('Save') }}</x-primary-button>
+                    :disabled="$bookings_exist || $holiday_overlap">
+                    {{ __('Save') }}
+                </x-primary-button>
             </form>
 
             @if(count($holidays))
 
-            <h3 class="text-gray-900 dark:text-gray-100 mt-10">
+            <h3 class="mt-10 text-gray-900 dark:text-gray-100">
                 {{ __('Holiday plans') }}
             </h3>
-            <table class="w-full text-left text-gray-900 dark:text-gray-100 mt-2">
+            <table class="w-full mt-2 text-left text-gray-900 dark:text-gray-100">
                 <thead>
                     <tr class="odd:bg-gray-100 dark:odd:bg-gray-900">
                         <th class="p-2">{{ __('From') }}</th>
@@ -76,6 +78,19 @@
             @endif
 
         </div>
+
+        <h2 class="!mt-12 text-lg font-medium text-gray-900 dark:text-gray-100">
+          {{ __('Single slot closure') }}
+        </h2>
+        <p class="!mt-1 text-sm text-gray-500">
+          {{ __("Here you can close a single slot for a specific day") }}
+        </p>
+
+
+        <div class="max-w-xl">
+          <livewire:booking-form :is_booking="false" />
+        </div>
+
     </div>
 </div>
 

@@ -24,7 +24,7 @@ class MercadoPagoController extends Controller
             {
                 $booking->delete();
                 // remove booking id from session to keep navigation.blade.php
-                // from showing the notification badge 
+                // from showing the notification badge
                 session()->forget('pending_payment');
                 return false;
             } else {
@@ -33,15 +33,15 @@ class MercadoPagoController extends Controller
         }
 
         $now = Carbon::now();
-    
+
         $pref = new \MercadoPago\Preference();
 
         // Excluded payment methods
-        $payment_methods = [ 
-            'excluded_payment_methods' => [], 
+        $payment_methods = [
+            'excluded_payment_methods' => [],
             'excluded_payment_types'   => [
                 ['id' => 'ticket']
-            ]   
+            ]
         ];
 
         $item                   = new \MercadoPago\Item();
@@ -66,15 +66,15 @@ class MercadoPagoController extends Controller
         $pref->expiration_date_to   = $now->addMinutes(10)->format('c');
 
         $pref->back_urls        = [
-            'success' => route('user.bookings.confirmation', $booking),
-            'failure' => route('user.bookings.failure'),
+            'success' => route('bookings.confirmation', $booking),
+            'failure' => route('bookings.failure'),
         ];
 
         // Allows me to access the booking ID from the webhook notification
-        $pref->external_reference   = $booking->id;              
+        $pref->external_reference   = $booking->id;
 
         // Referencia en el resumen de tarjeta
-        $pref->statement_descriptor = "AR-Bioconstelaciones";   
+        $pref->statement_descriptor = "AR-Bioconstelaciones";
 
         // Retrieve url from config file, depends on environment
         $pref->notification_url = App::environment('local')
@@ -103,7 +103,7 @@ class MercadoPagoController extends Controller
         return $response->json();
     }
 
-    public function webhook(Request $request) 
+    public function webhook(Request $request)
     {
         if($request->input('type') == 'payment')
         {
@@ -118,7 +118,7 @@ class MercadoPagoController extends Controller
                 $booking_id = $merchant_order->external_reference;
 
                 $booking = Booking::find($booking_id);
-                
+
                 // Update payment status
                 DB::transaction(function () use ($booking, $mp_id, $paid_amount) {
                     $booking->payment()->update([
@@ -134,7 +134,7 @@ class MercadoPagoController extends Controller
                 $booking->pref_expiry = null;
                 $booking->save();
 
-                // Now that payment is confirmed, dispatch NewBookingEvent. 
+                // Now that payment is confirmed, dispatch NewBookingEvent.
                 // Sends emails.
                 //NewBookingEvent::dispatch($booking);
             }

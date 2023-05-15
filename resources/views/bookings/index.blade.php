@@ -4,18 +4,15 @@
     <x-slot name="header">
 
       <div class="flex justify-between">
-        <h2 class="inline-block font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="inline-block text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
             {{ __('Bookings') }}
         </h2>
 
-        @php($route = Auth::user()->isAdmin()
-        ? route('bookings.create')
-        : route('user.bookings.create'))
-        <a 
+        <a
           aria-label="{{ __('New booking') }}"
           data-tooltip="{{ __('New booking') }}"
           data-placement="left"
-          href="{{ $route }}">
+          href="{{ route('bookings.create', $therapist) }}">
           <x-primary-button >
             <x-antdesign-plus-o width="22" height="22"/>
           </x-primary-button>

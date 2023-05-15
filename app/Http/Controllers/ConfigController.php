@@ -5,9 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Config;
 use App\Models\User;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ConfigController extends Controller
 {

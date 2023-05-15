@@ -5,16 +5,17 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserBookingController;
-use App\Models\Booking;
-use App\Notifications\BookingReminder;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Mail\ContactTherapist;
+use App\Models\Booking;
+use App\Notifications\BookingReminder;
 use App\Mail\EmailConfirmation;
 use App\Models\ContactMessage;
+use App\Models\User;
 use App\Notifications\MessageConfirmation;
 use App\Notifications\NewMessage;
+use Illuminate\Support\Facades\Password;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,12 +44,24 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+// everyone
+// Add verified middleware
+Route::middleware(['auth', 'pending_payment'])->group(function() {
+    Route::resource('bookings', BookingController::class)
+        ->only(['index', 'show', 'edit', 'update', 'destroy']);
+    Route::get('bookings/{therapist}/create', [BookingController::class, 'create'])
+        ->name('bookings.create');
+    Route::get('bookings/{booking}/checkout', [BookingController::class, 'checkout'])
+        ->name('bookings.checkout');
+    Route::get('bookings/{booking}/confirmation', [BookingController::class, 'confirmation'])
+        ->name('bookings.confirmation');
+    Route::get('failed_payment', [BookingController::class, 'failure'])
+        ->name('bookings.failure');
+});
+
 // admin
 // Add verified middleware
 Route::middleware(['auth', 'admin'])->group(function() {
-    Route::resource('bookings', BookingController::class);
-    Route::post('bookings/single-slot-holiday', [BookingController::class, 'singleSlotHoliday'])
-        ->name('bookings.singleSlotHoliday');
     Route::resource('users', UsersController::class);
     Route::get('/config', [ConfigController::class, 'index'])
         ->name('config');
@@ -56,24 +69,14 @@ Route::middleware(['auth', 'admin'])->group(function() {
 
 // customer
 // Add verified middleware
-Route::middleware(['auth', 'customer', 'pending_payment'])->group(function() {
+Route::middleware(['auth', 'customer'])->group(function() {
     // Contact forms (for contacting therapist)
     Route::get('contact/{therapist}/query', [ContactController::class, 'therapist'])
         ->name('contact.therapist');
     Route::post('contact/query', [ContactController::class, 'therapistSend'])
         ->name('contact.therapist.send');
-
     // Bookings
     Route::name('user.')->group(function() {
-        Route::resource('user/bookings', UserBookingController::class)
-            ->only(['index', 'show', 'create', 'store', 'destroy']);
-        Route::get('user/bookings/{booking}/checkout', [UserBookingController::class, 'checkout'])
-            ->name('bookings.checkout');
-        Route::get('user/bookings/{booking}/confirmation',
-                [UserBookingController::class, 'confirmation'])
-                ->name('bookings.confirmation');
-        Route::get('user/failed_payment', [UserBookingController::class, 'failure'])
-                ->name('bookings.failure');
     });
 });
 
@@ -96,6 +99,11 @@ Route::get('/email_test', function() {
         my_subject: 'consulta',
         text: 'Hola como estas, este es el mensaje',
     );
+});
+
+Route::get('reset_link', function() {
+    $user = User::first();
+    return Password::createToken($user);
 });
 
 // Route::get('do_flags', function() {

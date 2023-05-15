@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Http\Controllers\UserBookingController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,18 +16,20 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
         $schedule->call(function() {
-            UserBookingController::purge_unpaid_bookings();
+            BookingController::purge_unpaid_bookings();
         })
         ->everyMinute()
         ->appendOutputTo(base_path('logs/booking_purge_sch.log'));
 
         $schedule->call(function() {
-            UserBookingController::send_reminder();
+            BookingController::send_reminder();
         })
         ->everyMinute()
         ->appendOutputTo(base_path('logs/booking_reminder_sch.log'));
+
+        // Clear expired password reset tokens
+        $schedule->command('auth:clear-resets')->daily();
     }
 
     /**

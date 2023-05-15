@@ -174,6 +174,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'slot_id'                  => 'slot',
+
+    ],
 
 ];

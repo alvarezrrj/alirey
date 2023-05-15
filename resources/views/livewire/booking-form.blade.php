@@ -1,5 +1,5 @@
 {{-- If you look to others for fulfillment, you will never truly be fulfilled. --}}
-
+<div>
 {{-- Toggle switch styles --}}
 @push('styles')
   @vite('resources/css/toggle.css')
@@ -26,21 +26,14 @@
 </style>
 @endpush
 
-
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-
-  <x-alert-error key="overlap" />
-  <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
-
-
       {{-- Form won't be displayed if the user has a pending payment. They need
         to complete the payment or cancel the booking before continuing --}}
       @if( session()->has('pending_payment') )
 
         <x-alert-warning :message="__('You have a pending payment. You need to finish your checkout or delete the booking before you can grab another slot.')" />
 
-        <div class="w-full flex justify-center mt-6">
-          <a href="{{ route('user.bookings.checkout', session()->get('pending_payment')) }}">
+        <div class="flex justify-center w-full mt-6">
+          <a href="{{ route('bookings.checkout', session()->get('pending_payment')) }}">
             <x-primary-button>
               {{ __('Continue to checkout') }}
             </x-primary-button>
@@ -49,13 +42,15 @@
 
       @else
 
-      <div class="max-w-xl sm:pl-8 space-y-6 text-gray-900 dark:text-gray-100 ">
+      <div class="max-w-xl space-y-6 text-gray-900 sm:pl-8 dark:text-gray-100 ">
+        <x-alert-error key="overlap" />
+        <x-alert-message />
 
         {{-- Booking instructions --}}
         @if(! $is_admin)
         <div x-data="{ open: false, height:'' }" class="relative">
           <h3 x-on:click="open = !open"
-            class="mb-6 font-bold text-lg flex items-center z-10 cursor-pointer">
+            class="z-10 flex items-center mb-6 text-lg font-bold cursor-pointer">
             {{ __('How to book a bioconstelation session') }}
             <span
               class="inline-block ml-3 transition-all duration-500"
@@ -69,7 +64,7 @@
           </h3>
           <p
           wire:ignore
-          class="overflow-hidden transition-all duration-500 absolute"
+          class="absolute overflow-hidden transition-all duration-500"
           x-cloak
           x-init="
             height = `${$el.getBoundingClientRect().height}px`;
@@ -86,215 +81,121 @@
         @endif
 
         @if(isset($booking))
-          <h3 class="font-bold">
+          <h3 class="mt-4 font-bold">
             {{ __('Booking number') }}:&nbsp;{{ $booking->id }}
           </h3>
         @endif
 
-        @php
 
-        $action = $is_admin
-        ? isset($booking)
-          ? route('bookings.update', $booking)
-          : route('bookings.store')
-        : route('user.bookings.store')
-
-        @endphp
-
-        @if($is_admin && ! isset($booking))
-        <label class="form-check-label inline-block text-gray-800 dark:text-gray-200"
-        for="toggle_is_booking">
-          {{ __('Is booking') }}
-          <x-toggle
-            :checked="$is_booking"
-            id="toggle_is_booking"
-            value="1"
-            wire:model="is_booking">
-          </x-toggle>
-        </label>
-        <p class="!mt-0 text-sm text-gray-600 dark:text-gray-400">
-          {{ __('toggle this to choose between a holiday or a booking.')}}
-        </p>
-        @endif
-
-        <form action={{ $action }} method="POST" class="">
+        @php($action = isset($booking) ? 'update' : 'insert')
+        <form wire:submit.prevent="{{ $action }}">
           @csrf
           @method(isset($booking) ? 'patch' : 'post')
 
-          @if($is_admin)
+          @if($is_admin && $is_booking)
 
           <input type="hidden" value="{{ $booking?->user->id }}" name="user_id">
           <input type="hidden" value="{{ $booking?->id }}" name="booking_id">
 
-
-          <x-input-label class="mt-6 inline-block" for="email" :value="__('Email')" />
-          <span class="inline-block text-sm" wire:loading wire:target="email">
-            &nbsp;<x-spinner />
-          </span>
-          <x-text-input
-            id="email"
-            name="email"
-            type="text"
-            class="mt-1 block w-full"
-            :value="old('email', $booking?->user->email)"
-            :readonly="$booking"
-            required autofocus autocomplete="email"
-            wire:model.lazy="email"/>
-          <x-input-error class="mt-2" :messages="$errors->get('email')" />
-
-          <x-input-label class="mt-6" for="firstName" :value="__('Name')" />
-          <x-text-input
-            :readonly="$userFound"
-            id="firstName"
-            name="firstName"
-            type="text"
-            class="mt-1 block w-full"
-            :value="old('firstName', $booking?->user->firstName)"
-            required autocomplete="firstName"
-            wire:model="firstName"/>
-          <x-input-error class="mt-2" :messages="$errors->get('firstName')" />
-
-          <x-input-label class="mt-6" for="lastName" :value="__('Last Name')" />
-          <x-text-input
-            :readonly="$userFound"
-            id="lastName"
-            name="lastName"
-            type="text"
-            class="mt-1 block w-full"
-            :value="old('lastName', $booking?->user->lastName)"
-            required autocomplete="lastName"
-            wire:model="lastName"/>
-          <x-input-error class="mt-2" :messages="$errors->get('lastName')" />
-
-
-          {{-- Country code --}}
-          <div class="mt-6">
-            <div x-data="{
-                found: @entangle('userFound'),
-                booking: @entangle('booking')
-              }">
-              <template x-if="!found && !booking">
-                {{ $this->codeForm }}
-              </template>
-              <template x-if="found || booking">
-                {{ $this->codeForm->disabled() }}
-              </template>
-            </div>
-            <input
-            type="hidden"
-            name="code_id"
-            wire:model="code_id"
-            >
-            <x-input-error :messages="$errors->get('code_id')" class="mt-2" />
-          </div>
-
-          {{-- Telephone Number --}}
-          <div class="mt-6">
-            <x-input-label for="phone" :value="__('Telephone Number')" />
-            <x-text-input
-              class="mt-1 block w-full"
-              :readonly="$userFound"
-              id="phone"
-              inputmode="numeric"
-              name="phone"
-              required
-              type="text"
-              :value="old('phone', $booking?->user->phone )"
-              wire:model="phone"/>
-            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-          </div>
+          {{ $this->clientForm }}
 
           @endif
 
-          {{-- Booking type --}}
-          <fieldset class="mt-6">
-            <legend class="font-medium text-sm text-gray-800 dark:text-gray-200">
-              {{ __('Booking type') }}
-            </legend>
-            <x-radio-input
-              id="virtual"
-              name="virtual"
-              :checked="$booking?->virtual ?? true"
-              value="1" />
-            <x-input-label
-              class="inline-block"
-              for="virtual"
-              :value="__('Virtual')" />
-              <br>
-
-            <div
-              x-data="{
-                ackowledged: @entangle('ackowledged'),
-                is_admin: @entangle('is_admin'),
-              }"
-              x-on:click="(!ackowledged && !is_admin)
-              ? $dispatch('open-modal', 'booking-type-modal')
-              : ''"
-              >
+          @if($is_booking)
+            {{-- Booking type --}}
+            <fieldset class="mt-6">
+              <legend class="text-sm font-medium text-gray-800 dark:text-gray-200">
+                {{ __('Booking type') }}
+              </legend>
               <x-radio-input
-                id="in-person"
+                id="virtual"
                 name="virtual"
-                :checked="! ($booking?->virtual ?? true)"
-                value="0"
-                />
-              <x-input-label class="inline-block"
-                for="in-person"
-                :value="__('In-person')" />
-            </div>
-          </fieldset>
-          <x-input-error class="mt-2" :messages="$errors->get('type')" />
+                :checked="$booking?->virtual ?? true"
+                value="1"
+                wire:model="virtual"/>
+              <x-input-label
+                class="inline-block"
+                for="virtual"
+                :value="__('Virtual')" />
+                <br>
+
+              <div
+                x-data="{
+                  ackowledged: @entangle('ackowledged'),
+                  is_admin: @entangle('is_admin'),
+                }"
+                x-on:click="(!ackowledged && !is_admin)
+                ? $dispatch('open-modal', 'booking-type-modal')
+                : ''"
+                >
+                <x-radio-input
+                  id="in-person"
+                  name="virtual"
+                  :checked="! ($booking?->virtual ?? true)"
+                  value="0"
+                  wire:model="virtual"
+                  />
+                <x-input-label class="inline-block"
+                  for="in-person"
+                  :value="__('In-person')" />
+              </div>
+            </fieldset>
+            <x-input-error class="mt-2" :messages="$errors->get('virtual')" />
+          @else
+            <input type="hidden" name="virtual" value="1" wire:model="virtual">
+          @endif
 
           {{-- Date --}}
-          <div class="mt-6" wire:click="calClickHandler">
+          <div class="mt-6">
             {{ $this->dayForm }}
           </div>
-          <x-input-error class="mt-2" :messages="$errors->get('day')" />
-          <input
-            type="hidden"
-            name="day"
-            wire:model="day"
-          >
 
           {{-- Alpine slot --}}
+          {{--
+            computedSlots disables slots if:
+              * exists a booking for same day and slot (except that booking
+                is the booking being edited)
+              * the slot is for earlier today
+          --}}
           <div class="mt-6"
             x-data="{
                 slots: @js($data['slots']),
                 bookings: @js($data['bookings']),
                 day: @entangle('day'),
-                slot_id: @js($booking?->slot->id),
+                slot_id: @entangle('slot_id'),
 
                 get computedSlots() {
                   this.slots.forEach(s => {
                     if(this.bookings.some(
                       b => b.id != {{ $booking->id ?? -1 }}
-                        && b.day == this.day
-                        && b.slot.id == s.id
-                    ) || (this.day == (new Date).toISOString().split('T')[0]
+                      && b.day == this.day?.split(' ')[0]
+                      && b.slot.id == s.id
+                      ) || (this.day?.split(' ')[0] == (new Date).toISOString().split('T')[0]
                       && Number(s.start.split(':')[0]) <= (new Date).getHours())
-                    ) s.disabled = true;
-                    else
+                      ) s.disabled = true;
+                      else
                       s.disabled = false;
-                  });
-                  return this.slots;
-                },
-            }"
-          >
+                    });
+                    return this.slots;
+                  },
+            }">
 
             <div class="w-full">
-              <x-input-label for="slot_id" :value="__('Slot')" class="mt-6"/>
+              <x-input-label for="slot_id" :value="__('Slot')" class="inline-block mt-6"/>
+              <sup class="font-medium text-danger-700 dark:text-danger-400">*</sup>
               <x-select-input id="slot_id"
                 x-model="slot_id"
-                class="inline-block mt-1 w-full mb-1"
+                class="inline-block w-full mt-1 mb-1"
                 type="text"
                 name="slot_id"
                 wire:model="slot_id">
 
-                <template x-for="slot in computedSlots" >
+                <template x-for="(slot, index) in computedSlots" :key="slot.id">
                   <option
-                    x-bind:selected="slot.id == slot_id"
                     x-bind:value="slot.id"
                     x-bind:disabled="slot.disabled ? true : false"
-                    x-text="slot.start + ' - ' + slot.end">
+                    x-text="slot.start + ' - ' + slot.end"
+                    x-on:click="slot_id = $el.value">
                 </template>
 
               </x-select-input>
@@ -308,7 +209,7 @@
 
             @if(isset($booking))
             {{-- Restore booking date and time to initial state --}}
-            <div class="w-full flex justify-end">
+            <div class="flex justify-end w-full">
               <x-primary-button
                 class="mt-2"
                 :small="true"
@@ -329,18 +230,16 @@
           @if(isset($booking))
           {{-- Paid amount --}}
           <x-input-label class="mt-0" for="amount" :value="__('Paid ammount')" />
-          <div class="w-full flex items-center justify-start">
-            <span class="text-gray-800 dark:text-gray-200 w-6">$</span>
+          <div class="flex items-center justify-start w-full">
+            <span class="w-6 text-gray-800 dark:text-gray-200">$</span>
                 <x-text-input
                   class="mt-1 w-[calc(100%-1.5rem)]"
                   id="amount"
                   inputmode="numeric"
-                  name="amount"
                   required
                   step="100"
                   type="number"
-                  :value="old('amount', $booking?->payment->amount)"
-                  wire:model="booking.payment.amount"
+                  wire:model.defer="amount"
                     />
             <x-input-error :messages="$errors->get('amount')" class="mt-2" />
           </div>
@@ -355,16 +254,23 @@
           )
 
           <div class="flex justify-between mt-8">
-            <a href="{{ $back }}">
-              <x-secondary-button type="button">{{ __('Cancel') }}</x-secondary-button>
-            </a>
+            @if($is_booking)
+              <a href="{{ $back }}">
+                <x-secondary-button type="button">{{ __('Cancel') }}</x-secondary-button>
+              </a>
+            @endif
 
-            <x-primary-button>
-              @if($is_admin)
-                {{ __('Save') }}
-              @else
-                {{ __('Continue to checkout') }}
-              @endif
+            <x-primary-button class="min-w-[7rem]">
+              <span wire:loading.class='hidden' wire:target='update,insert'>
+                @if($is_admin)
+                  {{ __('Save') }}
+                @else
+                  {{ __('Continue to checkout') }}
+                @endif
+              </span>
+              <span wire:loading wire:target='update,insert'>
+                <x-spinner />
+              </span>
             </x-primary-button>
           </div>
 
@@ -373,41 +279,45 @@
       @endif {{-- End if session()->has('pending_payment') else --}}
     </div>
 
-  </div>
 
-@if(! $is_admin)
-  {{-- Booking type modal --}}
-  <x-modal name="booking-type-modal" focusable>
-    <div class="p-6 text-gray-900 dark:text-gray-100" >
-      <h2 class="text-lg font-semibold">
-          {{ __('In-person sessions') }}
-      </h2>
+  @if(! $is_admin)
+    {{-- Booking type modal --}}
+    <x-modal name="booking-type-modal" focusable>
+      <div class="p-6 text-gray-900 dark:text-gray-100" >
+        <h2 class="text-lg font-semibold">
+            {{ __('In-person sessions') }}
+        </h2>
 
-      <p class="mt-6">
-        {{ __('In-person sessions happen in Cosquin, Cordoba, Argenina. If you want to have an online session via video call, please select "Virtual".')}}
-      </p>
+        <p class="mt-6">
+          {{ __('In-person sessions happen in Cosquin, Cordoba, Argenina. If you want to have an online session via video call, please select "Virtual".')}}
+        </p>
 
-      <div class="mt-6 flex justify-between">
-        <div class="flex items-center">
-          <x-checkbox id="dsa" value="1" wire:model="ackowledged" />
-          <x-input-label for="dsa" :value="__('Don\'t show again')"/>
+        <div class="flex justify-between mt-6">
+          <div class="flex items-center">
+            <x-checkbox id="dsa" value="1" wire:model="ackowledged" />
+            <x-input-label for="dsa" :value="__('Don\'t show again')"/>
+          </div>
+
+          <x-primary-button
+            class="ml-3"
+            type="submit"
+            x-on:click="$dispatch('close')"
+            >
+            {{ __('Confirm') }}
+          </x-primary-button>
         </div>
 
-        <x-primary-button
-          class="ml-3"
-          type="submit"
-          x-on:click="$dispatch('close')"
-          >
-          {{ __('Confirm') }}
-        </x-primary-button>
       </div>
+    </x-modal>{{-- End Booking type modal --}}
+  @endif
 
-    </div>
-  </x-modal>{{-- End Booking type modal --}}
-@endif
-
-@push('libraries')
-<script src="https://sdk.mercadopago.com/js/v2"></script>
-@endpush
+  @push('libraries')
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
+  @endpush
+{{--
+  <pre class="text-white">
+    Errors:
+    {{ print_r($errors) }}
+  </pre> --}}
 
 </div>

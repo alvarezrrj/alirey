@@ -25,24 +25,35 @@
 
 @endpush
 
-<form method="POST" wire:submit.prevent="submit">
+@php($action = isset($user) ? 'update' : 'insert')
+<form wire:submit.prevent="{{ $action }}">
 
   {{ $this->form }}
 
   <div class="flex items-center justify-end mt-4">
-      <a class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-          {{ __('Already registered?') }}
-      </a>
+    @unless(isset($user) || Auth::user())
+    <a class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
+        {{ __('Already registered?') }}
+    </a>
+    @endunless
 
-      <x-primary-button class="ml-4 min-w-[10rem]">
-        <span wire:loading.class='hidden'>
+    <x-primary-button class="ml-4 min-w-[10rem]">
+      <span wire:loading.class='hidden'>
+        @unless(isset($user) || Auth::user())
           {{ __('Register') }}
-        </span>
-        <span wire:loading wire:target="submit">
-          <x-spinner />
-        </span>
-      </x-primary-button>
-    </div>
+        @else
+          {{ __('Save') }}
+        @endunless
+      </span>
+      <span wire:loading wire:target="insert,update">
+        <x-spinner />
+      </span>
+    </x-primary-button>
+  </div>
+
+  {{-- <pre class="text-white">
+    {{ var_dump($back_url) }}
+  </pre> --}}
 
 </form>
 

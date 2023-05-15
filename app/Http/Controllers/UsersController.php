@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Role;
 use App\Models\User;
+use App\SD\SD;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
 /**
@@ -27,7 +30,11 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $back_url = url()->previous();
+        return view('users.upsert', [
+            'user' => null,
+            'back_url' => $back_url,
+        ]);
     }
 
     /**
@@ -57,9 +64,8 @@ class UsersController extends Controller
     {
         $codes = DB::table('codes')->orderBy('country', 'asc')->get();
 
-        return view('users.edit', [
+        return view('users.upsert', [
             'user' => $user,
-            'codes' => $codes,
         ]);
     }
 

@@ -4,6 +4,18 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Remove x-code-select from update-profile-information-form.blade.php (replace with filament component)
+
+Send notification to user when they're signed up: 
+
+"You have just been signed up on our platform, an email verification link should have been sent. Once you have verified your email, you can click this button to set up a password."
+
+    <a href="http://127.0.0.1:8000/reset-password/{{ Password::createToken($user) }}?email=alvarezrrj%40gmail.com">Set up my password</a>
+
+Send notification to user when therapist creates a booking for them
+
+Do google calendar sync (and possibly login)
+
 Replace jquery.flexselect for filament Select
 Delete all felxselect related stuff
 
@@ -33,6 +45,11 @@ Add support for english language
 + Auto delete soft deleted slots with no related bookings in a scheduled job
 + Sort out the roles situation
 
+### Known issues
+
++ Slot picker on booking form requires an option to be clicked on (even if the &lt;select&gt; element has a value)
++ bookings.checkout lags for a few seconds before loading 'pay' button with no loading indicator
+
 ### For a multi-therapist scenario
 
 + Modify App\Http\Livewire\Booking to only show bookings where therapist_id == Auth::user()->id when Auth::user()->isTherapist
@@ -43,10 +60,16 @@ Add support for english language
 + Restrict admin's ability to delete any user (create a moderator role that can do that)
 + Include therapist name and logo in contact form, do a separate form to contact site admin.
 + Replace the logo in /contact/webmaster
++ Rewrite RegisteredUserController::dashboard to retreive correct therapist instead of 'admin'.
++ Find a prettier solution to this line:
+```blade
+@php($therapist = App\Models\Role::where('role', SD::admin)->first()->users()->first())
+```
+
 
 ## Config (/config)
 
-Can only be accessed by admin.
+Can only be accessed by admin. Allows the user to set:
 
 ### **Working days**
 
@@ -66,39 +89,36 @@ Allows the admin to display certain days as unavailable on the calendar.
 Create holiday plans by choosing a start and end date. If &lt;until&gt; is null or earlier than &lt;from&gt;, a single day holiday will be created.
 Delete holiday plans by clicking 'delete' on the table rows.
 
+Single slot closure form allows the user to close a single slot on a particular day
+
 
 ### **Slots**
 
-Allows admin to manage session slots. These will be shown to clients and made available for booking.
+Allows admin to manage session slots. These will be shown to clients as the available session times.
 On deletion, slots are only soft deleted to avoid orphaning bookings.
 
 
 ## Bookings.index (/bookings)
 
-Can only be accessed by admin, displays a table which is filterable by booking status and date, and allows for inspection and deletion of bookings (only admin can delete bookings as per BookingPolicy).
+Displays a table which is filterable by booking status and date, and allows for inspection and deletion of bookings (only admin can delete bookings as per BookingPolicy).
 
 ## Bookings.show (/bookings/{id})
 
 Displays booking details and allows admin to mark booking as 'complete', refund, mark as paid and edit it.
 
-## Bookings.create (/bookings/create && /user/bookings/create)
+## Bookings.create (/bookings/create )
 
 This is the booking creation workflow for the different circumstances
 
 ![Booking creation flow](./booking_diagram.svg "Booking diagram")
 
-Note: CreateBookingRequest is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario. Other places where this happens:
-- BookingController::getData() 
-- UserCreateBookingRequest::rules()
+Note: BookingController::getData() is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario.
 
-A toggle switch allows admin (and only admin) to select between creating a booking and creating a single slot holiday, which creates an entry in the bookings table with the user set to him/herself and the is_booking flag set to false, effectively disabling bookings for that day/time
+// TO DO
+// Update this line once this is implemented
+When admin registers a new user, an email confirmation notification and a password reset link are sent so they can access their account.
 
-When admin creates a new booking for a non existing user, an acount is opened with a random password. If user desires to access their account, they can be sent a password reset email from users table on admin panel.
-
-When admin is creating new booking, user details will be filled automatically after entering email address if a user exists for that email address.
-If a user's details have changed, admin could update them from users panel (the booking form cannot update a users details, if a user exists for the given email address, DB details will be used, esentially overriding the form's data for the user).
-
-Non-admin users creating bookings are redirected to checkout page (user.bookings.checkout) after the booking is validated and stored on DB. Users with pending payment are shown a notification badge on their username and prompted to pay or cancel the booking before being allowed to create a new one.
+Non-admin users creating bookings are redirected to checkout page (bookings.checkout) after the booking is validated and stored on DB. Users with pending payment are shown a notification badge on their username and prompted to pay or cancel the booking before being allowed to create a new one.
 
 Once the payment goes trhough, MP redirects users to confirmation page. This controller removes preference details from booking to avoid it being deleted by booking purger and sets payment status to 'awaiting confirmation from MP' (changing payment status to anything other than 'pending' allows the BookingPolicy to keep the booking from beeing checked out twice). Payment confirmation is done by webhook, which sets payment status to 'MercadoPago', paid amount and mp_id (MercadoPago's payment ID, needed for refunds).
 
@@ -113,13 +133,13 @@ SD::PAYMENT_CASH: Payment was confirmed by admin.
 SD::PAYMENT_MP and mp_id == null: Booking was paid for, but notification from MP hasn't arrived yet.
 SD::PAYMENT_MP and mp_id != null: Booking paid for and confirmation from MP received.o
 
-## Booking checkout (user/bookings/{id}/checkout)
+## Booking checkout (bookings/{id}/checkout)
 
-Allows non-admin user to pay for their pending booking only if payment status is pending and booking status is not cancelled. Creates mp preference on first visit and retrieves it on subsequent visits. If preference is expired, booking is deleted and user notified.
+Allows non-admin user to pay for their pending booking only if payment status is pending and booking status is not cancelled. Creates mp preference on first visit and retrieves it on subsequent visits. If preference is expired, booking is deleted and user notified via UI.
 
 ## Bookings.update (/bookings/{id}/)
 
-Displays a form for updating/inserting bookings that have a state of BOOKING_PENDING
+Displays a form for inserting bookings and updating those that have a state of BOOKING_PENDING
 
 'date' &lt;select&gt; shows days as disabled if there's a corresponding holiday or if there are as many bookings for the day as slots in config table.
 
@@ -134,9 +154,6 @@ Allows a logged in user to get in touch with the therapist, both the client's me
 ## Contact webmaster (/contact/webmaster)
 
 Allows anyone to contact the site admin, includes an optional screenshot field (usefull for bug reporting).
-
-
-## Notes
 
 
 ## Deployment
@@ -232,6 +249,7 @@ Learn how to keep the process running with [Supervisor](https://laravel.com/docs
 * [Tailwind CSS](https://maven.apache.org/) - To make it look cool
 * [Alpine JS](https://alpinejs.dev/) - For the browser to have something to do
 * [Livewire](https://laravel-livewire.com/) - For reactivity
+* [Filament](https://filamentphp.com/) - For building forms
 
 
 ## Authors

@@ -1,4 +1,5 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100 dark:bg-gray-800 dark:border-gray-700">
+  @php($therapist = App\Models\Role::where('role', SD::admin)->first()->users()->first())
   <!-- Primary Navigation Menu -->
   @php($max_w = Auth::user()->isAdmin()
   ? ''
@@ -15,35 +16,42 @@
 
         <!-- Navigation Links -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link href="/" :active="request()->is('/')">
+          <x-nav-link href="/"
+            :active="request()->is('/')">
             {{ __('Home') }}
           </x-nav-link>
 
-          <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+          <x-nav-link :href="route('dashboard')"
+            :active="request()->routeIs('dashboard')">
             {{ __('Dashboard') }}
           </x-nav-link>
 
           @if(Auth::user()->isAdmin())
 
-          <x-nav-link :href="route('config')" :active="request()->routeIs('config')">
+          <x-nav-link :href="route('config')"
+            :active="request()->routeIs('config')">
             {{ __('Configuration') }}
           </x-nav-link>
 
-          <x-nav-link :href="route('bookings.index')" :active="request()->routeIs('bookings.index')">
+          <x-nav-link :href="route('bookings.index')"
+            :active="request()->routeIs('bookings.index')">
             {{ __('Bookings') }}
           </x-nav-link>
 
-          <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
+          <x-nav-link :href="route('users.index')"
+            :active="request()->routeIs('users.index')">
             {{ __('Users') }}
           </x-nav-link>
 
           @else
 
-          <x-nav-link :href="route('user.bookings.index')" :active="request()->routeIs('user.bookings.index')">
+          <x-nav-link :href="route('bookings.index')"
+            :active="request()->routeIs('bookings.index')">
             {{ __('My bookings') }}
           </x-nav-link>
 
-          <x-nav-link :href="route('user.bookings.create')" :active="request()->routeIs('user.bookings.create')">
+          <x-nav-link :href="route('bookings.create', $therapist)"
+            :active="request()->routeIs('bookings.create', $therapist)">
             {{ __('New booking') }}
           </x-nav-link>
 
@@ -80,7 +88,7 @@
 
           <x-slot name="content" class="py-2">
             @if(session()->has('pending_payment'))
-            <x-dropdown-link :href="route('user.bookings.checkout', session()->get('pending_payment'))"
+            <x-dropdown-link :href="route('bookings.checkout', session()->get('pending_payment'))"
               class="ml-px border-l border-red-700">
               {{ __('Checkout') }}
             </x-dropdown-link>
@@ -153,19 +161,19 @@
       @else
 
       @if(session()->has('pending_payment'))
-      <x-responsive-nav-link :href="route('user.bookings.checkout', session()->get('pending_payment'))"
+      <x-responsive-nav-link :href="route('bookings.checkout', session()->get('pending_payment'))"
         class="border-red-700 border-l-3">
         {{ __('Checkout') }}
       </x-responsive-nav-link>
       @endif
 
-      <x-responsive-nav-link :href="route('user.bookings.index')"
-        :active="request()->routeIs('user.bookings.index')">
+      <x-responsive-nav-link :href="route('bookings.index')"
+        :active="request()->routeIs('bookings.index')">
         {{ __('My bookings') }}
       </x-responsive-nav-link>
 
-      <x-responsive-nav-link :href="route('user.bookings.create')"
-        :active="request()->routeIs('user.bookings.create')">
+      <x-responsive-nav-link :href="route('bookings.create', $therapist)"
+        :active="request()->routeIs('bookings.create', $therapist)">
         {{ __('New booking') }}
       </x-responsive-nav-link>
 

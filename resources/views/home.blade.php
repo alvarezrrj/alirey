@@ -1,3 +1,4 @@
+@php($therapist = App\Models\Role::where('role', SD::admin)->first()->users()->first())
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
@@ -125,7 +126,7 @@
 
           {{-- Hero CTA --}}
           <div class="flex justify-center mt-12">
-            <a target="_blank" href="{{ route('user.bookings.create') }}">
+            <a target="_blank" href="{{ route('bookings.create', $therapist) }}">
               <x-primary-button>
                 Reservá tu consulta
               </x-primary-button>
@@ -321,7 +322,7 @@
 
           {{-- CTA --}}
           <div class="flex justify-center mt-12">
-            <a target="_blank" href="{{ route('user.bookings.create') }}">
+            <a target="_blank" href="{{ route('bookings.create', $therapist) }}">
               <x-primary-button>
                 Reservá tu consulta
               </x-primary-button>
@@ -406,7 +407,7 @@
 
           {{-- CTA --}}
           <div class="flex justify-center mt-12">
-            <a target="_blank" href="{{ route('user.bookings.create') }}">
+            <a target="_blank" href="{{ route('bookings.create', $therapist) }}">
               <x-primary-button>
                 Reservá tu consulta
               </x-primary-button>
@@ -531,7 +532,7 @@
                   🛖 <a href="#">Inicio</a>
                 </li>
                 <li>
-                  <a href="{{ route('user.bookings.create') }}">
+                  <a href="{{ route('bookings.create', $therapist) }}">
                     👉 Reservá tu sesión de bioconstelación
                   </a>
                 </li>

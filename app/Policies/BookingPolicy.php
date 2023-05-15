@@ -31,7 +31,9 @@ class BookingPolicy
      */
     public function view(User $user, Booking $booking)
     {
-        return $booking->user()->is($user);
+        return $user->isAdmin()
+            || $booking->therapist()->is($user)
+            || $booking->user()->is($user);
     }
 
     /**
@@ -68,7 +70,7 @@ class BookingPolicy
      */
     public function delete(User $user, Booking $booking)
     {
-        return $user->isAdmin() || 
+        return $user->isAdmin() ||
             (  $booking->user()->is($user)
             && $booking->payment->status == SD::PAYMENT_PENDING );
     }
@@ -99,18 +101,18 @@ class BookingPolicy
 
     /**
      * Determin whether the user can pay for the booking
-     * 
+     *
      */
     public function checkout(User $user, Booking $booking)
     {
-        return $this->view($user, $booking) 
+        return $this->view($user, $booking)
             && $booking->payment->status == SD::PAYMENT_PENDING
             && $booking->status != SD::BOOKING_CANCELLED;
     }
 
     public function refund(User $user, Booking $booking)
     {
-        return $booking->therapist->is($user) 
+        return $booking->therapist->is($user)
             && $booking->payment->status === SD::PAYMENT_MP;
     }
 }

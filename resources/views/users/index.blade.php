@@ -8,21 +8,25 @@
           {{ __('Users') }}
       </h2>
 
-      {{-- <a
+      <a
         aria-label="{{ __('New user') }}"
         data-tooltip="{{ __('New user') }}"
         data-placement="left"
-        href="{{ route('dashboard') }}">
+        href="{{ route('users.create') }}">
         <x-primary-button >
           <x-antdesign-plus-o width="22" height="22"/>
         </x-primary-button>
-      </a> --}}
+      </a>
     </div>
   </x-slot>
 
   <div class="py-12 space-y-6">
 
-      <livewire:users-table />
+    <div class="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
+      <x-alert-message key="message" />
+    </div>
+
+    <livewire:users-table />
 
   </div>
 

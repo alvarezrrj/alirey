@@ -147,7 +147,7 @@
           <div class="{{ $buttons_wrapper }}">
             @php($view_path = $is_admin
             ? route('bookings.show', $booking)
-            : route('user.bookings.show', $booking)
+            : route('bookings.show', $booking)
             )
             <a href="{{ $view_path }}" class={{ $button_class }}>
               <x-primary-button :small="true" class="w-full">

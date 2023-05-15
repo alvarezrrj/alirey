@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Role;
 use App\SD\SD;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,6 +32,8 @@ class RegisteredUserController extends Controller
 
     public function dashboard(Request $request)
     {
+        $therapist = Role::where('role', SD::admin)->first()->users()->first();
+
         $upcoming = Booking::whereDate('day', '>=', Carbon::today())
                            ->where('status', '!=', SD::BOOKING_CANCELLED)
                            ->where('status', '!=', SD::BOOKING_COMPLETED)
@@ -49,6 +52,7 @@ class RegisteredUserController extends Controller
         return view('dashboard', [
             'booking' => $upcoming,
             'is_admin' => $is_admin ?? false,
+            'therapist' => $therapist,
         ]);
     }
 }

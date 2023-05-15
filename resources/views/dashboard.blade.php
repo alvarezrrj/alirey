@@ -35,7 +35,7 @@
 
             <p class="mt-6">
               {{ __('There\'s nothing over here 🏜') }} <br>
-              <a href="{{ route('user.bookings.create') }}">
+              <a href="{{ route('bookings.create', $therapist) }}">
                 <x-primary-button class="mt-6">
                   {{ __('Book yourself a slot') }}
                 </x-primary-button>

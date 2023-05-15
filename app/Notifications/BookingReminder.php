@@ -45,7 +45,7 @@ class BookingReminder extends Notification
             ->subject(__('Booking reminder'))
             ->greeting(__('Hi').' '.$this->booking->user->firstName.',')
             ->line(__('This is a friendly reminder about your booking, which starts at **').$this->booking->slot->start->format('H:i').__('** today'))
-            ->action(__('Open on website'), route('user.bookings.show', $this->booking));
+            ->action(__('Open on website'), route('bookings.show', $this->booking));
     }
 
     /**

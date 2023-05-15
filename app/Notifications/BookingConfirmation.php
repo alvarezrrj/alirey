@@ -2,8 +2,8 @@
 
 /**
  * BookingConfirmation
- * 
- * Emails user their booking details 
+ *
+ * Emails user their booking details
  */
 
 namespace App\Notifications;
@@ -57,7 +57,7 @@ class BookingConfirmation extends Notification
             ->line(__('Date').': '.$this->booking->day->format('d/m/Y'))
             ->line(__('Time').': '.$this->booking->slot->start->format('H:i'))
             ->line(__('Location').': '.$location)
-            ->action(__('Open on website'), route('user.bookings.show', $this->booking));
+            ->action(__('Open on website'), route('bookings.show', $this->booking));
     }
 
     /**

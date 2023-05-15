@@ -190,6 +190,7 @@ return [
         'sex'                      => 'sexo',
         'short_text'               => 'texto corto',
         'size'                     => 'tamaño',
+        'slot_id'                  => 'horario',
         'state'                    => 'estado',
         'start'                    => 'inicio',
         'street'                   => 'calle',
