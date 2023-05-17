@@ -35,12 +35,12 @@
 
             {{ $header ?? '' }}
 
-            <div class="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg dark:bg-gray-800 sm:rounded-lg">
+            <div class="w-full px-6 py-4 mt-6 bg-white shadow-md sm:max-w-lg dark:bg-gray-800 sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>
 
-        {{-- Push stuff into this stack with @push('scripts') <foo> @endpush
+        {{-- Push stuff into this stack with @push('libraries') <foo> @endpush
              from within the view --}}
         @stack('libraries')
         @stack('scripts')

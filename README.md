@@ -1,13 +1,28 @@
 # Alirey
 
-A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Laravel & Livewire). This doc attempts to describe what each section does and how it works.
+Install google API client 
+```
+composer require google/apiclient:^2.10
+```
+
+
+A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Laravel & Livewire). This doc attempts to describe what each section does and how it does it.
 
 ## TO DO
 
-Remove x-code-select from update-profile-information-form.blade.php (replace with filament component)
+Add 'add to calendar' button on booking view
+
+Use avatar in nav component and user-select
+
+Write:
++ Terms of service
++ Privacy policy
++ Refunds policy
++ Amendments
+
+register user form says 'Edit user' on header
 
 Send notification to user when they're signed up: 
-
 "You have just been signed up on our platform, an email verification link should have been sent. Once you have verified your email, you can click this button to set up a password."
 
     <a href="http://127.0.0.1:8000/reset-password/{{ Password::createToken($user) }}?email=alvarezrrj%40gmail.com">Set up my password</a>
@@ -22,6 +37,7 @@ Delete all felxselect related stuff
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
 Add support for english language
+
 
 
 ### Future releases
@@ -44,6 +60,20 @@ Add support for english language
 + Sort past bookings descendingly in bookings table
 + Auto delete soft deleted slots with no related bookings in a scheduled job
 + Sort out the roles situation
++ Remove x-code-select from update-profile-information-form.blade.php (replace with filament component)
+
+## Notes
+Goggle scopes
+https://developers.google.com/identity/protocols/oauth2/scopes#calendar
+
+might need to add
+```
+$table->string('google_id')->nullable();
+$table->string('google_token', 12288)->nullable();
+```
+to users table
+
+
 
 ### Known issues
 
@@ -164,6 +194,7 @@ Allows anyone to contact the site admin, includes an optional screenshot field (
 - Update pref->notification_url on MercadoPagoController::create_or_get_preference()
 - Update MAIL_ variables in .env file
 - Updata database variables in .env file 
+- Store app's url in [Google console](https://console.cloud.google.com/apis/credentials?project=alirey) to allow redirect after Google sign in
 - Create database on server
 - Install composer dependencies with
 ``` 
@@ -226,7 +257,7 @@ $ npm run dev
 ```
 to run the Vite server, which does the Tailwind magic and serves static assets
 
-And lastly, to run the scheduler locally
+Run the scheduler locally
 ```
 $ php artisan schedule:work
 ```

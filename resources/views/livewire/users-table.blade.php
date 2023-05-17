@@ -28,7 +28,8 @@
         @endif
 
         @foreach($users as $user)
-          <li class="grid grid-cols-10 grid-rows-4 px-4 py-3 my-6 text-gray-900 border border-gray-300 rounded-md dark:border-gray-700 md:border-0 md:my-0 md:rounded-none gap-x-1 md:grid-cols-10 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-100">
+          <li class="grid grid-cols-10 grid-rows-4 px-4 py-3 my-6 text-gray-900 border border-gray-300 rounded-md dark:border-gray-700 md:border-0 md:my-0 md:rounded-none gap-x-1 md:grid-cols-10 md:grid-rows-1 even:bg-gray-100 even:dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-100"
+            wire:key='{{ $user->id }}'>
             <div class="col-span-1 row-span-4">
               {{ $user->id }}
             </div>
@@ -39,7 +40,11 @@
               {{ $user->email }}
             </div>
             <div class="col-span-9 overflow-hidden md:col-span-2 text-ellipsis">
-              +{{ $user->code->code }} {{ $user->phone }}
+              @if(isset($user->code))
+                +{{ $user->code->code }} {{ $user->phone }}
+              @else
+                -
+              @endif
             </div>
             <div class="flex items-center justify-between col-span-9 md:mt-0 md:col-span-2 md:justify-end">
               <a href="{{ route('users.show', $user) }}" class="w-2/5">

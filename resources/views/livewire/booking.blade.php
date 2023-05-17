@@ -3,7 +3,7 @@
 <div class="max-w-xl sm:pl-8">
 
   <div class="flex justify-between">
-    <h3 class=" font-bold">
+    <h3 class="font-bold ">
       {{ __('Booking number') }}:&nbsp;{{ $booking->id }}
     </h3>
     @unless($booking->status === SD::BOOKING_COMPLETED
@@ -21,37 +21,37 @@
     @endunless
   </div>
 
-  <table class="text-gray-900 dark:text-gray-100 w-full mt-6">
+  <table class="w-full mt-6 text-gray-900 dark:text-gray-100">
     <tbody class="divide-y">
       <tr>
-        <th class="text-left p-2  ">
+        <th class="p-2 text-left ">
           {{ __('Status') }}
         </th>
-        <td class="text-right p-2  ">
+        <td class="p-2 text-right ">
           {{ __($booking->status) }}
         </td>
       </tr>
 
       <tr>
-        <th class="text-left p-2 ">
+        <th class="p-2 text-left ">
           {{ __('Name') }}
         </th>
-        <td class="text-right p-2 ">
+        <td class="p-2 text-right ">
           {{ $booking->user->firstName }}
           {{ $booking->user->lastName }}
         </td>
       </tr>
 
       <tr x-data="">
-        <th class="text-left p-2 ">
+        <th class="p-2 text-left ">
           {{ __('Email') }}<br>
           <small
-            class="text-gray-500 dark:text-gray-500 font-normal"
+            class="font-normal text-gray-500 dark:text-gray-500"
             x-show="@js($is_admin)" >
             {{ __('Tap to message') }}
           </small>
         </th>
-        <td class="text-right p-2 ">
+        <td class="p-2 text-right ">
           <a href="mailto:{{ $booking->user->email }}">
             {{ $booking->user->email }}
           </a>
@@ -59,18 +59,18 @@
       </tr>
 
       <tr x-data="">
-        <th class="text-left p-2 ">
+        <th class="p-2 text-left ">
           {{ __('Phone') }}<br>
+          <template x-if="'clipboard' in navigator">
             <small
-              class="text-gray-500 dark:text-gray-500 font-normal"
-              x-if="'clipboard' in navigator"
+              class="font-normal text-gray-500 dark:text-gray-500"
               x-ref="tap"
-              x-show="@js($is_admin)"
-              >
+              x-show="@js($is_admin)" >
               {{ __('Tap to copy') }}
             </small>
+          </template>
         </th>
-        <td class="text-right p-2">
+        <td class="p-2 text-right">
           <div class="flex items-center justify-end h-full">
             <span
               x-init="$refs.tap ? $el.style.cursor = 'pointer' : ''"
@@ -83,13 +83,18 @@
                     3500)
                 )
               ">
-              +{{ $booking->user->code->code }}&nbsp;
-              {{ $booking->user->phone }}
+              @if(isset($booking->user->code))
+                +{{ $booking->user->code->code }}&nbsp;
+                {{ $booking->user->phone }}
+              @else
+                -
+              @endif
             </span>
-            @if($is_admin)
+            @if($is_admin && isset($booking->user->code))
               <a href="https://api.whatsapp.com/send/?phone={{ $booking->user->code->code }}{{ $booking->user->phone }}&text&type=phone_number&app_absent=1"
                 class="ml-2"
-                data-tooltip="{{ __('Call on Whatsapp') }}">
+                data-tooltip="{{ __('Call on Whatsapp') }}"
+                data-placement="left">
                 <x-primary-button :small="true">
                   <x-antdesign-whats-app-o width="22" height="22"/>
                 </x-primary-button>
@@ -100,10 +105,10 @@
       </tr>
 
       <tr>
-        <th class="text-left p-2 ">
+        <th class="p-2 text-left ">
           {{ __('Booking type') }}
         </th>
-        <td class="text-right p-2 ">
+        <td class="p-2 text-right ">
           @if($booking->virtual) {{ __('Virtual') }}
           @else {{ __('In-person') }}
           @endif
@@ -111,19 +116,19 @@
       </tr>
 
       <tr>
-        <th class="text-left p-2 ">
+        <th class="p-2 text-left ">
           {{ __('Date') }}
         </th>
-        <td class="text-right p-2 ">
+        <td class="p-2 text-right ">
           {{ $booking->day->format('d/m/Y') }}
         </td>
       </tr>
 
       <tr>
-        <th class="text-left p-2 ">
+        <th class="p-2 text-left ">
           {{ __('Start time') }}
         </th>
-        <td class="text-right p-2 ">
+        <td class="p-2 text-right ">
           {{ $booking->slot->start->format('H:i') }}
         </td>
       </tr>
@@ -139,10 +144,10 @@
 
       @if($is_admin)
         <tr>
-          <th class="text-left p-2 ">
+          <th class="p-2 text-left ">
             {{ __('Payment status') }}
           </th>
-          <td class="text-right p-2 ">
+          <td class="p-2 text-right ">
             @if ($booking->payment->status == SD::PAYMENT_MP
               || $booking->payment->status == SD::PAYMENT_CASH
               || $booking->payment->status == SD::PAYMENT_MP_AWAIT)
@@ -154,20 +159,20 @@
 
         @if ($booking->payment->status == SD::PAYMENT_REFUNDED)
           <tr>
-            <th class="text-left p-2 ">
+            <th class="p-2 text-left ">
               {{ __('Refund date') }}
             </th>
-            <td class="text-right p-2 ">
+            <td class="p-2 text-right ">
               {{ $booking->payment->updated_at->format('m/d/Y') }}
             </td>
           </tr>
         @endif
 
         <tr>
-          <th class="text-left p-2 ">
+          <th class="p-2 text-left ">
             {{ __('Paid ammount') }}
           </th>
-          <td class="text-right p-2 ">
+          <td class="p-2 text-right ">
             $ {{ $booking->payment->amount }}
           </td>
         </tr>
@@ -178,7 +183,7 @@
 
 @if($is_admin)
   {{-- Buttons --}}
-  <div class="grid sm:grid-cols-3 grid-rows-2 mt-6 gap-x-2 gap-y-4">
+  <div class="grid grid-rows-2 mt-6 sm:grid-cols-3 gap-x-2 gap-y-4">
 
     @if ($booking->payment->status == SD::PAYMENT_MP &&
          // MP payments can only be refunded within 180 days since aproval
@@ -257,7 +262,7 @@
               class="mt-6"
               for="ammount"
               :value="__('Paid ammount')" />
-            <div class="mt-2 w-full grid grid-cols-12 items-center">
+            <div class="grid items-center w-full grid-cols-12 mt-2">
               <span class="col-span-1 text-center"> $ </span>
               <x-text-input
                 class="col-span-11"
@@ -269,7 +274,7 @@
                 />
             </div>
 
-            <div class="mt-6 flex justify-between">
+            <div class="flex justify-between mt-6">
                 <x-secondary-button
                   type="button"
                   x-on:click="$dispatch('close')">
@@ -313,7 +318,7 @@
           {{ __('Once you do this, you won\'t be able to edit this booking.') }}
         </p>
 
-        <div class="mt-6 flex justify-between">
+        <div class="flex justify-between mt-6">
           <x-secondary-button
             type="button"
             x-on:click="$dispatch('close')">
@@ -356,7 +361,7 @@
           {{ __('Once you do this, you won\'t be able to edit this booking.') }}
         </p>
 
-        <div class="mt-6 flex justify-between">
+        <div class="flex justify-between mt-6">
             <x-secondary-button
               type="button"
               x-on:click="$dispatch('close')">
@@ -389,7 +394,7 @@
           {{ __('Are you sure?') }}
         </p>
 
-        <div class="mt-6 flex justify-between">
+        <div class="flex justify-between mt-6">
             <x-secondary-button
               type="button"
               x-on:click="$dispatch('close')">

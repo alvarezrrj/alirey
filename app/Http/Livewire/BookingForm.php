@@ -18,6 +18,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Illuminate\Validation\Rule;
 
@@ -40,7 +41,6 @@ class BookingForm extends Component implements HasForms
     // Booking type modal acknowledgement
     public $ackowledged;
 
-    public $userFound = false;
     // Select between booking and single-slot holiday
     public $is_booking = true;
 
@@ -69,7 +69,7 @@ class BookingForm extends Component implements HasForms
 
     public function mount()
     {
-        $this->data = BookingController::getData();
+        $this->data = BookingController::getData($this->booking ?? null);
         $this->codes = Code::all();
         $this->is_admin = Auth::user()->isAdmin();
 
@@ -166,44 +166,46 @@ class BookingForm extends Component implements HasForms
             $this->validate(),
             ['day', 'slot_id', 'virtual']
         );
-        // TO DO
-        // Do all of this inside a DB transaction
-        if ( count(Booking::whereDate('day', $validated['day'])
-                          ->where('slot_id', $validated['slot_id'])
-                          ->get() )) {
-            if ($this->is_booking) {
-                $this->addError('overlap', 'Sorry, that slot is no longer available. Please try again.');
-            } else {
-                $this->addError('overlap', 'Woops! a booking has just come in for that day and time, you might want to get in touch with the client.');
-            }
-            return;
-        }
-        $payment = Payment::create([
-            'amount' => 0,
-            'status' => SD::PAYMENT_PENDING,
-        ]);
-        $validated['payment_id'] = $payment->id;
-        $validated['status'] = SD::BOOKING_PENDING;
-        $validated['therapist_id'] = $this->therapist->id;
+        $bookings = Booking::whereDate('day', $validated['day'])
+            ->where('status', '!=', SD::BOOKING_CANCELLED)
+            ->where('slot_id', $validated['slot_id']);
 
-        // Admin booking for client
-        if ($this->is_admin && $this->is_booking) {
-            $booking = User::find($this->client)->bookings()->create($validated);
-            session()->flash('message', 'Booking saved.');
-            return redirect(route('bookings.show', $booking));
-        // Single slot holiday
-        } else if (! $this->is_booking) {
-            $booking = $this->therapist->bookings()->create($validated);
-            $booking->update([
-                'is_booking' => false
+        return DB::transaction(function () use ($validated, $request, $bookings) {
+            if ( $bookings->count() ) {
+                if ($this->is_booking) {
+                    $this->addError('overlap', 'Sorry, that slot is no longer available. Please try again.');
+                } else {
+                    $this->addError('overlap', 'Woops! a booking has just come in for that day and time, you might want to get in touch with the client.');
+                }
+                return;
+            }
+            $payment = Payment::create([
+                'amount' => 0,
+                'status' => SD::PAYMENT_PENDING,
             ]);
-            session()->flash('message', 'Changes saved.');
-            return;
-        // Client booking for themselves
-        } else {
-            $booking = $request->user()->bookings()->create($validated);
-            return redirect()->route('bookings.checkout', $booking);
-        }
+            $validated['payment_id'] = $payment->id;
+            $validated['status'] = SD::BOOKING_PENDING;
+            $validated['therapist_id'] = $this->therapist->id;
+
+            // Admin booking for client
+            if ($this->is_admin && $this->is_booking) {
+                $booking = User::find($this->client)->bookings()->create($validated);
+                session()->flash('message', 'Booking saved.');
+                return redirect(route('bookings.show', $booking));
+            // Single slot holiday
+            } else if (! $this->is_booking) {
+                $booking = $this->therapist->bookings()->create($validated);
+                $booking->update([
+                    'is_booking' => false
+                ]);
+                session()->flash('message', 'Changes saved.');
+                return;
+            // Client booking for themselves
+            } else {
+                $booking = $request->user()->bookings()->create($validated);
+                return redirect()->route('bookings.checkout', $booking);
+            }
+        });
     }
 
     public function update()
@@ -214,20 +216,22 @@ class BookingForm extends Component implements HasForms
             $this->validate(),
             ['day', 'slot_id', 'virtual']
         );
-        // TO DO
-        // Do all of this inside a DB transaction
-        if ( count(Booking::whereDate('day', $validated['day'])
-                          ->where('slot_id', $validated['slot_id'])
-                          ->whereNot('id', $this->booking?->id)
-                          ->get() )) {
-            $this->addError('overlap', 'Sorry, that slot is no longer available. Please try again.');
-            return;
-        }
-        $this->booking->update($validated);
-        $payment = $this->validate()['amount'] ?? 0;
-        $this->booking->payment()->update(['amount' => $payment]);
+        $bookings = Booking::whereDate('day', $validated['day'])
+            ->where('slot_id', $validated['slot_id'])
+            ->where('status', '!=', SD::BOOKING_CANCELLED)
+            ->whereNot('id', $this->booking?->id);
 
-        session()->flash('message', 'Changes saved.');
-        return redirect(route('bookings.show', $this->booking));
+        return DB::transaction(function() use ($bookings, $validated) {
+            if ( $bookings->count() ) {
+                $this->addError('overlap', 'Sorry, that slot is no longer available. Please try again.');
+                return;
+            }
+            $this->booking->update($validated);
+            $payment = $this->validate()['amount'] ?? 0;
+            $this->booking->payment()->update(['amount' => $payment]);
+
+            session()->flash('message', 'Changes saved.');
+            return redirect(route('bookings.show', $this->booking));
+        });
     }
 }

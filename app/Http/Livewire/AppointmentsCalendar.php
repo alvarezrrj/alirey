@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Booking;
+use App\SD\SD;
 use Illuminate\Support\Collection;
 use Rabol\LivewireCalendar\LivewireCalendar;
 use Carbon\Carbon;
@@ -24,6 +25,7 @@ class AppointmentsCalendar extends LivewireCalendar
     {
         return Booking::whereDate('day', '>=', $this->gridStartsAt)
             ->whereDate('day', '<', $this->gridEndsAt)
+            ->where('status', '!=', SD::BOOKING_CANCELLED)
             ->join('slots', 'slots.id', '=', 'bookings.slot_id')
             ->orderBy('slots.start')
             ->select('bookings.*')

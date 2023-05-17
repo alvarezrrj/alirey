@@ -234,7 +234,8 @@ class BookingController extends Controller
 
     public static function getData($booking = null)
     {
-        $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
+        $admin = Role::where('role', SD::admin)->first()->users()->first();
+        // $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
         $working_days = $admin->config->working_days;
         $now = Carbon::today();
         $last_day = $admin->config->allways_open
@@ -248,6 +249,7 @@ class BookingController extends Controller
                     ->all();
         $bookings = Booking::with('slot')
                     ->whereDate('day', '>=', $now)
+                    ->where('status', '!=', SD::BOOKING_CANCELLED)
                     ->get();
         $slots = Slot::all();
 
@@ -258,7 +260,10 @@ class BookingController extends Controller
 
             $is_holiday = isset($holidays[$now->toDateTimeString()]);
             // Disable day if it's full
-            $is_full = (Booking::whereDate('day', $now)->count() >= count($slots)
+            $is_full = (Booking::whereDate('day', $now)
+                                ->where('status', '!=' , SD::BOOKING_CANCELLED)
+                                ->count()
+                                 >= count($slots)
                     // But not if it's the booking's day
                     && ! $booking?->day->eq($now) );
 

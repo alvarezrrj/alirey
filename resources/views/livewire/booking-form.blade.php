@@ -159,25 +159,25 @@
           --}}
           <div class="mt-6"
             x-data="{
-                slots: @js($data['slots']),
-                bookings: @js($data['bookings']),
-                day: @entangle('day'),
-                slot_id: @entangle('slot_id'),
+              slots: @js($data['slots']),
+              bookings: @js($data['bookings']),
+              day: @entangle('day'),
+              slot_id: @entangle('slot_id'),
 
-                get computedSlots() {
-                  this.slots.forEach(s => {
-                    if(this.bookings.some(
-                      b => b.id != {{ $booking->id ?? -1 }}
-                      && b.day == this.day?.split(' ')[0]
-                      && b.slot.id == s.id
-                      ) || (this.day?.split(' ')[0] == (new Date).toISOString().split('T')[0]
-                      && Number(s.start.split(':')[0]) <= (new Date).getHours())
-                      ) s.disabled = true;
-                      else
-                      s.disabled = false;
-                    });
-                    return this.slots;
-                  },
+              get computedSlots() {
+                this.slots.forEach(s => {
+                  if(this.bookings.some(
+                    b => b.id != {{ $booking->id ?? -1 }}
+                    && b.day == this.day?.split(' ')[0]
+                    && b.slot.id == s.id
+                    ) || (this.day?.split(' ')[0] == (new Date).toISOString().split('T')[0]
+                    && Number(s.start.split(':')[0]) <= (new Date).getHours())
+                    ) s.disabled = true;
+                    else
+                    s.disabled = false;
+                  });
+                  return this.slots;
+                },
             }">
 
             <div class="w-full">
