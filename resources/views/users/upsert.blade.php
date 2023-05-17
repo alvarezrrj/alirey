@@ -11,7 +11,11 @@
       @endunless
 
       <h2 class="inline-block ml-2 text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-        {{ __('Edit User') }}
+        @if($user)
+          {{ __('Edit User') }}
+        @else
+          {{ __('Register User') }}
+        @endif
       </h2>
     </div>
   </x-slot>

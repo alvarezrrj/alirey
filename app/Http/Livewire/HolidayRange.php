@@ -13,7 +13,7 @@ class HolidayRange extends Component
 
     public function render()
     {
-        return view('livewire.holiday-range');
+        return view('livewire.config.holiday-range');
     }
 
     public function delete(Request $request)

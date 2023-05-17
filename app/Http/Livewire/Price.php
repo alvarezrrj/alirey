@@ -9,19 +9,19 @@ use Livewire\Component;
 class Price extends Component
 {
     public $config;
- 
+
     protected $rules = [
         'config.price' => 'required|integer|min:0',
     ];
 
-    public function mount() 
+    public function mount()
     {
         $this->config = Config::where('user_id', Auth::user()->id)->first();
     }
 
     public function render()
     {
-        return view('livewire.price');
+        return view('livewire.config.price');
     }
 
     public function updated()

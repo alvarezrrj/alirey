@@ -59,6 +59,13 @@ Route::middleware(['auth', 'pending_payment'])->group(function() {
         ->name('bookings.failure');
 });
 
+Route::get('/terms', function() {
+    return view('legal.terms-of-service');
+});
+Route::get('/privacy', function() {
+    return view('legal.privacy-policy');
+});
+
 // admin
 // Add verified middleware
 Route::middleware(['auth', 'admin'])->group(function() {

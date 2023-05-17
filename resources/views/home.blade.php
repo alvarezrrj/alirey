@@ -7,8 +7,7 @@
 
     <!-- Load webp feature detection by modernizer -->
     @vite('resources/libraries/modernizr/modernizr-webp.js')
-    {{-- <script src="{{ Vite::asset('resources/libraries/modernizr/modernizr-webp.js') }}"></script> --}}
-    {{-- <script src="{{ asset('build/assets/libraries/modernizr/modernizr-webp.js') }}"></script> --}}
+
     <!-- Remove noscript class from <html> (stays on on no JS browsers) -->
     <script>
       document.documentElement.classList.remove('noscript');
@@ -17,18 +16,13 @@
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 
     <!-- aos -->
-    {{-- @vite('resources/libraries/aos/aos.css') --}}
-    {{-- <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/aos/aos.css') }}"> --}}
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     {{-- Loading atribute polyfill --}}
     @vite(['resources/libraries/loading-attr/loading-attribute-polyfill.css'])
-    {{-- <link rel="stylesheet" href="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.css') }}"> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('build/assets/libraries/loading-attr/loading-attribute-polyfill.css') }}"> --}}
 
     <!-- Home styles -->
     @vite('resources/css/home-styles.css')
-    {{-- <link rel="stylesheet" href="{{ Vite::asset('resources/css/home-styles.css') }}"> --}}
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -593,8 +587,6 @@
     </footer><!-- End Footer -->
 
     <!-- aos -->
-    {{-- @vite('resources/libraries/aos/aos.js') --}}
-    {{-- <script src="{{ Vite::asset('resources/libraries/aos/aos.js') }}"></script> --}}
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init({
@@ -609,7 +601,6 @@
 
     <!-- Loading attribute polyfill -->
     @vite('resources/libraries/loading-attr/loading-attribute-polyfill.umd.js')
-    {{-- <script type="module" src="{{ Vite::asset('resources/libraries/loading-attr/loading-attribute-polyfill.umd.js') }}"></script> --}}
 
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 

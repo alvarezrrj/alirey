@@ -25,7 +25,7 @@ class Slots extends Component
 
     public function render(Request $request)
     {
-        return view('livewire.slots', [
+        return view('livewire.config.slots', [
             'slots' => $request->user()->config->slots()->oldest('start')->get(),
         ]);
     }
@@ -62,16 +62,16 @@ class Slots extends Component
         // Ensure end > start
         $params1 = explode(':', $this->slot['start']);
         $start = Carbon::createFromTime(
-            $params1[0], 
-            $params1[1], 
-            0, 
+            $params1[0],
+            $params1[1],
+            0,
             config('app.timezone')
         );
         $params2 = explode(':', $this->slot['end']);
         $end = Carbon::createFromTime(
-            $params2[0], 
-            $params2[1], 
-            0, 
+            $params2[0],
+            $params2[1],
+            0,
             config('app.timezone')
         );
 
@@ -87,7 +87,7 @@ class Slots extends Component
     public function noop()
     {
         // Calling a component's action triggers a re-render,
-        // This function is called by the event listener when 
+        // This function is called by the event listener when
         // a slot is deleted to trigger a fresh render of the table
     }
 }

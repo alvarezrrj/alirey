@@ -14,7 +14,7 @@ class Slot extends Component
 
     public function render()
     {
-        return view('livewire.slot');
+        return view('livewire.config.slot');
     }
 
     public function delete()

@@ -11,7 +11,7 @@ use Livewire\Component;
 class Booking extends Component
 {
     use AuthorizesRequests;
-    
+
     public $is_admin;
 
     public $booking;
@@ -33,7 +33,7 @@ class Booking extends Component
 
     public function render()
     {
-        return view('livewire.booking');
+        return view('livewire.bookings.booking');
     }
 
     public function paid()
@@ -51,7 +51,7 @@ class Booking extends Component
     public function refund()
     {
         $this->authorize('refund', $this->booking);
-    
+
         $response = MercadoPagoController::refund($this->booking->payment->mp_id);
 
         if($response['status'] != 'approved') {

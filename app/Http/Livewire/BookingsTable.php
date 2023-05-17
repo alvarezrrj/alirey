@@ -56,7 +56,7 @@ class BookingsTable extends Component
 
 
 
-        return view('livewire.bookings-table', [
+        return view('livewire.bookings.bookings-table', [
             'bookings' => $bookings->get(),
         ]);
     }

@@ -16,14 +16,14 @@ class Anticipation extends Component
         'config.open_until' => 'required|date'
     ];
 
-    public function mount() 
+    public function mount()
     {
         $this->config = Config::where('user_id', Auth::user()->id)->first();
     }
 
     public function render()
     {
-        return view('livewire.anticipation');
+        return view('livewire.config.anticipation');
     }
 
     public function updated()

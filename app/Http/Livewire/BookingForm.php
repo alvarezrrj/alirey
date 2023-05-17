@@ -157,7 +157,7 @@ class BookingForm extends Component implements HasForms
 
     public function render()
     {
-        return view('livewire.booking-form');
+        return view('livewire.bookings.booking-form');
     }
 
     public function insert(Request $request)

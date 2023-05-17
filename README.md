@@ -10,7 +10,11 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Add 'add to calendar' button on booking view
+Add 'I accept the terms and conditions' checkbox on booking form'
+
+Add into terms of service: "it's your responsibility to call us if you don't give us your number".
+
+Send therapist's phone number in booking confirmation and reminder emails.
 
 Use avatar in nav component and user-select
 
@@ -18,7 +22,7 @@ Write:
 + Terms of service
 + Privacy policy
 + Refunds policy
-+ Amendments
++ Amendments policy
 
 register user form says 'Edit user' on header
 
@@ -29,7 +33,10 @@ Send notification to user when they're signed up:
 
 Send notification to user when therapist creates a booking for them
 
-Do google calendar sync (and possibly login)
+Send email confirmation link to user when they're edited by admin (check first if it is necesary)
+
+Do google calendar sync
+Add 'add to calendar' button on booking view
 
 Replace jquery.flexselect for filament Select
 Delete all felxselect related stuff

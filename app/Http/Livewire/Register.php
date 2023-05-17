@@ -11,6 +11,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\ViewField;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Illuminate\Auth\Events\Registered;
@@ -62,90 +63,97 @@ class Register extends Component implements HasForms
 
     public function render()
     {
-        return view('livewire.register');
+        return view('livewire.register.register');
     }
 
     protected function getFormSchema(): array
     {
+        $schema = [
+            TextInput::make('firstName')
+                ->columnSpan([
+                    'sm' => 2,
+                ])
+                ->label(__('Name'))
+                ->autofocus()
+                ->required()
+                ->rules(['max:255'])
+                ->string(),
+            TextInput::make('lastName')
+                ->columnSpan([
+                    'sm' => 2,
+                ])
+                ->label(__('Last Name'))
+                ->required()
+                ->rules(['max:255'])
+                ->string(),
+            TextInput::make('email')
+                ->columnSpan('full')
+                ->label(__('Email'))
+                ->email()
+                ->rules(['max:255'])
+                ->required()
+                ->unique(
+                    table: User::class,
+                    ignorable: $this->user ?? null),
+            Select::make('code_id')
+                ->columnSpan([
+                    'sm' => 2,
+                ])
+                ->label(__('Country code'))
+                ->allowHtml()
+                ->searchable()
+                ->placeholder(__('Country'))
+                ->disablePlaceholderSelection()
+                ->options($this->codes)
+                ->exists(table: Code::class, column: 'id')
+                ->extraAttributes(['class' => 'dark:text-gray-300 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-lg']),
+            TextInput::make('phone')
+            ->columnSpan([
+                'sm' => 2,
+                ])
+                ->label(__('Phone'))
+                ->inputMode('numeric')
+                ->string()
+                ->rules(['max:255']),
+        ];
+        if (! Auth::user()?->isAdmin()) {
+            array_push($schema,
+            ViewField::make('phone-helper')
+                ->view('livewire.register.phone-helper')
+                ->columnSpan('full')
+            );
+        }
+        array_push($schema,
+            TextInput::make('password')
+                ->columnSpan('full')
+                ->label(__('Password'))
+                ->password()
+                ->autocomplete('new-password')
+                ->confirmed()
+                ->rules([Password::defaults()])
+                ->required(! isset($this->user) && ! Auth::user())
+                ->hint(__('At least :x characters', ['x' => 8]))
+                ->hidden(isset($this->user) || Auth::user()),
+            TextInput::make('password_confirmation')
+                ->columnSpan('full')
+                ->label(__('Confirm Password'))
+                ->password()
+                ->autocomplete('new-password')
+                ->required(! isset($this->user) && ! Auth::user())
+                ->hidden(isset($this->user) || Auth::user()),
+        );
         return [
             Grid::make([
                 'default' => 1,
                 'sm' => 4,
-            ])->schema([
-                TextInput::make('firstName')
-                    ->columnSpan([
-                        'sm' => 2,
-                    ])
-                    ->label(__('Name'))
-                    ->autofocus()
-                    ->required()
-                    ->rules(['max:255'])
-                    ->string(),
-                TextInput::make('lastName')
-                    ->columnSpan([
-                        'sm' => 2,
-                    ])
-                    ->label(__('Last Name'))
-                    ->required()
-                    ->rules(['max:255'])
-                    ->string(),
-                TextInput::make('email')
-                    ->columnSpan('full')
-                    ->label(__('Email'))
-                    ->email()
-                    ->rules(['max:255'])
-                    ->required()
-                    ->unique(
-                        table: User::class,
-                        ignorable: $this->user ?? null),
-                Select::make('code_id')
-                    ->columnSpan([
-                        'sm' => 2,
-                    ])
-                    ->label(__('Country code'))
-                    ->allowHtml()
-                    ->searchable()
-                    ->placeholder(__('Country'))
-                    ->disablePlaceholderSelection()
-                    ->options($this->codes)
-                    ->required()
-                    ->exists(table: Code::class, column: 'id')
-                    ->extraAttributes(['class' => 'dark:text-gray-300 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-lg']),
-                TextInput::make('phone')
-                    ->columnSpan([
-                        'sm' => 2,
-                    ])
-                    ->label(__('Phone'))
-                    ->inputMode('numeric')
-                    ->string()
-                    ->rules(['max:255'])
-                    ->required(),
-                TextInput::make('password')
-                    ->columnSpan('full')
-                    ->label(__('Password'))
-                    ->password()
-                    ->autocomplete('new-password')
-                    ->confirmed()
-                    ->rules([Password::defaults()])
-                    ->required(! isset($this->user) && ! Auth::user())
-                    ->hint(__('At least :x characters', ['x' => 8]))
-                    ->hidden(isset($this->user) || Auth::user()),
-                TextInput::make('password_confirmation')
-                    ->columnSpan('full')
-                    ->label(__('Confirm Password'))
-                    ->password()
-                    ->autocomplete('new-password')
-                    ->required(! isset($this->user) && ! Auth::user())
-                    ->hidden(isset($this->user) || Auth::user()),
-            ])
-
+            ])->schema($schema)
         ];
     }
 
-    public function insert(?User $admin): RedirectResponse | Redirector
+    public function insert(): RedirectResponse | Redirector
     {
         // User is logged in (Admin is creating a new user)
-        if ($admin) {
+        if (Auth::user() != null) {
             // TO DO send email to user to set password
             $user = User::create(Arr::collapse([
                 $this->form->getState(),
@@ -159,20 +167,19 @@ class Register extends Component implements HasForms
         }
 
         // New user is registering themselves
+        $data = $this->form->getState();
+        $data['password'] = Hash::make($data['password']);
         $user = User::create(Arr::add(
-            $this->form->getState(),
+            $data,
             'role_id',
             $this->role_id,
         ));
-        $user->update([
-            'password' => Hash::make($this->form->getState()['password']),
-        ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return Redirect::to(RouteServiceProvider::HOME);
+        return Redirect::intended(RouteServiceProvider::HOME);
     }
 
     public function update(): RedirectResponse

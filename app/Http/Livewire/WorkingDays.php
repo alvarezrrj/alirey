@@ -24,12 +24,12 @@ class WorkingDays extends Component
 
     public function render()
     {
-        return view('livewire.working-days', [
+        return view('livewire.config.working-days', [
             'days' => $this->working_days,
         ]);
     }
 
-    public function updated() 
+    public function updated()
     {
         // Cast all values to integer
         foreach($this->working_days as &$day) $day = (int) $day;

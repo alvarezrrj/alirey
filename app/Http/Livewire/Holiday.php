@@ -38,8 +38,8 @@ class Holiday extends Component
 
     public function render(Request $request)
     {
-        
-        return view('livewire.holidays', [
+
+        return view('livewire.config.holidays', [
             'holidays' => $this->fetchHolidays($request),
         ]);
     }
@@ -51,14 +51,14 @@ class Holiday extends Component
         if(! Gate::allows('admin-only')) {
             return response('', 403);
         }
-        
+
         $from = Carbon::create($this->from);
         $until = $this->until ? Carbon::create($this->until) : $from;
 
         // Push new values into array for livewire to re-render table
         /*
         array_push($this->holidays, [
-            $from->format('d/m/Y'), 
+            $from->format('d/m/Y'),
             $until->format('d/m/Y')
         ]);
         */
@@ -68,7 +68,7 @@ class Holiday extends Component
         } else {
 
             while($from->lte($until)) {
-                
+
                 $request->user()->holidays()->create([ 'day' => $from ]);
                 $from->addDay();
             }
@@ -86,7 +86,7 @@ class Holiday extends Component
             ->whereDate('day', '>=', $now)
             ->oldest('day')
             ->get();
-        
+
         if(! count($dates)) return [];
 
         // Walk the array to find holiday groups
@@ -100,14 +100,14 @@ class Holiday extends Component
             $next = $dates[$i+1]->day ?? null;
 
             if(! $next) array_push($holidays, [
-                $start->format('d/m/Y'), 
+                $start->format('d/m/Y'),
                 $current->format('d/m/Y')
             ]);
 
             elseif($current->diffInDays($next) > 1)
             {
                 array_push($holidays, [
-                    $start->format('d/m/Y'), 
+                    $start->format('d/m/Y'),
                     $current->format('d/m/Y')
                 ]);
                 $start = $next;
@@ -168,8 +168,8 @@ class Holiday extends Component
     {
 
     }
-    
-    public function resetUntil() 
+
+    public function resetUntil()
     {
         $this->until = null;
     }
