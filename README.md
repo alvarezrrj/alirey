@@ -10,11 +10,12 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Add 'I prefer to call you' checkbox in profile and column in users table
+
 Add an 'opt_out' column on users table (to allow them to opt out of promotional email)
 
 When a user who hasn't given their phone number makes a booking, give them the option to enter their phone number in a modal.
 
-Add 'I accept the terms and conditions' checkbox on booking form'
 
 Add into terms of service: "it's your responsibility to call us if you don't give us your number".
 

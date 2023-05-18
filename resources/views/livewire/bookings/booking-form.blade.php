@@ -181,7 +181,7 @@
             }">
 
             <div class="w-full">
-              <x-input-label for="slot_id" :value="__('Slot')" class="inline-block mt-6"/>
+              <x-input-label for="slot_id" :value="__('Slot')" class="inline-block "/>
               <sup class="font-medium text-danger-700 dark:text-danger-400">*</sup>
               <x-select-input id="slot_id"
                 x-model="slot_id"
@@ -227,6 +227,17 @@
 
           </div> {{-- End Alpine slot --}}
 
+          @if(! $is_admin)
+          {{-- Ackowledge terms --}}
+          <div class="flex items-center mt-6 text-sm text-gray-800 dark:text-gray-200">
+            <x-checkbox wire:model="accepts_terms"/>
+            {{ __('I have read and accept the') }}&nbsp;
+            <a href="{{ route('terms') }}" target="_blank" class="underline">
+              {{ __('terms and conditions') }}
+            </a>
+          </div>
+          @endif
+
           @if(isset($booking))
           {{-- Paid amount --}}
           <x-input-label class="mt-0" for="amount" :value="__('Paid ammount')" />
@@ -260,7 +271,20 @@
               </a>
             @endif
 
-            <x-primary-button class="min-w-[7rem]">
+            @if(! $is_admin && ! Auth::user()->phone)
+            {{-- Show phone number modal --}}
+            <x-primary-button
+              :disabled="!$accepts_terms"
+              type="button"
+              x-data=""
+              x-on:click="$dispatch('open-modal', 'no-phone-modal')">
+              {{ __('Continue to checkout') }}
+            </x-primary-button>
+            @else
+            {{-- Save booking and continue --}}
+            <x-primary-button
+              class="min-w-[7rem]"
+              :disabled="!$accepts_terms && !$is_admin" >
               <span wire:loading.class='hidden' wire:target='update,insert'>
                 @if($is_admin)
                   {{ __('Save') }}
@@ -272,6 +296,7 @@
                 <x-spinner />
               </span>
             </x-primary-button>
+            @endif
           </div>
 
         </form>
@@ -280,8 +305,8 @@
     </div>
 
 
+  {{-- Booking type modal --}}
   @if(! $is_admin)
-    {{-- Booking type modal --}}
     <x-modal name="booking-type-modal" focusable>
       <div class="p-6 text-gray-900 dark:text-gray-100" >
         <h2 class="text-lg font-semibold">
@@ -311,13 +336,55 @@
     </x-modal>{{-- End Booking type modal --}}
   @endif
 
+  {{-- No phone modal --}}
+  @if(! $is_admin && ! Auth::user()->phone)
+  <x-modal name="no-phone-modal" focusable>
+
+    @if($errors->isNotEmpty())
+    <div x-data="" x-init="$dispatch('close')">Sarasa</div>
+    @endif
+
+    <div class="p-6 text-gray-900 dark:text-gray-100" >
+      <h2 class="text-lg font-semibold">
+        {{ __('Virtual sessions') }}
+      </h2>
+
+      <p class="my-6">
+        {{ __('Since you haven\'t given us your phone number, it\'ll be your responsibility to phone us at the time of your booking. Or you can leave your number bellow and let us call you.') }}
+      </p>
+
+      <livewire:phone-input />
+
+      <p class="mt-6 text-sm">
+        <x-antdesign-info-circle class="inline-block w-4 h-4" />
+        {{ __('If you want to stop seeing this message, you can go to your profile and select \'I prefer to call you\' under the phone number field.') }}
+
+      <div class="flex justify-end mt-6">
+        <x-secondary-button
+          class="min-w-[12rem]"
+          wire:click='insert'>
+          <span wire:loading.class='hidden'>
+            {{ __('I\'ll call you') }}
+          </span>
+          <span wire:loading wire:target='insert'>
+            <x-spinner />
+          </span>
+        </x-secondary-button>
+      </div>
+
+    </div>
+  </x-modal>
+  @endif
+
   @push('libraries')
   <script src="https://sdk.mercadopago.com/js/v2"></script>
   @endpush
-{{--
-  <pre class="text-white">
+
+  {{-- <pre class="text-white">
     Errors:
     {{ print_r($errors) }}
+    Errors length:
+    {{ print_r(count($errors)) }}
   </pre> --}}
 
 </div>

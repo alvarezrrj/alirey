@@ -30,6 +30,7 @@ class BookingForm extends Component implements HasForms
     public $data;
     public $codes;
     public $is_admin;
+    public $accepts_terms = false;
 
     public $booking;
 
@@ -46,6 +47,12 @@ class BookingForm extends Component implements HasForms
 
     public $client;
     public User $therapist;
+
+    // Events emitted from phone-input
+    protected $listeners = [
+        // Phone number saved, continue to checkout
+        'phone_saved' => 'insert',
+    ];
 
     protected function rules()
     {

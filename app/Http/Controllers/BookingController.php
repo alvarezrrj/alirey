@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\SingleSlotHolidayRequest;
 use App\Http\Requests\UpdateBookingRequest;
 use App\Models\Booking;
@@ -155,15 +156,15 @@ class BookingController extends Controller
      * @param  \App\Models\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Booking $booking): RedirectResponse
+    public function destroy(Request $request, Booking $booking): RedirectResponse
     {
         $this->authorize('delete', $booking);
 
         $booking->delete();
 
-        if (Auth::user()->isAdmin()) return Redirect::back();
+        if ($request->user()->isAdmin()) return Redirect::back();
 
-        else Redirect::route('bookings.create', $booking->therapist);
+        else return Redirect::route('bookings.create', $booking->therapist);
     }
 
     public function checkout(Booking $booking)
