@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Livewire\Home;
 use App\Mail\ContactTherapist;
 use App\Models\Booking;
 use App\Notifications\BookingReminder;
@@ -31,6 +32,13 @@ use Illuminate\Support\Facades\Password;
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('/terms', function() {
+    return view('legal.terms-of-service');
+})->name('terms');
+Route::get('/privacypolicy', function() {
+    return view('legal.privacy-policy');
+})->name('privacy-policy');
 
 Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])
     // Add verified middleware
@@ -57,13 +65,6 @@ Route::middleware(['auth', 'pending_payment'])->group(function() {
         ->name('bookings.confirmation');
     Route::get('failed_payment', [BookingController::class, 'failure'])
         ->name('bookings.failure');
-});
-
-Route::get('/terms', function() {
-    return view('legal.terms-of-service');
-});
-Route::get('/privacy', function() {
-    return view('legal.privacy-policy');
 });
 
 // admin

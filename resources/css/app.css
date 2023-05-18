@@ -6,7 +6,7 @@
 
 @layer components {
     .table-select {
-        @apply px-2 py-1 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 focus:bg-gray-200 dark:focus:bg-gray-600;
+        @apply px-2 py-1 bg-gray-200 cursor-pointer hover:dark:hover:bg-gray-600 focus:bg-gray-200 dark:focus:bg-gray-600;
     }
 
     [data-tooltip]::after,
@@ -18,7 +18,7 @@
 
     [data-tooltip]::after,
     [data-tooltip][data-placement=top]::after {
-        @apply text-gray-600 dark:text-gray-200;
+        @apply text-gray-600 dark:text-gray-200 ;
     }
 
     .home-section-header {
@@ -26,11 +26,11 @@
     }
 
     .testimonial-title {
-        @apply inline-block w-full mt-0 text-xl font-bold text-center text-gray-900 lg:w-auto me-1 dark:text-gray-100 lg:text-start;
+        @apply inline-block w-auto w-full mt-0 text-xl font-bold text-center text-gray-900 lg:me-1 dark:text-gray-100 lg:text-start;
     }
 
     .testimonial-subtitle {
-        @apply w-full text-center text-gray-600 dark:text-gray-400 lg:text-start;
+        @apply w-full text-center text-gray-400 text-gray-600 dark:lg:text-start;
     }
 
     .testimonial-text {
@@ -42,7 +42,7 @@
     }
 
     .home-box {
-        @apply relative p-8 mt-0 mb-10 transition-all duration-300 bg-white rounded-lg shadow-lg me-2 ms-2 dark:bg-gray-800 hover:-translate-y-1;
+        @apply relative p-8 mt-0 mb-10 transition-all duration-300 bg-white rounded-lg shadow-lg dark:bg-gray-800 me-2 ms-2 hover:-translate-y-1;
     }
 
     .box-title {
@@ -58,231 +58,328 @@
     }
 }
 
-[x-cloak] { visibility: hidden !important; }
+[x-cloak] {
+    visibility: hidden !important;
+}
 
+/*=== Fonts ===*/
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Regular.ttf);
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Bold.ttf);
+    font-weight: bold;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Italic.ttf);
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-Light.ttf);
+    font-weight: lighter;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-BoldItalic.ttf);
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: Lato;
+    src: url(../fonts/Lato-LightItalic.ttf);
+    font-weight: lighter;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Lato';
+}
+/*=== End fonts ===*/
+
+/*=== Tooltip ===*/
 [data-tooltip] {
-    position:relative
-   }
-   [data-tooltip]:not(a,
-   button,
-   input) {
-    border-bottom:1px dotted;
-    text-decoration:none;
-    cursor:help
-   }
-   [data-tooltip]::after,
-   [data-tooltip]::before,
-   [data-tooltip][data-placement=top]::after,
-   [data-tooltip][data-placement=top]::before {
-    display:block;
-    z-index:99;
-    position:absolute;
-    bottom:100%;
-    left:50%;
-    padding:.25rem .5rem;
-    overflow:hidden;
-    transform:translate(-50%,-.25rem);
-    content:attr(data-tooltip);
-    font-style:normal;
-    font-size:.875rem;
-    text-decoration:none;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    opacity:0;
-    pointer-events:none
-   }
-   [data-tooltip]::after,
-   [data-tooltip][data-placement=top]::after {
-    padding:0;
-    transform:translate(-50%,0);
-    border-top:.3rem solid;
-    border-right:.3rem solid transparent;
-    border-left:.3rem solid transparent;
-    border-radius:0;
-    background-color:transparent;
-    content:"";
-   }
-   [data-tooltip][data-placement=bottom]::after,
-   [data-tooltip][data-placement=bottom]::before {
-    top:100%;
-    bottom:auto;
-    transform:translate(-50%,.25rem)
-   }
-   [data-tooltip][data-placement=bottom]:after {
-    transform:translate(-50%,-.3rem);
-    border:.3rem solid transparent;
-    border-bottom:.3rem solid
-   }
-   [data-tooltip][data-placement=left]::after,
-   [data-tooltip][data-placement=left]::before {
-    top:50%;
-    right:100%;
-    bottom:auto;
-    left:auto;
-    transform:translate(-.25rem,-50%)
-   }
-   [data-tooltip][data-placement=left]:after {
-    transform:translate(.3rem,-50%);
-    border:.3rem solid transparent;
-    border-left:.3rem solid
-   }
-   [data-tooltip][data-placement=right]::after,
-   [data-tooltip][data-placement=right]::before {
-    top:50%;
-    right:auto;
-    bottom:auto;
-    left:100%;
-    transform:translate(.25rem,-50%)
-   }
-   [data-tooltip][data-placement=right]:after {
-    transform:translate(-.3rem,-50%);
-    border:.3rem solid transparent;
-    border-right:.3rem solid
-   }
-   [data-tooltip]:focus::after,
-   [data-tooltip]:focus::before,
-   [data-tooltip]:hover::after,
-   [data-tooltip]:hover::before {
-    opacity:1
-   }
-   @media (hover:hover) and (pointer:fine) {
+    position: relative
+}
+
+[data-tooltip]:not(a,
+    button,
+    input) {
+    border-bottom: 1px dotted;
+    text-decoration: none;
+    cursor: help
+}
+
+[data-tooltip]::after,
+[data-tooltip]::before,
+[data-tooltip][data-placement=top]::after,
+[data-tooltip][data-placement=top]::before {
+    display: block;
+    z-index: 99;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    padding: .25rem .5rem;
+    overflow: hidden;
+    transform: translate(-50%, -.25rem);
+    content: attr(data-tooltip);
+    font-style: normal;
+    font-size: .875rem;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none
+}
+
+[data-tooltip]::after,
+[data-tooltip][data-placement=top]::after {
+    padding: 0;
+    transform: translate(-50%, 0);
+    border-top: .3rem solid;
+    border-right: .3rem solid transparent;
+    border-left: .3rem solid transparent;
+    border-radius: 0;
+    background-color: transparent;
+    content: "";
+}
+
+[data-tooltip][data-placement=bottom]::after,
+[data-tooltip][data-placement=bottom]::before {
+    top: 100%;
+    bottom: auto;
+    transform: translate(-50%, .25rem)
+}
+
+[data-tooltip][data-placement=bottom]:after {
+    transform: translate(-50%, -.3rem);
+    border: .3rem solid transparent;
+    border-bottom: .3rem solid
+}
+
+[data-tooltip][data-placement=left]::after,
+[data-tooltip][data-placement=left]::before {
+    top: 50%;
+    right: 100%;
+    bottom: auto;
+    left: auto;
+    transform: translate(-.25rem, -50%)
+}
+
+[data-tooltip][data-placement=left]:after {
+    transform: translate(.3rem, -50%);
+    border: .3rem solid transparent;
+    border-left: .3rem solid
+}
+
+[data-tooltip][data-placement=right]::after,
+[data-tooltip][data-placement=right]::before {
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    left: 100%;
+    transform: translate(.25rem, -50%)
+}
+
+[data-tooltip][data-placement=right]:after {
+    transform: translate(-.3rem, -50%);
+    border: .3rem solid transparent;
+    border-right: .3rem solid
+}
+
+[data-tooltip]:focus::after,
+[data-tooltip]:focus::before,
+[data-tooltip]:hover::after,
+[data-tooltip]:hover::before {
+    opacity: 1
+}
+
+@media (hover:hover) and (pointer:fine) {
+
     [data-tooltip]:hover::after,
     [data-tooltip]:hover::before,
     [data-tooltip][data-placement=bottom]:focus::after,
     [data-tooltip][data-placement=bottom]:focus::before,
     [data-tooltip][data-placement=bottom]:hover [data-tooltip]:focus::after,
     [data-tooltip][data-placement=bottom]:hover [data-tooltip]:focus::before {
-     animation-duration:.2s;
-     animation-name:tooltip-slide-top
+        animation-duration: .2s;
+        animation-name: tooltip-slide-top
     }
+
     [data-tooltip]:hover::after,
     [data-tooltip][data-placement=bottom]:focus::after,
     [data-tooltip][data-placement=bottom]:hover [data-tooltip]:focus::after {
-     animation-name:tooltip-caret-slide-top
+        animation-name: tooltip-caret-slide-top
     }
+
     [data-tooltip][data-placement=bottom]:focus::after,
     [data-tooltip][data-placement=bottom]:focus::before,
     [data-tooltip][data-placement=bottom]:hover::after,
     [data-tooltip][data-placement=bottom]:hover::before {
-     animation-duration:.2s;
-     animation-name:tooltip-slide-bottom
+        animation-duration: .2s;
+        animation-name: tooltip-slide-bottom
     }
+
     [data-tooltip][data-placement=bottom]:focus::after,
     [data-tooltip][data-placement=bottom]:hover::after {
-     animation-name:tooltip-caret-slide-bottom
+        animation-name: tooltip-caret-slide-bottom
     }
+
     [data-tooltip][data-placement=left]:focus::after,
     [data-tooltip][data-placement=left]:focus::before,
     [data-tooltip][data-placement=left]:hover::after,
     [data-tooltip][data-placement=left]:hover::before {
-     animation-duration:.2s;
-     animation-name:tooltip-slide-left
+        animation-duration: .2s;
+        animation-name: tooltip-slide-left
     }
+
     [data-tooltip][data-placement=left]:focus::after,
     [data-tooltip][data-placement=left]:hover::after {
-     animation-name:tooltip-caret-slide-left
+        animation-name: tooltip-caret-slide-left
     }
+
     [data-tooltip][data-placement=right]:focus::after,
     [data-tooltip][data-placement=right]:focus::before,
     [data-tooltip][data-placement=right]:hover::after,
     [data-tooltip][data-placement=right]:hover::before {
-     animation-duration:.2s;
-     animation-name:tooltip-slide-right
+        animation-duration: .2s;
+        animation-name: tooltip-slide-right
     }
+
     [data-tooltip][data-placement=right]:focus::after,
     [data-tooltip][data-placement=right]:hover::after {
-     animation-name:tooltip-caret-slide-right
+        animation-name: tooltip-caret-slide-right
     }
-   }
-   @keyframes tooltip-slide-top {
+}
+
+@keyframes tooltip-slide-top {
     from {
-     transform:translate(-50%,.75rem);
-     opacity:0
+        transform: translate(-50%, .75rem);
+        opacity: 0
     }
+
     to {
-     transform:translate(-50%,-.25rem);
-     opacity:1
+        transform: translate(-50%, -.25rem);
+        opacity: 1
     }
-   }
-   @keyframes tooltip-caret-slide-top {
+}
+
+@keyframes tooltip-caret-slide-top {
     from {
-     opacity:0
+        opacity: 0
     }
+
     50% {
-     transform:translate(-50%,-.25rem);
-     opacity:0
+        transform: translate(-50%, -.25rem);
+        opacity: 0
     }
+
     to {
-     transform:translate(-50%,0);
-     opacity:1
+        transform: translate(-50%, 0);
+        opacity: 1
     }
-   }
-   @keyframes tooltip-slide-bottom {
+}
+
+@keyframes tooltip-slide-bottom {
     from {
-     transform:translate(-50%,-.75rem);
-     opacity:0
+        transform: translate(-50%, -.75rem);
+        opacity: 0
     }
+
     to {
-     transform:translate(-50%,.25rem);
-     opacity:1
+        transform: translate(-50%, .25rem);
+        opacity: 1
     }
-   }
-   @keyframes tooltip-caret-slide-bottom {
+}
+
+@keyframes tooltip-caret-slide-bottom {
     from {
-     opacity:0
+        opacity: 0
     }
+
     50% {
-     transform:translate(-50%,-.5rem);
-     opacity:0
+        transform: translate(-50%, -.5rem);
+        opacity: 0
     }
+
     to {
-     transform:translate(-50%,-.3rem);
-     opacity:1
+        transform: translate(-50%, -.3rem);
+        opacity: 1
     }
-   }
-   @keyframes tooltip-slide-left {
+}
+
+@keyframes tooltip-slide-left {
     from {
-     transform:translate(.75rem,-50%);
-     opacity:0
+        transform: translate(.75rem, -50%);
+        opacity: 0
     }
+
     to {
-     transform:translate(-.25rem,-50%);
-     opacity:1
+        transform: translate(-.25rem, -50%);
+        opacity: 1
     }
-   }
-   @keyframes tooltip-caret-slide-left {
+}
+
+@keyframes tooltip-caret-slide-left {
     from {
-     opacity:0
+        opacity: 0
     }
+
     50% {
-     transform:translate(.05rem,-50%);
-     opacity:0
+        transform: translate(.05rem, -50%);
+        opacity: 0
     }
+
     to {
-     transform:translate(.3rem,-50%);
-     opacity:1
+        transform: translate(.3rem, -50%);
+        opacity: 1
     }
-   }
-   @keyframes tooltip-slide-right {
+}
+
+@keyframes tooltip-slide-right {
     from {
-     transform:translate(-.75rem,-50%);
-     opacity:0
+        transform: translate(-.75rem, -50%);
+        opacity: 0
     }
+
     to {
-     transform:translate(.25rem,-50%);
-     opacity:1
+        transform: translate(.25rem, -50%);
+        opacity: 1
     }
-   }
-   @keyframes tooltip-caret-slide-right {
+}
+
+@keyframes tooltip-caret-slide-right {
     from {
-     opacity:0
+        opacity: 0
     }
+
     50% {
-     transform:translate(-.05rem,-50%);
-     opacity:0
+        transform: translate(-.05rem, -50%);
+        opacity: 0
     }
+
     to {
-     transform:translate(-.3rem,-50%);
-     opacity:1
+        transform: translate(-.3rem, -50%);
+        opacity: 1
     }
-   }
+}
+/*=== End tooltip ===*/
