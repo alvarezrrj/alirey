@@ -14,24 +14,11 @@ Add 'I prefer to call you' checkbox in profile and column in users table
 
 Add an 'opt_out' column on users table (to allow them to opt out of promotional email)
 
-When a user who hasn't given their phone number makes a booking, give them the option to enter their phone number in a modal.
-
-
-Add into terms of service: "it's your responsibility to call us if you don't give us your number".
-
 Send therapist's phone number in booking confirmation and reminder emails.
 
 Use avatar in nav component and user-select
 
-Write:
-+ Terms of service
-+ Privacy policy
-+ Refunds policy
-+ Amendments policy
-
-register user form says 'Edit user' on header
-
-Send notification to user when they're signed up: 
+Send notification to user when they're signed up by admin: 
 "You have just been signed up on our platform, an email verification link should have been sent. Once you have verified your email, you can click this button to set up a password."
 
     <a href="http://127.0.0.1:8000/reset-password/{{ Password::createToken($user) }}?email=alvarezrrj%40gmail.com">Set up my password</a>
@@ -49,8 +36,6 @@ Delete all felxselect related stuff
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
 Add support for english language
-
-
 
 ### Future releases
 

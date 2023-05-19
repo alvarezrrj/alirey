@@ -14,7 +14,9 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +47,8 @@ class BookingForm extends Component implements HasForms
     // Select between booking and single-slot holiday
     public $is_booking = true;
 
-    public $client;
+    public ?User $client;
+    public ?int $client_id;
     public User $therapist;
 
     // Events emitted from phone-input
@@ -74,16 +77,16 @@ class BookingForm extends Component implements HasForms
         ];
     }
 
-    public function mount()
+    public function mount(Request $request)
     {
         $this->data = BookingController::getData($this->booking ?? null);
         $this->codes = Code::all();
-        $this->is_admin = Auth::user()->isAdmin();
+        $this->is_admin = $request->user()->isAdmin();
 
         if ($this->is_admin) {
-            $this->therapist = Auth::user();
+            $this->therapist = $request->user();
         } else {
-            $this->client = Auth::user();
+            $this->client = $request->user();
         }
 
         $this->virtual = $this->booking?->virtual ?? 1;
@@ -94,14 +97,14 @@ class BookingForm extends Component implements HasForms
             'day' => $this->booking?->day,
         ]);
         $this->clientForm->fill([
-            'client' => $this->booking?->user_id,
+            'client_id' => $this->booking?->user_id,
         ]);
     }
 
     protected function getClientFormSchema(): array
     {
         return [
-            Select::make('client')
+            Select::make('client_id')
                 ->label(__('Client'))
                 ->placeholder(__('Find client'))
                 ->hint('['.__('Client not found? Register one.').']('.route('users.create').')')
@@ -111,12 +114,12 @@ class BookingForm extends Component implements HasForms
                 ->allowHtml()
                 ->searchable()
                 ->getSearchResultsUsing(function (string $search) {
-                    $users = User::where('firstName', 'like', "%$search%")
-                    ->orWhere('lastName', 'like', "%$search%")
-                    ->orWhere('email', 'like', "%$search%")
-                    ->where('id', '!=', $this->therapist->id)
-                    ->limit(50)
-                    ->get();
+                    $users = User::where('id', '!=', $this->therapist->id)
+                        ->where('firstName', 'like', "%$search%")
+                        ->orWhere('lastName', 'like', "%$search%")
+                        ->orWhere('email', 'like', "%$search%")
+                        ->limit(50)
+                        ->get();
                     return $users->keyBy('id')
                         ->map(fn ($user) => view('bookings.user-select')
                             ->with(['user' => $user])
@@ -196,7 +199,7 @@ class BookingForm extends Component implements HasForms
 
             // Admin booking for client
             if ($this->is_admin && $this->is_booking) {
-                $booking = User::find($this->client)->bookings()->create($validated);
+                $booking = User::find($this->client_id)->bookings()->create($validated);
                 session()->flash('message', 'Booking saved.');
                 return redirect(route('bookings.show', $booking));
             // Single slot holiday

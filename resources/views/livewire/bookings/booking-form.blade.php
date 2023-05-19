@@ -271,7 +271,7 @@
               </a>
             @endif
 
-            @if(! $is_admin && ! Auth::user()->phone)
+            @if(! $is_admin && $virtual && ! $client->phone  && ! $client->prefers_calling)
             {{-- Show phone number modal --}}
             <x-primary-button
               :disabled="!$accepts_terms"
@@ -380,11 +380,11 @@
   <script src="https://sdk.mercadopago.com/js/v2"></script>
   @endpush
 
-  {{-- <pre class="text-white">
-    Errors:
-    {{ print_r($errors) }}
-    Errors length:
-    {{ print_r(count($errors)) }}
-  </pre> --}}
+  <pre class="text-white">
+    {{-- Errors:
+    {{ print_r($errors) }} --}}
+    {{-- Client:
+    {{ print_r($client) }} --}}
+  </pre>
 
 </div>

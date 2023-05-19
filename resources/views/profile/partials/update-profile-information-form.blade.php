@@ -41,6 +41,17 @@
             </div>
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             <x-input-error :messages="$errors->get('code_id')" class="mt-2" />
+
+            <p class="grid grid-rows-2 mt-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+              <span class="flex items-center">
+                <x-checkbox name="prefers_calling" value="1" :checked="old('prefers_calling', $user->prefers_calling)"/>
+                {{ __('I prefer to call you') }}
+              </span>
+              <span class="text-sm text-gray-600 dark:text-gray-400">
+                {{ __('Check this box to stop us from asking your number.') }}
+              </span>
+            </p>
+            <x-input-error :messages="$errors->get('prefers_calling')" class="mt-2" />
         </div>
 
         <div>
