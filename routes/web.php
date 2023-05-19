@@ -14,6 +14,7 @@ use App\Notifications\BookingReminder;
 use App\Mail\EmailConfirmation;
 use App\Models\ContactMessage;
 use App\Models\User;
+use App\Notifications\BookingConfirmation;
 use App\Notifications\MessageConfirmation;
 use App\Notifications\NewMessage;
 use Illuminate\Support\Facades\Password;
@@ -100,13 +101,16 @@ Route::post('contact', [ContactController::class, 'send'])
 
 //=== Emaill testing ===
 Route::get('/email_test', function() {
+    $booking  = Booking::find(155);
+    return (new BookingReminder($booking))
+        ->toMail($booking->user);
 
-    return new ContactTherapist(
-        name: 'Carlitos',
-        email:  'hello@example.com',
-        my_subject: 'consulta',
-        text: 'Hola como estas, este es el mensaje',
-    );
+    // return new ContactTherapist(
+    //     name: 'Carlitos',
+    //     email:  'hello@example.com',
+    //     my_subject: 'consulta',
+    //     text: 'Hola como estas, este es el mensaje',
+    // );
 });
 
 Route::get('reset_link', function() {

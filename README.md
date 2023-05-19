@@ -1,18 +1,9 @@
 # Alirey
 
-Install google API client 
-```
-composer require google/apiclient:^2.10
-```
-
-
 A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Laravel & Livewire). This doc attempts to describe what each section does and how it does it.
 
 ## TO DO
 
-Add 'I prefer to call you' checkbox in profile and column in users table
-
-Add an 'opt_out' column on users table (to allow them to opt out of promotional email)
 
 Send therapist's phone number in booking confirmation and reminder emails.
 
@@ -44,20 +35,17 @@ Add support for english language
 + Display holidays and non-working days on calendar
 + Support for booking drag and drop on calendar
 + Use filament tables
-+ Instruct admin how user search works via notifications that pop up on disabled input click (booking-form.blade.php).
 + BookingController->edit()
     - Find another way to see if day is full inside while loop to avoid so many round trips to DB
 + Link Google calendar and/or iCal
-+ Give the client an option not to enter their phone number (they will have to start the call instead of receiving it)
-+ External login
 + Sort out calendar drop-down positioning
 + Give admin ability to dissallow last minute bookings
-+ Move single slot holiday component into config
 + Add search in bookings table
 + Sort past bookings descendingly in bookings table
 + Auto delete soft deleted slots with no related bookings in a scheduled job
 + Sort out the roles situation
 + Remove x-code-select from update-profile-information-form.blade.php (replace with filament component)
+Add an 'opt_out' column on users table (to allow them to opt out of promotional email)
 
 ## Notes
 Goggle scopes

@@ -41,11 +41,20 @@ class BookingReminder extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
+        $mail_message = (new MailMessage)
             ->subject(__('Booking reminder'))
             ->greeting(__('Hi').' '.$this->booking->user->firstName.',')
             ->line(__('This is a friendly reminder about your booking, which starts at **').$this->booking->slot->start->format('H:i').__('** today'))
             ->action(__('Open on website'), route('bookings.show', $this->booking));
+        if (! $this->booking->user->phone) {
+            $mail_message->line(__('Your therapist\'s number')
+                .': +'
+                .$this->booking->therapist->code->code
+                .' '
+                .$this->booking->therapist->phone
+            );
+        }
+        return $mail_message;
     }
 
     /**
