@@ -4,9 +4,6 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-
-Use avatar in nav component and user-select
-
 Send notification to user when they're signed up by admin: 
 "You have just been signed up on our platform, an email verification link should have been sent. Once you have verified your email, you can click this button to set up a password."
 

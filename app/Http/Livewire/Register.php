@@ -163,6 +163,7 @@ class Register extends Component implements HasForms
                 ]
             ]));
             session()->flash('message', 'User registered.');
+            event(new Registered($user, has_password: false));
             return redirect($this->back_url);
         }
 

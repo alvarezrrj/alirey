@@ -4,6 +4,7 @@ namespace Illuminate\Auth\Listeners;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendEmailVerificationNotification
 {
@@ -15,7 +16,12 @@ class SendEmailVerificationNotification
      */
     public function handle(Registered $event)
     {
-        if ($event->user instanceof MustVerifyEmail && ! $event->user->hasVerifiedEmail()) {
+        if ($event->user instanceof MustVerifyEmail
+            && ! $event->user->hasVerifiedEmail()
+            // If user was created by therapist, we will only send the password
+            // set up email and verify their email when they set up their
+            // password
+            && $event->has_password) {
             $event->user->sendEmailVerificationNotification();
         }
     }

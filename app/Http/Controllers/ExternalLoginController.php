@@ -34,7 +34,6 @@ class ExternalLoginController extends Controller
         $user_from_db = User::where('email', $user->email)->first();
 
         if (! $user_from_db) {
-            // TO DO
             // Create user
             $new_user = new User;
             $new_user->firstName = $user->user['given_name'];
@@ -50,11 +49,11 @@ class ExternalLoginController extends Controller
             Auth::login($new_user);
         } else {
             // Update and login user
-            // TO DO
-            // Make sure user is sent to where he was before
-            $user_from_db->update([
-                'avatar' => $user->avatar,
-            ]);
+            $user_from_db->avatar = $user->avatar;
+            if (! $user_from_db->email_verified_at) {
+                $user_from_db->email_verified_at = now();
+            }
+            $user_from_db->save();
             Auth::login($user_from_db);
         }
 

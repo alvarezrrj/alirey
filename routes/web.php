@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Notifications\BookingConfirmation;
 use App\Notifications\MessageConfirmation;
 use App\Notifications\NewMessage;
+use App\Notifications\SetUpYourPassword;
 use Illuminate\Support\Facades\Password;
 
 /*
@@ -102,7 +103,7 @@ Route::post('contact', [ContactController::class, 'send'])
 //=== Emaill testing ===
 Route::get('/email_test', function() {
     $booking  = Booking::find(155);
-    return (new BookingReminder($booking))
+    return (new SetUpYourPassword)
         ->toMail($booking->user);
 
     // return new ContactTherapist(
