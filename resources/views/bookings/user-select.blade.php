@@ -1,7 +1,8 @@
 <div class="grid grid-cols-10 grid-rows-2">
   <div class="grid col-span-1 row-span-2 place-items-center">
-    @if($user->profileImage)
-      {{-- Create profile image component and load it here --}}
+    @if($user->avatar)
+      <img class="w-full p-2 rounded-full" src="{{ $user->avatar }}"
+      referrerpolicy="no-referrer">
     @else
       <x-bi-person-circle class="w-full h-full p-2"/>
     @endif

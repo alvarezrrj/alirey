@@ -66,8 +66,11 @@
             <button tabindex="0"
               class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border-red-700 rounded-md hover:border-red-600 dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300">
               <div class="relative border-inherit">
+                @if (Auth::user()->avatar)
+                  <img class="inline w-8 h-8 rounded-full me-2" src="{{ Auth::user()->avatar }}"
+                    referrerpolicy="no-referrer">
+                @endif
                 {{ Auth::user()->firstName }}
-
                 @if(session()->has('pending_payment'))
                 <div
                   class="absolute top-0 left-0 -translate-y-1/2 border-4 rounded-full border-inherit -translate-x-3/4">
@@ -182,9 +185,17 @@
 
     <!-- Responsive Settings Options -->
     <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-      <div class="px-4">
-        <div class="text-base font-medium text-gray-800 dark:text-gray-200">{{ Auth::user()->firstName }}</div>
-        <div class="text-sm font-medium text-gray-500">{{ Auth::user()->email }}</div>
+      <div class="flex flex-wrap justify-between w-full px-4">
+        <div>
+        <span class="text-base font-medium text-gray-800 dark:text-gray-200">
+          {{ Auth::user()->firstName }}
+        </span><br>
+        <span class="text-sm font-medium text-gray-500 ">
+          {{ Auth::user()->email }}
+        </span>
+        </div>
+        <img class="w-12 rounded-full" src="{{ Auth::user()->avatar }}"
+        referrerpolicy="no-referrer">
       </div>
 
       <div class="mt-3 space-y-1">

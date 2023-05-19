@@ -5,8 +5,6 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 ## TO DO
 
 
-Send therapist's phone number in booking confirmation and reminder emails.
-
 Use avatar in nav component and user-select
 
 Send notification to user when they're signed up by admin: 
