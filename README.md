@@ -30,7 +30,6 @@ Add support for english language
 + Sort past bookings descendingly in bookings table
 + Auto delete soft deleted slots with no related bookings in a scheduled job
 + Sort out the roles situation
-+ Remove x-code-select from update-profile-information-form.blade.php (replace with filament component)
 Add an 'opt_out' column on users table (to allow them to opt out of promotional email)
 
 ## Notes

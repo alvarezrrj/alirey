@@ -31,14 +31,12 @@
 
         <!-- Telephone Number -->
         <div class="mt-4">
-            <x-input-label for="phone" :value="__('Telephone Number')" />
-            <div class="flex">
-                <x-code-select :codes="$codes" :value="old('code_id', $user->code_id ?? null)" label="Country code" id="code" name="code_id" rounded="rounded-l-md"
-                class="inline-block w-2/5 mt-1 flexselect" />
-                <x-text-input id="phone" inputmode="numeric" rounded="rounded-r-md"
-                class="inline-block w-3/5 mt-1" type="text" name="phone"
-                :value="old('phone', $user->phone )" />
-            </div>
+            <livewire:code-select :code_id="old('code_id', $user->code_id)" />
+
+            <x-input-label for="phone" :value="__('Telephone Number')" class="mt-6"/>
+            <x-text-input id="phone" inputmode="numeric"
+              class="inline-block w-full mt-1" type="text" name="phone"
+              :value="old('phone', $user->phone )" />
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             <x-input-error :messages="$errors->get('code_id')" class="mt-2" />
 
