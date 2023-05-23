@@ -51,9 +51,9 @@
     </x-primary-button>
   </div>
 
-  <pre class="text-white">
+  {{-- <pre class="text-white">
     {{ var_dump($authenticated) }}
-  </pre>
+  </pre> --}}
 
 </form>
 
