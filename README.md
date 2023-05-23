@@ -4,6 +4,8 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Add favicons
+
 Do google calendar sync
 Add 'add to calendar' button on booking view
 
