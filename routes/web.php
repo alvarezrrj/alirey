@@ -44,8 +44,7 @@ Route::get('/privacypolicy', function() {
 })->name('privacy-policy');
 
 Route::get('/dashboard', [RegisteredUserController::class, 'dashboard'])
-    // Add verified middleware
-    ->middleware(['auth', 'pending_payment'])->name('dashboard');
+    ->middleware(['auth', 'verified', 'pending_payment'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -56,8 +55,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // everyone
-// Add verified middleware
-Route::middleware(['auth', 'pending_payment'])->group(function() {
+Route::middleware(['auth', 'verified', 'pending_payment'])->group(function() {
     Route::resource('bookings', BookingController::class)
         ->only(['index', 'show', 'edit', 'update', 'destroy']);
     Route::get('bookings/{therapist}/create', [BookingController::class, 'create'])
@@ -71,16 +69,14 @@ Route::middleware(['auth', 'pending_payment'])->group(function() {
 });
 
 // admin
-// Add verified middleware
-Route::middleware(['auth', 'admin'])->group(function() {
+Route::middleware(['auth', 'verified', 'admin'])->group(function() {
     Route::resource('users', UsersController::class);
     Route::get('/config', [ConfigController::class, 'index'])
         ->name('config');
 });
 
 // customer
-// Add verified middleware
-Route::middleware(['auth', 'customer'])->group(function() {
+Route::middleware(['auth', 'verified', 'customer'])->group(function() {
     // Contact forms (for contacting therapist)
     Route::get('contact/{therapist}/query', [ContactController::class, 'therapist'])
         ->name('contact.therapist');
@@ -102,10 +98,10 @@ Route::post('contact', [ContactController::class, 'send'])
     ->name('contact');
 
 //=== Emaill testing ===
-Route::get('/email_test', function() {
-    $booking  = Booking::find(155);
-    return (new BookingDetails($booking))
-        ->toMail($booking->user);
+// Route::get('/email_test', function() {
+//     $booking  = Booking::find(155);
+//     return (new BookingDetails($booking))
+//         ->toMail($booking->user);
 
     // return new ContactTherapist(
     //     name: 'Carlitos',
@@ -113,25 +109,4 @@ Route::get('/email_test', function() {
     //     my_subject: 'consulta',
     //     text: 'Hola como estas, este es el mensaje',
     // );
-});
-
-Route::get('reset_link', function() {
-    $user = User::first();
-    return Password::createToken($user);
-});
-
-// Route::get('do_flags', function() {
-//     $codes = \App\Models\Code::all();
-//     foreach($codes as $code) {
-//         if (!isset($code->flag)) {
-//             $code->update(['flag' => '&nbsp;&nbsp;&nbsp;&nbsp;']);
-//             $code->save;
-//         } else {
-//             $new = str_replace('U+', '&#x', $code->flag);
-//             $new = str_replace(' ', ';', $new);
-//             $new .= ';';
-//             $code->update(['flag' => $new]);
-//             $code->save();
-//         }
-//     }
 // });

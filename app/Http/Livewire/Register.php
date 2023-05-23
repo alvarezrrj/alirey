@@ -17,6 +17,7 @@ use Filament\Forms\Contracts\HasForms;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +41,9 @@ class Register extends Component implements HasForms
 
     public ?User $user;
 
-    public function mount()
+    public ?User $authenticated;
+
+    public function mount(Request $request)
     {
         $this->codes = DB::table('codes')
             ->orderBy('country', 'asc')
@@ -59,6 +62,8 @@ class Register extends Component implements HasForms
             'code_id' => $this->user->code_id ?? null,
             'phone' => $this->user->phone ?? null,
         ]);
+
+        $this->authenticated = $request->user();
     }
 
     public function render()
@@ -116,7 +121,7 @@ class Register extends Component implements HasForms
                 ->string()
                 ->rules(['max:255']),
         ];
-        if (! Auth::user()?->isAdmin()) {
+        if (isset($this->authenticated) && ! $this->authenticated->isAdmin()) {
             array_push($schema,
             ViewField::make('phone-helper')
                 ->view('livewire.register.phone-helper')
@@ -150,11 +155,10 @@ class Register extends Component implements HasForms
         ];
     }
 
-    public function insert(): RedirectResponse | Redirector
+    public function insert(Request $request): RedirectResponse | Redirector
     {
         // User is logged in (Admin is creating a new user)
-        if (Auth::user() != null) {
-            // TO DO send email to user to set password
+        if (isset($request->user)) {
             $user = User::create(Arr::collapse([
                 $this->form->getState(),
                 [
@@ -185,8 +189,12 @@ class Register extends Component implements HasForms
 
     public function update(): RedirectResponse
     {
-        // TO DO send email to user to confirm email
-        $this->user->update($this->form->getState());
+        $this->user->fill($this->form->getState());
+
+        if ($this->user->isDirty('email')) {
+            $this->user->email_verified_at = null;
+        }
+
         $this->user->save();
 
         session()->flash('message', 'Changes saved.');

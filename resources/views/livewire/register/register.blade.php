@@ -51,9 +51,9 @@
     </x-primary-button>
   </div>
 
-  {{-- <pre class="text-white">
-    {{ var_dump($back_url) }}
-  </pre> --}}
+  <pre class="text-white">
+    {{ var_dump($authenticated) }}
+  </pre>
 
 </form>
 

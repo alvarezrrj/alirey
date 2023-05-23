@@ -4,8 +4,6 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Send email confirmation link to user when they're edited by admin (check first if it is necesary)
-
 Do google calendar sync
 Add 'add to calendar' button on booking view
 
@@ -162,13 +160,12 @@ Allows anyone to contact the site admin, includes an optional screenshot field (
 ## Deployment
 
 - Deffer loading of CSS when possible
-- Add 'verified' middleware to routes
-- Uncomment line 139 on MercadoPagoController `NewBookingEvent::dispatch($booking);`
-- Update pref->notification_url on MercadoPagoController::create_or_get_preference()
+- Add 'verified' middleware to routes ✔
+- Uncomment line 139 on MercadoPagoController `NewBookingEvent::dispatch($booking);` ✔
 - Update MAIL_ variables in .env file
-- Updata database variables in .env file 
-- Store app's url in [Google console](https://console.cloud.google.com/apis/credentials?project=alirey) to allow redirect after Google sign in
 - Create database on server
+- Updata database variables in .env file 
+- Store app's url in [Google console](https://console.cloud.google.com/apis/credentials?project=alirey) to allow redirect after Google sign in ✔
 - Install composer dependencies with
 ``` 
 composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader

@@ -136,7 +136,7 @@ class MercadoPagoController extends Controller
 
                 // Now that payment is confirmed, dispatch NewBookingEvent.
                 // Sends emails.
-                //NewBookingEvent::dispatch($booking);
+                NewBookingEvent::dispatch($booking);
             }
         }
         return response('', 200);
