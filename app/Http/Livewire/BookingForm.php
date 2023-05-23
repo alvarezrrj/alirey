@@ -8,6 +8,7 @@ use App\Models\Code;
 use App\Models\Payment;
 use App\Models\User;
 use App\Models\Slot;
+use App\Notifications\BookingDetails;
 use App\SD\SD;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
@@ -200,6 +201,7 @@ class BookingForm extends Component implements HasForms
             // Admin booking for client
             if ($this->is_admin && $this->is_booking) {
                 $booking = User::find($this->client_id)->bookings()->create($validated);
+                $booking->user->notify(new BookingDetails($booking));
                 session()->flash('message', 'Booking saved.');
                 return redirect(route('bookings.show', $booking));
             // Single slot holiday

@@ -9,7 +9,8 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 /**
- * System to therapist notification of a new booking
+ * System to therapist notification of a new booking. Sent when client books a
+ * session.
  */
 
 class NewBooking extends Notification

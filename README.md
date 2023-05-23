@@ -4,13 +4,6 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Send notification to user when they're signed up by admin: 
-"You have just been signed up on our platform, an email verification link should have been sent. Once you have verified your email, you can click this button to set up a password."
-
-    <a href="http://127.0.0.1:8000/reset-password/{{ Password::createToken($user) }}?email=alvarezrrj%40gmail.com">Set up my password</a>
-
-Send notification to user when therapist creates a booking for them
-
 Send email confirmation link to user when they're edited by admin (check first if it is necesary)
 
 Do google calendar sync

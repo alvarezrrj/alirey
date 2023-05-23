@@ -1,11 +1,5 @@
 <?php
 
-/**
- * BookingConfirmation
- *
- * Emails user their booking details
- */
-
 namespace App\Notifications;
 
 use App\Models\Booking;
@@ -15,20 +9,18 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
 /**
- * System to user notification of booking confirmation. Sent when client books
- * a session.
+ * System to client notification of booking confirmation. Sent when therapist
+ * books on behalf of client.
  */
 
-class BookingConfirmation extends Notification
+class BookingDetails extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
-     *
-     * @return void
      */
-    public function __construct(public Booking $booking)
+    public function __construct(private Booking $booking)
     {
         //
     }
@@ -36,21 +28,17 @@ class BookingConfirmation extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @return array<int, string>
      */
-    public function via($notifiable)
+    public function via(object $notifiable): array
     {
         return ['mail'];
     }
 
     /**
      * Get the mail representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    public function toMail(object $notifiable): MailMessage
     {
         $location = $this->booking->virtual
             ? 'WhatsApp'
@@ -58,7 +46,8 @@ class BookingConfirmation extends Notification
 
         $mail_message = (new MailMessage)
             ->subject(__('Your booking details'))
-            ->greeting(__('Thank you for booking a session with us! These are your booking details:'))
+            ->greeting(__('Hi').' '.$this->booking->user->firstName.' 👋,')
+            ->line(__('These are your booking details:'))
             ->line(__('Date').': '.$this->booking->day->format('d/m/Y'))
             ->line(__('Time').': '.$this->booking->slot->start->format('H:i'))
             ->line(__('Location').': '.$location)
@@ -79,10 +68,9 @@ class BookingConfirmation extends Notification
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
-     * @return array
+     * @return array<string, mixed>
      */
-    public function toArray($notifiable)
+    public function toArray(object $notifiable): array
     {
         return [
             //

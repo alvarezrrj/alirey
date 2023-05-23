@@ -5,20 +5,21 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Password;
 use App\Http\Livewire\Home;
 use App\Mail\ContactTherapist;
 use App\Models\Booking;
-use App\Notifications\BookingReminder;
 use App\Mail\EmailConfirmation;
 use App\Models\ContactMessage;
 use App\Models\User;
+use App\Notifications\BookingReminder;
 use App\Notifications\BookingConfirmation;
+use App\Notifications\BookingDetails;
 use App\Notifications\MessageConfirmation;
 use App\Notifications\NewMessage;
 use App\Notifications\SetUpYourPassword;
-use Illuminate\Support\Facades\Password;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,7 +104,7 @@ Route::post('contact', [ContactController::class, 'send'])
 //=== Emaill testing ===
 Route::get('/email_test', function() {
     $booking  = Booking::find(155);
-    return (new SetUpYourPassword)
+    return (new BookingDetails($booking))
         ->toMail($booking->user);
 
     // return new ContactTherapist(

@@ -30,7 +30,7 @@
     }
 
     .testimonial-subtitle {
-        @apply w-full text-center text-gray-400 text-gray-600 dark:lg:text-start;
+        @apply w-full text-center text-gray-600 dark:text-gray-300 lg:text-start;
     }
 
     .testimonial-text {
