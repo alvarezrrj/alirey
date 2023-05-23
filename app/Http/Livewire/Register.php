@@ -158,7 +158,7 @@ class Register extends Component implements HasForms
     public function insert(Request $request): RedirectResponse | Redirector
     {
         // User is logged in (Admin is creating a new user)
-        if (isset($request->user)) {
+        if ($request->user() !== null) {
             $user = User::create(Arr::collapse([
                 $this->form->getState(),
                 [
