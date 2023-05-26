@@ -3,7 +3,8 @@ main {
     position: relative;
     background:
         fixed url(../img/sathy/fondo-web-01-01-02.jpg) top no-repeat,
-        #fff5;
+        fixed #fff5;
+    /* background-attachment: fixed, fixed; */
     background-size: cover;
     background-blend-mode: color;
     padding: 40px 0 120px 0;
@@ -12,18 +13,22 @@ main {
 .webp main {
     background:
         fixed url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
-        #fff5;
+        fixed #fff5;
+    /* background-attachment: fixed, fixed; */
 }
 
 @media (prefers-color-scheme: dark) {
     main {
         background:
             fixed url(../img/sathy/fondo-web-01-01-02.jpg) top no-repeat,
-            #0006;
+            fixed #0006;
+        /* background-attachment: fixed, fixed; */
     }
+
     .webp main {
         background:
             fixed url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
-            #0006;
+            fixed #0006;
+        /* background-attachment: fixed, fixed; */
     }
 }
