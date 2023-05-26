@@ -28,15 +28,14 @@
     @livewireScripts
   </head>
 
-  <body class="bg-gray-100 dark:bg-gray-900 grid grid-rows-[auto_1fr_auto] text-gray-800 dark:text-gray-300">
+  <body class="text-gray-800 bg-gray-100 lg:grid dark:bg-gray-900 dark:text-gray-300">
 
-    <header class="sticky top-0 z-50 shrink-0 grow-0">
+    <header class="sticky top-0 z-50">
       @includeWhen(Auth::user(), 'layouts.navigation')
       @includeUnless(Auth::user(), 'layouts.guest-navigation')
     </header>
 
       {{ $slot }}
-    </main>
 
     <!-- ======= Footer ======= -->
     <footer class="w-full text-sm text-gray-300 bg-black">

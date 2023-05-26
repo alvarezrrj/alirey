@@ -2,32 +2,28 @@ main {
     width: 100%;
     position: relative;
     background:
-        fixed
-        url(../img/sathy/fondo-web-01-01-02.jpg) center bottom no-repeat,
+        fixed url(../img/sathy/fondo-web-01-01-02.jpg) top no-repeat,
         #fff5;
     background-size: cover;
     background-blend-mode: color;
-    padding: 80px 0 120px 0;
+    padding: 40px 0 120px 0;
 }
 
 .webp main {
     background:
-        fixed
-        url(../img/sathy/fondo-web-01-01-02.webp) center bottom no-repeat,
+        fixed url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
         #fff5;
 }
 
 @media (prefers-color-scheme: dark) {
     main {
         background:
-            fixed
-            url(../img/sathy/fondo-web-01-01-02.jpg) center bottom no-repeat,
+            fixed url(../img/sathy/fondo-web-01-01-02.jpg) top no-repeat,
             #0006;
     }
     .webp main {
         background:
-            fixed
-            url(../img/sathy/fondo-web-01-01-02.webp) center bottom no-repeat,
+            fixed url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
             #0006;
     }
 }

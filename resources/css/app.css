@@ -46,7 +46,7 @@
     }
 
     .box-title {
-        @apply mb-4 text-lg font-bold ms-10 sm:ms-0;
+        @apply mb-4 text-lg font-bold md:ms-10 ms-0;
     }
 
     .box-desc {

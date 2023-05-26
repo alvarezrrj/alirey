@@ -7,3 +7,4 @@ hot
 *.HEIC
 public/build/*
 node_modules/*
+google-oauth*

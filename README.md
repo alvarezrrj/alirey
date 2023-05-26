@@ -4,6 +4,13 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
+Arreglar fondo en version movil
+
+APP IN MAINTENANCE MODE
+Access trhough 
+https://alirey.rodrigoalvarez.co.uk/lokBsTMfYOnV4VuaAg57ybaC4CsgZuOlkywy
+Lift with `php artisan up`
+
 Add favicons
 
 Do google calendar sync
@@ -207,9 +214,14 @@ php artisan view:cache
 
 - Run queue worker with
 ```
-php artisan queue:work  --tries=3 --backoff=60
+php artisan queue:work database --tries=3 --backoff=60
 ```
-Learn how to keep the process running with [Supervisor](https://laravel.com/docs/10.x/queues#supervisor-configuration)
+
+- Run the worker [supervisor](https://laravel.com/docs/10.x/queues#supervisor-configuration) with
+``` 
+supervisorctl start worker-538346:*
+supervisorctl start worker-538355:*
+```
 
 
 

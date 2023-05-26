@@ -1,6 +1,6 @@
 body {
     background:
-        fixed url(../img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.jpg) center bottom no-repeat,
+        fixed url(../img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.jpg) center no-repeat,
         #0001;
     background-size: cover;
     background-blend-mode: color;
@@ -8,20 +8,22 @@ body {
 
 .webp body {
     background:
-        fixed url(../img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.webp) center bottom no-repeat,
+        fixed url(../img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.webp) center no-repeat,
         #0001;
-}
+    }
 
 @media (prefers-color-scheme: dark) {
     body {
         background:
-            fixed url(../img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.jpg) center bottom no-repeat,
-            #000a;
-    }
+            fixed url(../img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.jpg) center no-repeat,
+            #444b;
+        background-size: cover;
+}
 
     .webp body {
         background:
-            fixed url(../img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.webp) center bottom no-repeat,
-            #000a;
+            fixed url(../img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.webp) center no-repeat,
+            #444b;
+        background-size: cover;
     }
 }
