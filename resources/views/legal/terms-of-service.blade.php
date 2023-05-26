@@ -6,7 +6,7 @@ SD::admin)->first()->users()->first())
 <x-site-layout>
 
   <main
-    class="max-w-screen-md px-4 mx-auto space-y-14 dark:text-gray-200 sm:px-16 lg:px-18 xl:px-22 2xl:px-24">
+    class="max-w-screen-md px-4 mx-auto space-y-14 dark:text-gray-200 sm:px-16 lg:px-18 xl:px-22 2xl:px-24 ">
 
     <h1 class="mt-8 text-xl text-center">{{ __('legal.terms.header') }}</h1>
     <h2>1. {{ __('legal.terms.terms') }}</h2>

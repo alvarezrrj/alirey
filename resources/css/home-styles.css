@@ -1,34 +1,42 @@
 main {
-    width: 100%;
-    position: relative;
-    background:
-        fixed url(../img/sathy/fondo-web-01-01-02.jpg) top no-repeat,
-        fixed #fff5;
-    /* background-attachment: fixed, fixed; */
-    background-size: cover;
-    background-blend-mode: color;
     padding: 40px 0 120px 0;
+    position: relative;
+    z-index: 20;
+}
+/* The background is applied to a position: fixed pseudo element to work around
+ * background-attachment: fixed not working on iOS and mobile devices
+ */
+main::before {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    content: "";
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background:
+        url(../img/sathy/fondo-web-01-01-02.jpg) top no-repeat,
+        #fff5;
+    background-size: cover !important;
+    background-blend-mode: color;
 }
 
-.webp main {
+.webp main::before {
     background:
-        fixed url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
-        fixed #fff5;
-    /* background-attachment: fixed, fixed; */
+        url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
+        #fff5;
 }
 
 @media (prefers-color-scheme: dark) {
-    main {
+    main::before {
         background:
-            fixed url(../img/sathy/fondo-web-01-01-02.jpg) top no-repeat,
-            fixed #0006;
-        /* background-attachment: fixed, fixed; */
-    }
+            url(../img/sathy/fondo-web-01-01-02.jpg) top no-repeat,
+            #0006;
+}
 
-    .webp main {
+    .webp main::before {
         background:
-            fixed url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
-            fixed #0006;
-        /* background-attachment: fixed, fixed; */
+            url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
+            #0006;
     }
 }

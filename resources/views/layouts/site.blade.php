@@ -28,7 +28,7 @@
     @livewireScripts
   </head>
 
-  <body class="text-gray-800 bg-gray-100 lg:grid dark:bg-gray-900 dark:text-gray-300">
+  <body class="text-gray-800 bg-gray-100 dark:bg-gray-900 dark:text-gray-300">
 
     <header class="sticky top-0 z-50">
       @includeWhen(Auth::user(), 'layouts.navigation')
@@ -38,7 +38,7 @@
       {{ $slot }}
 
     <!-- ======= Footer ======= -->
-    <footer class="w-full text-sm text-gray-300 bg-black">
+    <footer class="relative z-20 w-full text-sm text-gray-300 bg-black">
       <div class="pb-8 bg-gray-900 pt-14">
         <div class="grid grid-cols-3 p-8">
           {{-- <div class="flex"> --}}

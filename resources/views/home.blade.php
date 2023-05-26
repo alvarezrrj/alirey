@@ -15,7 +15,7 @@
   <main class="lg:flex lg:items-start">
 
     {{-- Navigation --}}
-    <nav class="z-20 hidden w-16 h-full p-6 transition-all duration-300 bg-transparent lg:w-80 lg:shrink-0 lg:flex lg:justify-end lg:items-start 2xl:max-w-lg 2xl:w-full">
+    <nav class="sticky top-0 z-20 hidden w-16 h-full p-6 transition-all duration-300 bg-transparent lg:w-80 lg:shrink-0 lg:flex lg:justify-end lg:items-start 2xl:max-w-lg 2xl:w-full">
       <ul class="absolute space-y-4 list-none dark:bg-inherit dark:text-gray-200 text-end lg:sticky lg:top-10"
         x-data="{
           links: $el.querySelectorAll('a'),
@@ -45,7 +45,7 @@
     </nav>
 
     {{-- Content --}}
-    <div class="max-w-screen-lg px-8 space-y-20 dark:text-gray-200 sm:px-16 lg:px-18 xl:px-22 2xl:px-24">
+    <div class="relative z-20 max-w-screen-lg px-8 space-y-20 dark:text-gray-200 sm:px-16 lg:px-18 xl:px-22 2xl:px-24">
 
       <section id="biodescodificacion-inicio" class="pb-20 border-b border-skin"
         class="mt-12">
