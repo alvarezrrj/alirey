@@ -6,10 +6,10 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 Arreglar fondo en version movil
 
-APP IN MAINTENANCE MODE
+<!-- APP IN MAINTENANCE MODE
 Access trhough 
 https://alirey.rodrigoalvarez.co.uk/lokBsTMfYOnV4VuaAg57ybaC4CsgZuOlkywy
-Lift with `php artisan up`
+Lift with `php artisan up` -->
 
 Add favicons
 
