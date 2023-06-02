@@ -4,12 +4,12 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-Arreglar fondo en version movil
-
 <!-- APP IN MAINTENANCE MODE
 Access trhough 
 https://alirey.rodrigoalvarez.co.uk/lokBsTMfYOnV4VuaAg57ybaC4CsgZuOlkywy
 Lift with `php artisan up` -->
+
+Fix filament dark mode issue with: https://github.com/filamentphp/filament/issues/6647#issuecomment-1569853641
 
 Add favicons
 
