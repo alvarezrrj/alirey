@@ -24,7 +24,6 @@ class ExternalLoginController extends Controller
         try {
             $user = Socialite::driver('google')->user();
         } catch (\Exception $e) {
-            // TO DO
             // Display notification saying something went wrong
             session()->flash('login', 'Whoops! Something went wrong 🤦. Please try again.');
 
