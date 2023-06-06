@@ -12,20 +12,37 @@ main {
     }
 }
 
-body::after {
+body::before {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
+    width: 100lvw;
     height: 100vh;
+    height: 100lvh;
     content: "";
     z-index: 10;
-    background-color: #eee !important;
+    background:
+        url(../img/sathy/fondo-web-01-01-02.jpg) top no-repeat,
+        #fff5;
+    background-size: cover !important;
     background-blend-mode: color;
 }
 
+.webp body::before {
+    background:
+        url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
+        #fff5;
+}
+
 @media (prefers-color-scheme: dark) {
-    body::after  {
+    body::before  {
         background-color: #000a !important;
+    }
+
+    .webp body::before {
+        background:
+            url(../img/sathy/fondo-web-01-01-02.webp) top no-repeat,
+            #0006;
     }
 }

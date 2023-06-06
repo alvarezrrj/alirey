@@ -223,6 +223,11 @@ supervisorctl start worker-538346:*
 supervisorctl start worker-538355:*
 ```
 
+- When making changes to the code, stop all workers with
+```
+php artisan queue:restart
+```
+This will stop all workers and allow supervisor te restart them, picking up the code changes.
 
 
 

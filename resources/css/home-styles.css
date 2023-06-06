@@ -8,7 +8,9 @@ main {
  */
 main::before {
     width: 100vw;
+    width: 100lvw;
     height: 100vh;
+    height: 100lvh;
     position: fixed;
     content: "";
     top: 0;
