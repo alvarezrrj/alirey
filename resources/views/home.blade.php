@@ -241,7 +241,7 @@
         <header>
           <h3 class="home-section-header">¿Que es la Bioconstelación?</h3>
           <p class="m-auto text-center text-gray-700 pb-14 dark:text-gray-300">
-          <strong>Bioconstelación es una nueva metodología</strong> que, a través del reconocimiento del orden ancestral, permite restablecer conflictos emocionales, sociales o físicos, acelerando los procesos de quilibrio en nuestro interior y entorno familiar. La <strong>bioconstelación</strong> está basada en dos conceptos:
+          <strong>Bioconstelación es una nueva metodología</strong> que, a través del reconocimiento del orden ancestral, permite restablecer conflictos emocionales, sociales o físicos, acelerando los procesos de equilibrio en nuestro interior y entorno familiar. La <strong>bioconstelación</strong> está basada en dos conceptos:
           </p>
         </header>
 
