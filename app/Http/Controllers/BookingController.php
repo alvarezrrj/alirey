@@ -236,7 +236,6 @@ class BookingController extends Controller
     public static function getData($booking = null)
     {
         $admin = Role::where('role', SD::admin)->first()->users()->first();
-        // $admin = User::where('role_id', Role::where('role', SD::admin)->first()->id)->first();
         $working_days = $admin->config->working_days;
         $now = Carbon::today();
         $last_day = $admin->config->allways_open
@@ -308,6 +307,9 @@ class BookingController extends Controller
     {
         // All bookings happening within 20'
         $bookings = Booking::whereHas('slot', function(Builder $query) {
+            // This time comparison works regardless of the Server's location
+            // because Laravel is configured to use env('TIMEZONE'), which
+            // is America/Argentina/Cordoba
             $query->whereTime('start', '>=', Carbon::now())
                   ->whereTime('start', '<=', Carbon::now()->addMinutes(20));
         })

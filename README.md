@@ -4,19 +4,12 @@ A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Lara
 
 ## TO DO
 
-<!-- APP IN MAINTENANCE MODE
-Access trhough 
-https://alirey.rodrigoalvarez.co.uk/lokBsTMfYOnV4VuaAg57ybaC4CsgZuOlkywy
-Lift with `php artisan up` -->
-
 Fix filament dark mode issue with: https://github.com/filamentphp/filament/issues/6647#issuecomment-1569853641
 
 Add favicons
 
-Do google calendar sync
 Add 'add to calendar' button on booking view
 
-Replace jquery.flexselect for filament Select
 Delete all felxselect related stuff
 
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
@@ -123,9 +116,7 @@ This is the booking creation workflow for the different circumstances
 
 Note: BookingController::getData() is currently retrieving config as if there were only one admin managing the app. Therapist_id should be included in create booking form in a multi-admin scenario.
 
-// TO DO
-// Update this line once this is implemented
-When admin registers a new user, an email confirmation notification and a password reset link are sent so they can access their account.
+When admin registers a new user, a password reset link is sent so they can access their account.
 
 Non-admin users creating bookings are redirected to checkout page (bookings.checkout) after the booking is validated and stored on DB. Users with pending payment are shown a notification badge on their username and prompted to pay or cancel the booking before being allowed to create a new one.
 
@@ -155,6 +146,10 @@ Displays a form for inserting bookings and updating those that have a state of B
 'time' &lt;select&gt; updates itself when a new day is selected, disabling any slots that have a booking on them, except if it corresponds to current booking.
 
 'restore' button restores date and time.
+
+## BookingController::send_reminder()
+
+This static function is called by the scheduler and sends a reminder email to anyone who's booking starts within 20'.
 
 ## Contact (/contact/{therapist}/query)
 
