@@ -1,6 +1,6 @@
 # Alirey
 
-A booking management system built in the TALL stack (TailwindCSS, AlpineJS, Laravel & Livewire). This doc attempts to describe what each section does and how it does it.
+A booking management system built with the TALL stack (TailwindCSS, AlpineJS, Laravel & Livewire). This doc attempts to describe what each section does and how it does it.
 
 ## TO DO
 
@@ -8,9 +8,6 @@ Fix filament dark mode issue with: https://github.com/filamentphp/filament/issue
 
 Add favicons
 
-Add 'add to calendar' button on booking view
-
-Delete all felxselect related stuff
 
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 
@@ -19,19 +16,19 @@ Add support for english language
 ### Future releases
 
 + Color calendar events according to booking/payment status
-+ Support for multi day events (holidays) in calendar
 + Display holidays and non-working days on calendar
 + Support for booking drag and drop on calendar
 + Use filament tables
 + BookingController->edit()
     - Find another way to see if day is full inside while loop to avoid so many round trips to DB
 + Link Google calendar and/or iCal
+    - Add 'add to calendar' button on booking view
 + Sort out calendar drop-down positioning
-+ Give admin ability to dissallow last minute bookings
++ Give admin ability to dissallow last minute bookings in config.
 + Add search in bookings table
 + Sort past bookings descendingly in bookings table
 + Auto delete soft deleted slots with no related bookings in a scheduled job
-+ Sort out the roles situation
++ Sort out the roles situation: separate 'admin' from 'therapist'
 Add an 'opt_out' column on users table (to allow them to opt out of promotional email)
 
 ## Notes
@@ -165,7 +162,6 @@ Allows anyone to contact the site admin, includes an optional screenshot field (
 - Deffer loading of CSS when possible
 - Add 'verified' middleware to routes ✔
 - Uncomment line 139 on MercadoPagoController `NewBookingEvent::dispatch($booking);` ✔
-- Update MAIL_ variables in .env file
 - Create database on server
 - Updata database variables in .env file 
 - Store app's url in [Google console](https://console.cloud.google.com/apis/credentials?project=alirey) to allow redirect after Google sign in ✔
@@ -268,11 +264,10 @@ Learn how to keep the process running with [Supervisor](https://laravel.com/docs
 
 ## Authors
 
-* **Rodrigo Alvarez** - *Initial work* - [website](https://rodrigoalvarez.co.uk)
+* **Rodrigo Alvarez** - [website](https://rodrigoalvarez.co.uk)
 
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
+* Hat tip to asantibanez for an awesome livewire calendar
 * Love to the open source community
-* etc

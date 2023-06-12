@@ -456,7 +456,7 @@
 
     {{-- WhatsApp button --}}
     <a
-      class="fixed h-10 w-10 bottom-6 right-6 rounded-full bg-[#32bb46] flex justify-center items-center"
+      class="z-20 fixed h-10 w-10 bottom-6 right-6 rounded-full bg-[#32bb46] flex justify-center items-center"
       href="https://api.whatsapp.com/send/?phone=5493541221161&text&type=phone_number&app_absent=1">
       <x-antdesign-whats-app-o
         class="w-8 h-8 text-white dark:text-gray-900 "
