@@ -4,6 +4,10 @@ A booking management system built with the TALL stack (TailwindCSS, AlpineJS, La
 
 ## TO DO
 
+Fix slot not beeing selected by default on booking form
+
+Clean up instructions height animation on booking form
+
 Fix filament dark mode issue with: https://github.com/filamentphp/filament/issues/6647#issuecomment-1569853641
 
 Add favicons

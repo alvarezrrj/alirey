@@ -92,7 +92,7 @@ class BookingForm extends Component implements HasForms
 
         $this->virtual = $this->booking?->virtual ?? 1;
         $this->day = $this->booking?->day;
-        $this->slot_id = $this->booking?->slot_id;
+        $this->slot_id = $this->booking?->slot_id ?? Slot::first()->id;
         $this->amount = $this->booking?->payment->amount;
         $this->dayForm->fill([
             'day' => $this->booking?->day,

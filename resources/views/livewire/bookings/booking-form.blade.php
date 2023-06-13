@@ -43,7 +43,7 @@
       @else
 
       <div class="max-w-xl space-y-6 text-gray-900 sm:pl-8 dark:text-gray-100 ">
-        <x-alert-error key="overlap" />
+        <x-alert-warning key="overlap" />
         <x-alert-message />
 
         {{-- Booking instructions --}}
@@ -194,8 +194,7 @@
                   <option
                     x-bind:value="slot.id"
                     x-bind:disabled="slot.disabled ? true : false"
-                    x-text="slot.start + ' - ' + slot.end"
-                    x-on:click="slot_id = $el.value">
+                    x-text="slot.start + ' - ' + slot.end">
                 </template>
 
               </x-select-input>
