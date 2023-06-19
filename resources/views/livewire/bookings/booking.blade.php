@@ -2,7 +2,7 @@
 
 <div class="max-w-xl sm:pl-8">
 
-  <div class="flex justify-between">
+  <div class="flex flex-wrap justify-between">
     <h3 class="font-bold ">
       {{ __('Booking number') }}:&nbsp;{{ $booking->id }}
     </h3>
@@ -10,7 +10,7 @@
           ||$booking->status === SD::BOOKING_CANCELLED
           ||! $is_admin)
       <a href="{{ route('bookings.edit', $booking) }}">
-        <x-primary-button class="w-full sm:w-auto">
+        <x-primary-button class="w-full mt-4 sm:w-auto sm:mt-0">
           <x-antdesign-edit-o width="18" height="18"/>
           &nbsp;
           <span>
@@ -19,6 +19,25 @@
         </x-primary-button>
       </a>
     @endunless
+
+    @if(! $is_admin && ! isset($booking->google_event_id))
+      <x-primary-button small="true" class="w-full mt-4 sm:w-auto sm:mt-0"
+        wire:click='addToGoogleCalendar'>
+        <img
+          aria-hidden="true"
+          class="w-6 h-6 me-6"
+          height="200"
+          src="{{ Vite::asset('resources/img/Google_Calendar_icon.svg')}}"
+          width="200" alt="Google Calendar">
+        <span class="text-sm">{{ __('Add to Google Calendar') }}</span>
+      </x-primary-button>
+      <div class="hidden"
+        x-data="{saved: @entangle('saved_to_google')}"
+        x-init="$watch('saved', value => {
+          if (value) notif.i('{{ __('Saved to Google Calendar 👍') }}')
+        })">
+      </div>
+    @endif
   </div>
 
   <table class="w-full mt-6 text-gray-900 dark:text-gray-100">

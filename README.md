@@ -4,7 +4,18 @@ A booking management system built with the TALL stack (TailwindCSS, AlpineJS, La
 
 ## TO DO
 
-Fix slot not beeing selected by default on booking form
+- Changes to commit:
+    * Improve login form layout
+    * Give users ability to store booking on Google Calendar
+    * Update / delete booking from Google Calendar on admin update/delete
+    * Revoke Google tokens on user deletion
+
++ Replace booking's day column for from and to (as datetimes)
++ Check for booking overlap by just comparing dateTimes instead of slot_id
++ Select upcoming booking (on RegisteredUserController::dashboard) where 'from' <= Carbon::now()
+
++ Admin config: Sync with google calendar
++ Add link to 'add to google calendar' on booking confirmation email.
 
 Clean up instructions height animation on booking form
 
@@ -50,8 +61,9 @@ to users table
 
 ### Known issues
 
-+ Slot picker on booking form requires an option to be clicked on (even if the &lt;select&gt; element has a value)
++ Slot picker on booking form requires selects the first slot by default which might be unavailable. This could lead to a poor UX if someone goes for that slot and a moment later finds out it's not available.
 + bookings.checkout lags for a few seconds before loading 'pay' button with no loading indicator
++ Line 184 on Livewire\BookingForm `->where('slot_id', $validated['slot_id'])` is wrong: slots may have been soft deleted
 
 ### For a multi-therapist scenario
 
