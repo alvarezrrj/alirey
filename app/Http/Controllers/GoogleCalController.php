@@ -15,7 +15,7 @@ class GoogleCalController extends Controller
     /**
      * Redirects the user to Google's authorization page.
      */
-    public function auth(Request $request, Booking $booking)
+    public function auth(Request $request)
     {
         $client = $this::initGoogleClient();
         $client->setScopes([\Google\Service\Calendar::CALENDAR_EVENTS]);
@@ -24,7 +24,8 @@ class GoogleCalController extends Controller
         // Give Google a hint as to who is trying to log in. Simplifies the process.
         $client->setLoginHint($request->user()->email);
         // Use booking ID as a CSRF token
-        $client->setState(Crypt::encryptString("$booking->id"));
+        // TODO implement state
+        // $client->setState(Crypt::encryptString("$booking->id"));
 
         return new RedirectResponse($client->createAuthUrl());
     }
@@ -40,17 +41,16 @@ class GoogleCalController extends Controller
             // User didn't approve the request.
             $error = $request->get('error');
             session()->flash('error', $error);
-            session()->flash('warning', 'We couldn\'t connect to Google Calendar.');
 
-            return redirect()->route('dashboard');
+            return redirect()->route('google.calendar.finished', 'error');
         }
-        try {
-            $state = Crypt::decryptString($request->get('state'));
-        } catch (DecryptException $e) {
-            // CSRF token doesn't match.
-            session()->flash('error', 'Something went wrong.');
-            return redirect()->route('dashboard');
-        }
+        // try {
+        //     $state = Crypt::decryptString($request->get('state'));
+        // } catch (DecryptException $e) {
+        //     // CSRF token doesn't match.
+        //     session()->flash('error', 'Something went wrong.');
+        //     return redirect()->route('dashboard');
+        // }
         $client = $this::initGoogleClient();
         $client->setAccessType('offline');
         // Exchange the authorization code for an access token.
@@ -59,27 +59,29 @@ class GoogleCalController extends Controller
         $request->user()->google_token = Crypt::encryptString(json_encode($token));
         $request->user()->save();
 
-        // TODO retreive booking from request state
-        $booking = Booking::find($state);
-        $this->store($booking, $client);
-        // TODO Find out what iCalUID is (in $inserted->iCalUID)
+        return redirect()->route('google.calendar.finished', 'ok');
+    }
 
-        session()->flash('message', 'Booking saved on Google Calendar.');
-        return redirect()->route('dashboard');
+    /**
+     * @param string $result = 'ok' | 'error'
+     */
+    public function finished(string $result)
+    {
+        return view('oauth.finished')->with('result', $result);
     }
 
 
     /**
      * Store a booking on the user's Google Calendar
      */
-    public static function store(Booking $booking, ?Client $client=null)
+    public static function store(Booking $booking)
     {
-        $client = $client ?? self::initGoogleClient($booking->user);
-
+        $client = self::initGoogleClient($booking->user);
         $calendarService = new \Google\Service\Calendar($client);
         $event = self::createEvent($booking);
         $calendarId = config('services.google.calendar_id');
         $inserted = $calendarService->events->insert($calendarId, $event);
+        // TODO Find out what iCalUID is (in $inserted->iCalUID)
         $booking->fill([
             'google_event_id' => $inserted->id
         ])->save();

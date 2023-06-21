@@ -83,16 +83,17 @@ Route::middleware(['auth', 'verified', 'customer'])->group(function() {
         ->name('contact.therapist');
     Route::post('contact/query', [ContactController::class, 'therapistSend'])
         ->name('contact.therapist.send');
-    // Route::get('booking/calendar/index', [GoogleCalController::class, 'index'])
-    //     ->name('booking.calendar.index');
-    // Route::get('booking/calendar/create', [GoogleCalController::class, 'create'])
-    //     ->name('booking.calendar.create');
-    Route::get('google/calendar/auth/{booking}', [GoogleCalController::class, 'auth'])
+
+});
+
+// everyone (logged in)
+Route::middleware(['auth', 'verified'])->group(function() {
+    Route::get('google/calendar/auth', [GoogleCalController::class, 'auth'])
         ->name('google.calendar.auth');
     Route::get('google/calendar/callback', [GoogleCalController::class, 'callback'])
         ->name('google.calendar.callback');
-    // Route::get('google/calendar/tokens', [GoogleCalController::class, 'tokens'])
-    //     ->name('google.calendar.tokens');
+    Route::get('google/calendar/finished/{result}', [GoogleCalController::class, 'finished'])
+        ->name('google.calendar.finished');
 });
 
 

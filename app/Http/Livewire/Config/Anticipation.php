@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Config;
 
 use App\Models\Config;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -16,9 +17,9 @@ class Anticipation extends Component
         'config.open_until' => 'required|date'
     ];
 
-    public function mount()
+    public function mount(Request $request)
     {
-        $this->config = Config::where('user_id', Auth::user()->id)->first();
+        $this->config = $request->user()->config;
     }
 
     public function render()

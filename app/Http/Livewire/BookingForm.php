@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\NewBookingEvent;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GoogleCalController;
 use App\Models\Booking;
@@ -203,7 +204,7 @@ class BookingForm extends Component implements HasForms
             // Admin booking for client
             if ($this->is_admin && $this->is_booking) {
                 $booking = User::find($this->client_id)->bookings()->create($validated);
-                $booking->user->notify(new BookingDetails($booking));
+                NewBookingEvent::dispatch($booking);
                 session()->flash('message', 'Booking saved.');
                 return redirect(route('bookings.show', $booking));
             // Single slot holiday

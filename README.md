@@ -4,24 +4,19 @@ A booking management system built with the TALL stack (TailwindCSS, AlpineJS, La
 
 ## TO DO
 
-- Changes to commit:
-    * Improve login form layout
-    * Give users ability to store booking on Google Calendar
-    * Update / delete booking from Google Calendar on admin update/delete
-    * Revoke Google tokens on user deletion
++ Test Google Calendar Sync (therapist) in production 
+
++ Unnecesary modals are being rendered on Booking view
 
 + Replace booking's day column for from and to (as datetimes)
 + Check for booking overlap by just comparing dateTimes instead of slot_id
 + Select upcoming booking (on RegisteredUserController::dashboard) where 'from' <= Carbon::now()
 
-+ Admin config: Sync with google calendar
 + Add link to 'add to google calendar' on booking confirmation email.
 
-Clean up instructions height animation on booking form
-
-Fix filament dark mode issue with: https://github.com/filamentphp/filament/issues/6647#issuecomment-1569853641
-
-Add favicons
++ Clean up instructions height animation on booking form
++ Fix filament dark mode issue with: https://github.com/filamentphp/filament/issues/6647#issuecomment-1569853641
++ Add favicons
 
 
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
@@ -45,6 +40,8 @@ Add support for english language
 + Auto delete soft deleted slots with no related bookings in a scheduled job
 + Sort out the roles situation: separate 'admin' from 'therapist'
 Add an 'opt_out' column on users table (to allow them to opt out of promotional email)
++ Cerrar horarios de forma recurrente.
++ Add option to sync to google Calendar on user's profile
 
 ## Notes
 Goggle scopes

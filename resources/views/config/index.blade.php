@@ -9,22 +9,24 @@
     @endpush
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
             {{ __('Configuration') }}
         </h2>
     </x-slot>
 
     <div class="py-12 space-y-6">
 
-        <livewire:working-days />
+        <livewire:config.working-days />
 
-        <livewire:anticipation />
+        <livewire:config.anticipation />
 
-        <livewire:price />
+        <livewire:config.price />
 
-        <livewire:holiday />
+        <livewire:config.holiday />
 
-        <livewire:slots />
+        <livewire:config.slots />
+
+        <livewire:config.google-sync />
 
     </div>
 

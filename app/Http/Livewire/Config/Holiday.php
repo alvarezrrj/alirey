@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Config;
 
 use App\Models\Booking;
 use App\Models\Holiday as Holidays;

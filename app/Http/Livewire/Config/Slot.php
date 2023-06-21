@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Config;
 
 use App\Models\Slot as ModelsSlot;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

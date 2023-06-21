@@ -28,7 +28,13 @@ class Booking extends Component
 
     public $response;
 
+    public string $popup_url;
     public $saved_to_google = false;
+
+    public $complete;
+    // protected $listeners = [
+    //     'oAuthComplete' => 'foo',
+    // ];
 
     public function mount()
     {
@@ -95,11 +101,14 @@ class Booking extends Component
 
     public function addToGoogleCalendar(Request $request)
     {
+        // sleep(300);
         if ($request->user()->google_token) {
             GoogleCalController::store($this->booking);
             $this->saved_to_google = true;
+            $this->popup_url = '';
             return;
         }
-        return redirect()->route('google.calendar.auth', $this->booking);
+        $this->popup_url = route('google.calendar.auth');
+        // return redirect()->route('google.calendar.auth', $this->booking);
     }
 }

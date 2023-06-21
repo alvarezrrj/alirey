@@ -18,22 +18,22 @@
             <form wire:submit.prevent="submit" class="space-y-4">
                 <div class="flex space-x-5">
                 <x-input-label for="start">{{ __('Start') }}
-                    <x-text-input 
-                        class="block mt-1" id="start" 
+                    <x-text-input
+                        class="block mt-1" id="start"
                         name="start"
                         required
-                        type="time" 
+                        type="time"
                         wire:model="slot.start" />
                     </x-input-label>
                 <x-input-error :messages="$errors->get('start')" class="mt-2" />
-                
+
                 <x-input-label for="end">{{ __('End') }}
-                    <x-text-input 
-                        class="block mt-1" id="end" 
+                    <x-text-input
+                        class="block mt-1" id="end"
                         :min="date('Y-m-d')"
                         name="end"
                         required
-                        type="time" 
+                        type="time"
                         wire:model="slot.end" />
                 </x-input-label>
                 </div>
@@ -60,8 +60,8 @@
                 <tbody>
                 @foreach ($slots as $slot)
 
-                    <livewire:slot
-                        :slot="$slot" 
+                    <livewire:config.slot
+                        :slot="$slot"
                         :wire:key="$slot->id"/>
 
                 @endforeach
@@ -69,7 +69,7 @@
             </table>
 
             @endif
-            
+
         </div>
     </div>
 </div>

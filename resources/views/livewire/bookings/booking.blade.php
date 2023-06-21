@@ -20,24 +20,41 @@
       </a>
     @endunless
 
+    {{-- Add to Google Calendar button --}}
     @if(! $is_admin && ! isset($booking->google_event_id))
-      <x-primary-button small="true" class="w-full mt-4 sm:w-auto sm:mt-0"
+      <x-primary-button
+        small="true"
+        class="w-full mt-4 sm:w-auto sm:mt-0 min-w-[35ch] grid grid-cols-[auto_1fr]"
         wire:click='addToGoogleCalendar'>
+
         <img
           aria-hidden="true"
-          class="w-6 h-6 me-6"
+          class="self-start w-6 h-6"
           height="200"
           src="{{ Vite::asset('resources/img/Google_Calendar_icon.svg')}}"
           width="200" alt="Google Calendar">
-        <span class="text-sm">{{ __('Add to Google Calendar') }}</span>
+        <span class="text-sm"
+          wire:loading.class='hidden'
+          wire:target='addToGoogleCalendar'>
+          {{ __('Add to Google Calendar') }}
+        </span>
+        <span wire:loading.class='!flex' wire:target='addToGoogleCalendar'
+          class="justify-center hidden">
+          <x-spinner />
+        </span>
+
       </x-primary-button>
+
+      {{-- Notification trigger --}}
       <div class="hidden"
         x-data="{saved: @entangle('saved_to_google')}"
         x-init="$watch('saved', value => {
           if (value) notif.i('{{ __('Saved to Google Calendar 👍') }}')
         })">
       </div>
-    @endif
+
+      <x-oauth-popup :url="$popup_url" method="addToGoogleCalendar" />
+    @endif {{-- End add to Google Calendar button --}}
   </div>
 
   <table class="w-full mt-6 text-gray-900 dark:text-gray-100">
