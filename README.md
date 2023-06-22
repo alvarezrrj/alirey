@@ -4,6 +4,9 @@ A booking management system built with the TALL stack (TailwindCSS, AlpineJS, La
 
 ## TO DO
 
++ Add "show password" button to sign in form
++ Add price to landing page
+
 + Test Google Calendar Sync (therapist) in production 
 
 + Unnecesary modals are being rendered on Booking view
@@ -18,10 +21,8 @@ A booking management system built with the TALL stack (TailwindCSS, AlpineJS, La
 + Fix filament dark mode issue with: https://github.com/filamentphp/filament/issues/6647#issuecomment-1569853641
 + Add favicons
 
-
-Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
-
-Add support for english language
++ Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
++ Add support for english language
 
 ### Future releases
 
@@ -31,8 +32,6 @@ Add support for english language
 + Use filament tables
 + BookingController->edit()
     - Find another way to see if day is full inside while loop to avoid so many round trips to DB
-+ Link Google calendar and/or iCal
-    - Add 'add to calendar' button on booking view
 + Sort out calendar drop-down positioning
 + Give admin ability to dissallow last minute bookings in config.
 + Add search in bookings table
