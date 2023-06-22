@@ -558,7 +558,7 @@ var require_dayjs_min = __commonJS((exports, module) => {
         }, d2 = n3.meridiem || function(t4, e4, n4) {
           var r4 = t4 < 12 ? "AM" : "PM";
           return n4 ? r4.toLowerCase() : r4;
-        }, $2 = {YY: String(this.$y).slice(-2), YYYY: this.$y, M: a3 + 1, MM: O.s(a3 + 1, 2, "0"), MMM: h2(n3.monthsShort, a3, f2, 3), MMMM: h2(f2, a3), D: this.$D, DD: O.s(this.$D, 2, "0"), d: String(this.$W), dd: h2(n3.weekdaysMin, this.$W, o3, 2), ddd: h2(n3.weekdaysShort, this.$W, o3, 3), dddd: o3[this.$W], H: String(s3), HH: O.s(s3, 2, "0"), h: c3(1), hh: c3(2), a: d2(s3, u2, true), A: d2(s3, u2, false), m: String(u2), mm: O.s(u2, 2, "0"), s: String(this.$s), ss: O.s(this.$s, 2, "0"), SSS: O.s(this.$ms, 3, "0"), Z: i2};
+        }, $2 = {YY: String(this.$y).slice(-2), YYYY: O.s(this.$y, 4, "0"), M: a3 + 1, MM: O.s(a3 + 1, 2, "0"), MMM: h2(n3.monthsShort, a3, f2, 3), MMMM: h2(f2, a3), D: this.$D, DD: O.s(this.$D, 2, "0"), d: String(this.$W), dd: h2(n3.weekdaysMin, this.$W, o3, 2), ddd: h2(n3.weekdaysShort, this.$W, o3, 3), dddd: o3[this.$W], H: String(s3), HH: O.s(s3, 2, "0"), h: c3(1), hh: c3(2), a: d2(s3, u2, true), A: d2(s3, u2, false), m: String(u2), mm: O.s(u2, 2, "0"), s: String(this.$s), ss: O.s(this.$s, 2, "0"), SSS: O.s(this.$ms, 3, "0"), Z: i2};
         return r3.replace(y, function(t4, e4) {
           return e4 || $2[t4] || i2.replace(":", "");
         });
@@ -700,6 +700,22 @@ var require_cs = __commonJS((exports, module) => {
       return e3 + ".";
     }, formats: {LT: "H:mm", LTS: "H:mm:ss", L: "DD.MM.YYYY", LL: "D. MMMM YYYY", LLL: "D. MMMM YYYY H:mm", LLLL: "dddd D. MMMM YYYY H:mm", l: "D. M. YYYY"}, relativeTime: {future: "za %s", past: "p\u0159ed %s", s: r2, m: r2, mm: r2, h: r2, hh: r2, d: r2, dd: r2, M: r2, MM: r2, y: r2, yy: r2}};
     return t2.default.locale(d, null, true), d;
+  });
+});
+
+// node_modules/dayjs/locale/cy.js
+var require_cy = __commonJS((exports, module) => {
+  !function(d, e2) {
+    typeof exports == "object" && typeof module != "undefined" ? module.exports = e2(require_dayjs_min()) : typeof define == "function" && define.amd ? define(["dayjs"], e2) : (d = typeof globalThis != "undefined" ? globalThis : d || self).dayjs_locale_cy = e2(d.dayjs);
+  }(exports, function(d) {
+    "use strict";
+    function e2(d2) {
+      return d2 && typeof d2 == "object" && "default" in d2 ? d2 : {default: d2};
+    }
+    var _ = e2(d), a2 = {name: "cy", weekdays: "Dydd Sul_Dydd Llun_Dydd Mawrth_Dydd Mercher_Dydd Iau_Dydd Gwener_Dydd Sadwrn".split("_"), months: "Ionawr_Chwefror_Mawrth_Ebrill_Mai_Mehefin_Gorffennaf_Awst_Medi_Hydref_Tachwedd_Rhagfyr".split("_"), weekStart: 1, weekdaysShort: "Sul_Llun_Maw_Mer_Iau_Gwe_Sad".split("_"), monthsShort: "Ion_Chwe_Maw_Ebr_Mai_Meh_Gor_Aws_Med_Hyd_Tach_Rhag".split("_"), weekdaysMin: "Su_Ll_Ma_Me_Ia_Gw_Sa".split("_"), ordinal: function(d2) {
+      return d2;
+    }, formats: {LT: "HH:mm", LTS: "HH:mm:ss", L: "DD/MM/YYYY", LL: "D MMMM YYYY", LLL: "D MMMM YYYY HH:mm", LLLL: "dddd, D MMMM YYYY HH:mm"}, relativeTime: {future: "mewn %s", past: "%s yn \xF4l", s: "ychydig eiliadau", m: "munud", mm: "%d munud", h: "awr", hh: "%d awr", d: "diwrnod", dd: "%d diwrnod", M: "mis", MM: "%d mis", y: "blwyddyn", yy: "%d flynedd"}};
+    return _.default.locale(a2, null, true), a2;
   });
 });
 
@@ -12686,7 +12702,7 @@ var Dayjs = /* @__PURE__ */ function() {
     };
     var matches2 = {
       YY: String(this.$y).slice(-2),
-      YYYY: this.$y,
+      YYYY: Utils.s(this.$y, 4, "0"),
       M: $M + 1,
       MM: Utils.s($M + 1, 2, "0"),
       MMM: getShort(locale.monthsShort, $M, months, 3),
@@ -13102,6 +13118,7 @@ var locales = {
   bs: require_bs(),
   ca: require_ca(),
   cs: require_cs(),
+  cy: require_cy(),
   da: require_da(),
   de: require_de(),
   en: require_en(),
@@ -28084,6 +28101,14 @@ import_trix.default.config.blockAttributes.subHeading = {
   breakOnReturn: true,
   group: false
 };
+import_trix.default.config.textAttributes.underline = {
+  style: {textDecoration: "underline"},
+  inheritable: true,
+  parser: (element) => {
+    const style = window.getComputedStyle(element);
+    return style.textDecoration.includes("underline");
+  }
+};
 import_trix.default.Block.prototype.breaksOnReturn = function() {
   const lastAttribute = this.getLastAttribute();
   const blockConfig = import_trix.default.getBlockConfig(lastAttribute ? lastAttribute : "default");
@@ -28134,9 +28159,11 @@ var select_default = (Alpine) => {
     optionsLimit,
     placeholder,
     position,
+    isPlaceholderSelectionDisabled,
     searchDebounce,
     searchingMessage,
     searchPrompt,
+    searchableOptionFields,
     state: state2
   }) => {
     return {
@@ -28159,12 +28186,13 @@ var select_default = (Alpine) => {
           noResultsText: noSearchResultsMessage,
           placeholderValue: placeholder,
           position: position ?? "auto",
-          removeItemButton: true,
+          removeItemButton: !isPlaceholderSelectionDisabled,
           renderChoiceLimit: optionsLimit,
-          searchFields: ["label"],
+          searchFields: searchableOptionFields ?? ["label"],
           searchPlaceholderValue: searchPrompt,
           searchResultLimit: optionsLimit,
-          shouldSort: false
+          shouldSort: false,
+          searchFloor: hasDynamicSearchResults ? 0 : 1
         });
         await this.refreshChoices({withInitialOptions: true});
         if (![null, void 0, ""].includes(this.state)) {
@@ -28199,14 +28227,11 @@ var select_default = (Alpine) => {
         if (hasDynamicSearchResults) {
           this.$refs.input.addEventListener("search", async (event) => {
             let search = event.detail.value?.trim();
-            if ([null, void 0, ""].includes(search)) {
-              return;
-            }
             this.isSearching = true;
             this.select.clearChoices();
             await this.select.setChoices([
               {
-                label: searchingMessage,
+                label: [null, void 0, ""].includes(search) ? loadingMessage : searchingMessage,
                 value: "",
                 disabled: true
               }
@@ -28228,6 +28253,7 @@ var select_default = (Alpine) => {
             withInitialOptions: !hasDynamicOptions
           });
           this.select.clearStore();
+          this.refreshPlaceholder();
           this.setChoices(choices);
           if (![null, void 0, ""].includes(this.state)) {
             this.select.setChoiceByValue(this.formatState(this.state));
@@ -28550,10 +28576,11 @@ var Masked = class {
     this.resolve(value);
   }
   resolve(value) {
-    this.reset();
-    this.append(value, {
+    let flags = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {
       input: true
-    }, "");
+    };
+    this.reset();
+    this.append(value, flags, "");
     this.doCommit();
     return this.value;
   }
@@ -28680,11 +28707,11 @@ var Masked = class {
         break;
       details.aggregate(d);
     }
-    if (checkTail != null) {
-      details.tailShift += this.appendTail(checkTail).tailShift;
-    }
     if ((this.eager === true || this.eager === "append") && flags !== null && flags !== void 0 && flags.input && str) {
       details.aggregate(this._appendEager());
+    }
+    if (checkTail != null) {
+      details.tailShift += this.appendTail(checkTail).tailShift;
     }
     return details;
   }
@@ -30799,7 +30826,7 @@ var text_input_default = (Alpine) => {
         if (!getMaskOptionsUsing) {
           return;
         }
-        if (this.state) {
+        if (typeof this.state !== "undefined") {
           this.$el.value = this.state?.valueOf();
         }
         this.mask = IMask(this.$el, getMaskOptionsUsing(IMask)).on("accept", () => {
