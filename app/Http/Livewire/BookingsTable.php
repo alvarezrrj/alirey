@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\GoogleCalController;
 use App\Models\Booking;
 use App\SD\SD;
 use Carbon\Carbon;
@@ -74,6 +75,8 @@ class BookingsTable extends Component
     public function delete(Booking $booking)
     {
         $this->authorize('delete', $booking);
+
+        GoogleCalController::delete($booking);
 
         $booking->delete();
     }

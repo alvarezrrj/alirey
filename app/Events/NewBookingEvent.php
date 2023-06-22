@@ -20,7 +20,10 @@ class NewBookingEvent
      *
      * @return void
      */
-    public function __construct(public Booking $booking)
+    public function __construct(
+        public Booking $booking,
+        public bool $madeByTherapist = false
+    )
     {
         //
     }

@@ -34,9 +34,11 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        # This redirect URL is used by socialite
         'redirect' => env('APP_ENV') === 'local'
             ? env('APP_URL').':8000/auth/callback'
             : env('APP_URL').'/auth/callback',
+        'calendar_id' => env('GOOGLE_CALENDAR_ID', 'primary'),
     ],
 
 ];

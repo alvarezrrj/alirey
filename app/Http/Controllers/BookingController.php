@@ -160,6 +160,8 @@ class BookingController extends Controller
     {
         $this->authorize('delete', $booking);
 
+        GoogleCalController::delete($booking);
+
         $booking->delete();
 
         if ($request->user()->isAdmin()) return Redirect::back();

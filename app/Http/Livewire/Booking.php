@@ -2,11 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Controllers\GoogleCalController;
 use App\Http\Controllers\MercadoPagoController;
 use App\SD\SD;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Illuminate\Http\Request;
 
 class Booking extends Component
 {
@@ -25,6 +27,14 @@ class Booking extends Component
     public $alert = [];
 
     public $response;
+
+    public string $popup_url;
+    public $saved_to_google = false;
+
+    public $complete;
+    // protected $listeners = [
+    //     'oAuthComplete' => 'foo',
+    // ];
 
     public function mount()
     {
@@ -87,5 +97,18 @@ class Booking extends Component
         $this->completion_confirmed = true;
 
         $this->booking->save();
+    }
+
+    public function addToGoogleCalendar(Request $request)
+    {
+        // sleep(300);
+        if ($request->user()->google_token) {
+            GoogleCalController::store($this->booking);
+            $this->saved_to_google = true;
+            $this->popup_url = '';
+            return;
+        }
+        $this->popup_url = route('google.calendar.auth');
+        // return redirect()->route('google.calendar.auth', $this->booking);
     }
 }

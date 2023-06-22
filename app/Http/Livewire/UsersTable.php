@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Http\Controllers\GoogleCalController;
 
 class UsersTable extends Component
 {
@@ -30,6 +31,9 @@ class UsersTable extends Component
     public function delete(User $user)
     {
         $this->authorize('delete', $user);
+
+        // Revoke Google OAuth2 access token
+        GoogleCalController::revokeToken($user);
 
         $user->delete();
     }

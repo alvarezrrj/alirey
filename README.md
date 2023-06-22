@@ -4,13 +4,19 @@ A booking management system built with the TALL stack (TailwindCSS, AlpineJS, La
 
 ## TO DO
 
-Fix slot not beeing selected by default on booking form
++ Test Google Calendar Sync (therapist) in production 
 
-Clean up instructions height animation on booking form
++ Unnecesary modals are being rendered on Booking view
 
-Fix filament dark mode issue with: https://github.com/filamentphp/filament/issues/6647#issuecomment-1569853641
++ Replace booking's day column for from and to (as datetimes)
++ Check for booking overlap by just comparing dateTimes instead of slot_id
++ Select upcoming booking (on RegisteredUserController::dashboard) where 'from' <= Carbon::now()
 
-Add favicons
++ Add link to 'add to google calendar' on booking confirmation email.
+
++ Clean up instructions height animation on booking form
++ Fix filament dark mode issue with: https://github.com/filamentphp/filament/issues/6647#issuecomment-1569853641
++ Add favicons
 
 
 Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
@@ -34,6 +40,8 @@ Add support for english language
 + Auto delete soft deleted slots with no related bookings in a scheduled job
 + Sort out the roles situation: separate 'admin' from 'therapist'
 Add an 'opt_out' column on users table (to allow them to opt out of promotional email)
++ Cerrar horarios de forma recurrente.
++ Add option to sync to google Calendar on user's profile
 
 ## Notes
 Goggle scopes
@@ -50,8 +58,9 @@ to users table
 
 ### Known issues
 
-+ Slot picker on booking form requires an option to be clicked on (even if the &lt;select&gt; element has a value)
++ Slot picker on booking form requires selects the first slot by default which might be unavailable. This could lead to a poor UX if someone goes for that slot and a moment later finds out it's not available.
 + bookings.checkout lags for a few seconds before loading 'pay' button with no loading indicator
++ Line 184 on Livewire\BookingForm `->where('slot_id', $validated['slot_id'])` is wrong: slots may have been soft deleted
 
 ### For a multi-therapist scenario
 

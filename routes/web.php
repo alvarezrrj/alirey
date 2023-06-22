@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\GoogleCalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -82,10 +83,19 @@ Route::middleware(['auth', 'verified', 'customer'])->group(function() {
         ->name('contact.therapist');
     Route::post('contact/query', [ContactController::class, 'therapistSend'])
         ->name('contact.therapist.send');
-    // Bookings
-    Route::name('user.')->group(function() {
-    });
+
 });
+
+// everyone (logged in)
+Route::middleware(['auth', 'verified'])->group(function() {
+    Route::get('google/calendar/auth', [GoogleCalController::class, 'auth'])
+        ->name('google.calendar.auth');
+    Route::get('google/calendar/callback', [GoogleCalController::class, 'callback'])
+        ->name('google.calendar.callback');
+    Route::get('google/calendar/finished/{result}', [GoogleCalController::class, 'finished'])
+        ->name('google.calendar.finished');
+});
+
 
 //=== Contact ===
 // site admin

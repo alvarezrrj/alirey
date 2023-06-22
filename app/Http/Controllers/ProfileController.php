@@ -18,7 +18,7 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         $codes = DB::table('codes')->orderBy('country', 'asc')->get();
-        
+
         return view('profile.edit', [
             'user' => $request->user(),
             'codes' => $codes
@@ -51,6 +51,9 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+
+        // Revoke Google OAuth2 access token
+        GoogleCalController::revokeToken($user);
 
         Auth::logout();
 

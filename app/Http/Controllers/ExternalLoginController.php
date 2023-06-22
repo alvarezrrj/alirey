@@ -29,6 +29,10 @@ class ExternalLoginController extends Controller
 
             return redirect()->route('login');
         }
+        // echo '<pre>';
+        // echo var_dump($user);
+        // echo '<pre>';
+        // exit;
 
         $user_from_db = User::where('email', $user->email)->first();
 

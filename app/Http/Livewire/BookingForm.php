@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Events\NewBookingEvent;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\GoogleCalController;
 use App\Models\Booking;
 use App\Models\Code;
 use App\Models\Payment;
@@ -177,12 +179,13 @@ class BookingForm extends Component implements HasForms
             $this->validate(),
             ['day', 'slot_id', 'virtual']
         );
-        $bookings = Booking::whereDate('day', $validated['day'])
-            ->where('status', '!=', SD::BOOKING_CANCELLED)
-            ->where('slot_id', $validated['slot_id']);
 
-        return DB::transaction(function () use ($validated, $request, $bookings) {
-            if ( $bookings->count() ) {
+        return DB::transaction(function () use ($validated, $request) {
+            $bookings = Booking::whereDate('day', $validated['day'])
+                ->where('status', '!=', SD::BOOKING_CANCELLED)
+                ->where('slot_id', $validated['slot_id'])
+                ->count();
+            if ( $bookings ) {
                 if ($this->is_booking) {
                     $this->addError('overlap', 'Sorry, that slot is no longer available. Please try again.');
                 } else {
@@ -201,7 +204,7 @@ class BookingForm extends Component implements HasForms
             // Admin booking for client
             if ($this->is_admin && $this->is_booking) {
                 $booking = User::find($this->client_id)->bookings()->create($validated);
-                $booking->user->notify(new BookingDetails($booking));
+                NewBookingEvent::dispatch($booking);
                 session()->flash('message', 'Booking saved.');
                 return redirect(route('bookings.show', $booking));
             // Single slot holiday
@@ -228,13 +231,14 @@ class BookingForm extends Component implements HasForms
             $this->validate(),
             ['day', 'slot_id', 'virtual']
         );
-        $bookings = Booking::whereDate('day', $validated['day'])
-            ->where('slot_id', $validated['slot_id'])
-            ->where('status', '!=', SD::BOOKING_CANCELLED)
-            ->whereNot('id', $this->booking?->id);
 
-        return DB::transaction(function() use ($bookings, $validated) {
-            if ( $bookings->count() ) {
+        $redirect = DB::transaction(function() use ($validated) {
+            $bookings = Booking::whereDate('day', $validated['day'])
+                ->where('slot_id', $validated['slot_id'])
+                ->where('status', '!=', SD::BOOKING_CANCELLED)
+                ->whereNot('id', $this->booking?->id)
+                ->count();
+            if ( $bookings ) {
                 $this->addError('overlap', 'Sorry, that slot is no longer available. Please try again.');
                 return;
             }
@@ -245,5 +249,9 @@ class BookingForm extends Component implements HasForms
             session()->flash('message', 'Changes saved.');
             return redirect(route('bookings.show', $this->booking));
         });
+        if ($redirect) {
+            GoogleCalController::update($this->booking->fresh());
+            return $redirect;
+        }
     }
 }

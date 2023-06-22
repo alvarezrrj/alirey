@@ -67,7 +67,7 @@
                 <tbody>
                 @foreach ($holidays as $holiday)
 
-                    <livewire:holiday-range
+                    <livewire:config.holiday-range
                         :range="$holiday"
                         :wire:key="$holiday[0]"/>
 
