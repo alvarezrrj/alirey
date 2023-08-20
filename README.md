@@ -19,7 +19,6 @@ A booking management system built with the TALL stack (TailwindCSS, AlpineJS, La
 
 + Clean up instructions height animation on booking form
 + Fix filament dark mode issue with: https://github.com/filamentphp/filament/issues/6647#issuecomment-1569853641
-+ Add favicons
 
 + Once Rabol merges pull request, delete "repositories" field from composer.json and delete "/packages" folder, uninstall livewire-calendar and reinstall from repo.
 + Add support for english language
