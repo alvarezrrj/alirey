@@ -199,14 +199,17 @@ php artisan db:seed
 ```
 
 - Create resources/svg directory (It can be empty - necesary for Blade Icons)
-- Cache icons with
+
+- Clear cache with
 ```
-php artisan icons:cache
+php artisan cache:clear
 ```
 
-- Cache views with 
+- Cache things with
 ```
+php artisan icons:cache
 php artisan view:cache
+php artisan config:cache
 ```
 
 - Write cron entry on server to run scheduler
@@ -219,7 +222,7 @@ php artisan view:cache
 php artisan queue:work database --tries=3 --backoff=60
 ```
 
-- Run the worker [supervisor](https://laravel.com/docs/10.x/queues#supervisor-configuration) with
+- Run the worker [supervisor](https://git config --global --add safe.directory /home/forge/alirey.arlaravel.com/docs/10.x/queues#supervisor-configuration) with
 ``` 
 supervisorctl start worker-538346:*
 supervisorctl start worker-538355:*
