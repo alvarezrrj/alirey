@@ -155,7 +155,7 @@
                     <picture>
                       <source srcset="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.webp') }}" type="image/webp">
                       <img
-                          alt="Biodescodificación y Constelaciones | Testimoniosy"
+                          alt="Biodescodificación y Constelaciones | Testimonios"
                           class="h-auto testimonial-img"
                           height="523"
                           loading="lazy"
