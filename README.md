@@ -186,17 +186,17 @@ composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 npm ci
 npm run build
 ```
-
 - Migrate database with
 ```
 php artisan migrate --force
 ```
-(Use `--force` to allow migrating in production)
+Use `--force` to allow migrating in production without receiving warnings about it
 
 - Seed db with
 ```
-php artisan db:seed
+php artisan db:seed [-n]
 ```
+Use `-n` to "do not ask any interactive question"
 
 - Create resources/svg directory (It can be empty - necesary for Blade Icons)
 

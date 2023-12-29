@@ -13,6 +13,9 @@ use App\Mail\ContactTherapist;
 use App\Mail\ContactWebmaster;
 use App\Mail\EmailConfirmation;
 use App\Models\User;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -67,6 +70,19 @@ class ContactController extends Controller
      */
     public function webmasterSend(Request $request)
     {
+        // Check cloudflare turnstile token
+        $SECRET_KEY = config('app.cf_turnstile_sk');
+        $cf_token = $request->input('cf-turnstile-response');
+        $cf_siteverify_url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+
+        $response = Http::post($cf_siteverify_url, [
+            'secret' => $SECRET_KEY,
+            'response' => $cf_token
+        ]);
+        $not_a_robot = $response->json('success');
+
+        Gate::allowIf($not_a_robot);
+
         $validated = $request->validate([
             'subject' => 'nullable|string',
             'screenshot' => 'nullable|image',
@@ -83,6 +99,7 @@ class ContactController extends Controller
         session()->flash('message', __('Thank you, your message has been sent.'));
 
         return redirect()->back();
+
     }
 
     /**

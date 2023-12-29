@@ -223,4 +223,11 @@ return [
 
     'webmaster' => env('WEBMASTER_EMAIL'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Cloudflare turnstile secret key
+    |--------------------------------------------------------------------------
+    |
+    */
+    'cf_turnstile_sk' => env('CLOUDFLARE_TURNSTILE_SK'),
 ];
