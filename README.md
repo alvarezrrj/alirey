@@ -207,8 +207,8 @@ php artisan cache:clear
 
 - Cache things with
 ```
-php artisan icons:cache
-php artisan view:cache
+php artisan icons:cache && \
+php artisan view:cache && \
 php artisan config:cache
 ```
 
