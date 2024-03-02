@@ -94,7 +94,7 @@
 
         {{-- Hero CTA --}}
         <div class="flex justify-center mt-12">
-          <a target="_blank" href="{{ route('bookings.create', $therapist) }}">
+          <a target="_blank" href="https://api.whatsapp.com/send/?phone=5493541221161&text&type=phone_number&app_absent=1">
             <x-primary-button>
               Reservá tu consulta
             </x-primary-button>
@@ -290,7 +290,7 @@
 
         {{-- CTA --}}
         <div class="flex justify-center mt-12">
-          <a target="_blank" href="{{ route('bookings.create', $therapist) }}">
+          <a target="_blank" href="https://api.whatsapp.com/send/?phone=5493541221161&text&type=phone_number&app_absent=1">
             <x-primary-button>
               Reservá tu consulta
             </x-primary-button>
@@ -375,7 +375,7 @@
 
         {{-- CTA --}}
         <div class="flex justify-center mt-12">
-          <a target="_blank" href="{{ route('bookings.create', $therapist) }}">
+          <a target="_blank" href="https://api.whatsapp.com/send/?phone=5493541221161&text&type=phone_number&app_absent=1">
             <x-primary-button>
               Reservá tu consulta
             </x-primary-button>
