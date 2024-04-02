@@ -1,4 +1,3 @@
-@php($therapist = App\Models\Role::where('role', SD::admin)->first()->users()->first())
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
   <head>
@@ -6,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-880119893"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-880119893');
+    </script>
 
     <!-- Load webp feature detection by modernizer -->
     @vite('resources/libraries/modernizr/modernizr-webp.js')
@@ -73,7 +81,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="{{ route('bookings.create', $therapist) }}">
+                  <a href="https://api.whatsapp.com/send/?phone=5493541221161&text&type=phone_number&app_absent=1">
                     👉 Reservá tu sesión de bioconstelación
                   </a>
                 </li>
