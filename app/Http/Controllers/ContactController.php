@@ -116,8 +116,7 @@ class ContactController extends Controller
         ]);
 
         Mail::to($request['email'])->send(new EmailConfirmation());
-        // Mail::to(config('mail.therapist_addr'))->send(new ContactTherapist(
-        Mail::to('contact@rodrigoalvarez.co.uk')->send(new ContactTherapist(
+        Mail::to(config('mail.therapist_addr'))->send(new ContactTherapist(
             name: $validated['name'],
             email:  $validated['email'],
             my_subject: $validated['subject'],
