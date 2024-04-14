@@ -199,6 +199,9 @@ php artisan db:seed [-n]
 Use `-n` to "do not ask any interactive question"
 
 - Create resources/svg directory (It can be empty - necesary for Blade Icons)
+```
+mkdir resources/svg
+```
 
 - Clear cache with
 ```

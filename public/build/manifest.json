@@ -1,4 +1,60 @@
 {
+  "resources/css/app.css": {
+    "file": "assets/app-80c46410.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/css/home-styles.css": {
+    "file": "assets/home-styles-057be116.css",
+    "isEntry": true,
+    "src": "resources/css/home-styles.css"
+  },
+  "resources/css/legal-styles.css": {
+    "file": "assets/legal-styles-c755369b.css",
+    "isEntry": true,
+    "src": "resources/css/legal-styles.css"
+  },
+  "resources/css/toggle.css": {
+    "file": "assets/toggle-378f14f6.css",
+    "isEntry": true,
+    "src": "resources/css/toggle.css"
+  },
+  "resources/fonts/Lato-Bold.ttf": {
+    "file": "assets/Lato-Bold-d7f0b7f2.ttf",
+    "src": "resources/fonts/Lato-Bold.ttf"
+  },
+  "resources/fonts/Lato-BoldItalic.ttf": {
+    "file": "assets/Lato-BoldItalic-e38611f4.ttf",
+    "src": "resources/fonts/Lato-BoldItalic.ttf"
+  },
+  "resources/fonts/Lato-Italic.ttf": {
+    "file": "assets/Lato-Italic-3be26bf6.ttf",
+    "src": "resources/fonts/Lato-Italic.ttf"
+  },
+  "resources/fonts/Lato-Light.ttf": {
+    "file": "assets/Lato-Light-fb5343c4.ttf",
+    "src": "resources/fonts/Lato-Light.ttf"
+  },
+  "resources/fonts/Lato-LightItalic.ttf": {
+    "file": "assets/Lato-LightItalic-6d5176f3.ttf",
+    "src": "resources/fonts/Lato-LightItalic.ttf"
+  },
+  "resources/fonts/Lato-Regular.ttf": {
+    "file": "assets/Lato-Regular-e82542ae.ttf",
+    "src": "resources/fonts/Lato-Regular.ttf"
+  },
+  "resources/img/Google_Calendar_icon.svg": {
+    "file": "assets/Google_Calendar_icon-951dc44e.svg",
+    "src": "resources/img/Google_Calendar_icon.svg"
+  },
+  "resources/img/alicia_rey_constelaciones.jpg": {
+    "file": "assets/alicia_rey_constelaciones-bafff6ef.jpg",
+    "src": "resources/img/alicia_rey_constelaciones.jpg"
+  },
+  "resources/img/alicia_rey_constelaciones.webp": {
+    "file": "assets/alicia_rey_constelaciones-4293035c.webp",
+    "src": "resources/img/alicia_rey_constelaciones.webp"
+  },
   "resources/img/app_store.png": {
     "file": "assets/app_store-80935c66.png",
     "src": "resources/img/app_store.png"
@@ -19,13 +75,13 @@
     "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil-f2ae99b1.jpg",
     "src": "resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.jpg"
   },
-  "resources/img/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion.jpg": {
-    "file": "assets/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion-2fd7b1db.jpg",
-    "src": "resources/img/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion.jpg"
-  },
   "resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.webp": {
     "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil-8d8e2f10.webp",
     "src": "resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.webp"
+  },
+  "resources/img/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion.jpg": {
+    "file": "assets/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion-2fd7b1db.jpg",
+    "src": "resources/img/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion.jpg"
   },
   "resources/img/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion.webp": {
     "file": "assets/biodescodificacion_constelaciones_testimonio1_que_es_biodescodificacion-bc07603a.webp",
@@ -39,21 +95,17 @@
     "file": "assets/biodescodificacion_constelaciones_testimonio2_beneficios_de_biodescodificacion-114b4c03.webp",
     "src": "resources/img/biodescodificacion_constelaciones_testimonio2_beneficios_de_biodescodificacion.webp"
   },
-  "resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.webp": {
-    "file": "assets/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion-e3e6371d.webp",
-    "src": "resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.webp"
-  },
   "resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.jpg": {
     "file": "assets/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion-ee6a9bd0.jpg",
     "src": "resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.jpg"
   },
+  "resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.webp": {
+    "file": "assets/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion-e3e6371d.webp",
+    "src": "resources/img/biodescodificacion_constelaciones_testimonio3_para_que_sirve_biodescodificacion.webp"
+  },
   "resources/img/bootstrap-icons.custom.svg": {
     "file": "assets/bootstrap-icons.custom-027627b1.svg",
     "src": "resources/img/bootstrap-icons.custom.svg"
-  },
-  "resources/img/alicia_rey_constelaciones.webp": {
-    "file": "assets/alicia_rey_constelaciones-4293035c.webp",
-    "src": "resources/img/alicia_rey_constelaciones.webp"
   },
   "resources/img/bootstrap-icons.svg": {
     "file": "assets/bootstrap-icons-b11f12b8.svg",
@@ -87,25 +139,29 @@
     "file": "assets/play_store2-2f13d913.png",
     "src": "resources/img/play_store2.png"
   },
-  "resources/img/sathy/alicia_rey_contelaciones_logo_footer_old.png": {
-    "file": "assets/alicia_rey_contelaciones_logo_footer_old-65b88905.png",
-    "src": "resources/img/sathy/alicia_rey_contelaciones_logo_footer_old.png"
-  },
   "resources/img/play_store2.webp": {
     "file": "assets/play_store2-4527357c.webp",
     "src": "resources/img/play_store2.webp"
+  },
+  "resources/img/sathy/alicia_rey_contelaciones_logo_footer_old.png": {
+    "file": "assets/alicia_rey_contelaciones_logo_footer_old-65b88905.png",
+    "src": "resources/img/sathy/alicia_rey_contelaciones_logo_footer_old.png"
   },
   "resources/img/sathy/alicia_rey_contelaciones_logo_footer_old.webp": {
     "file": "assets/alicia_rey_contelaciones_logo_footer_old-1c8fbfde.webp",
     "src": "resources/img/sathy/alicia_rey_contelaciones_logo_footer_old.webp"
   },
+  "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.jpg": {
+    "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01-26e253f4.jpg",
+    "src": "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.jpg"
+  },
   "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.webp": {
     "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01-ab7c342b.webp",
     "src": "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.webp"
   },
-  "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.jpg": {
-    "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01-26e253f4.jpg",
-    "src": "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-01.jpg"
+  "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01.jpg": {
+    "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-fc8b9a1b.jpg",
+    "src": "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01.jpg"
   },
   "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01.webp": {
     "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-fd09b309.webp",
@@ -127,10 +183,6 @@
     "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_horizontal-f7ff3948.webp",
     "src": "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_horizontal.webp"
   },
-  "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01.jpg": {
-    "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01-fc8b9a1b.jpg",
-    "src": "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_fondo-web-01.jpg"
-  },
   "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical.png": {
     "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical-e71acca8.png",
     "src": "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical.png"
@@ -139,98 +191,55 @@
     "file": "assets/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical-4a89fb78.webp",
     "src": "resources/img/sathy/biodescodificacion_constelaciones_en_cordoba_alicia_rey_logo_vertical.webp"
   },
+  "resources/img/sathy/fondo-web-01-01-02.jpg": {
+    "file": "assets/fondo-web-01-01-02-6bd71cb2.jpg",
+    "src": "resources/img/sathy/fondo-web-01-01-02.jpg"
+  },
   "resources/img/sathy/fondo-web-01-01-02.webp": {
     "file": "assets/fondo-web-01-01-02-501813c0.webp",
     "src": "resources/img/sathy/fondo-web-01-01-02.webp"
-  },
-  "resources/img/sathy/fondo-web-2.webp": {
-    "file": "assets/fondo-web-2-f48acf6e.webp",
-    "src": "resources/img/sathy/fondo-web-2.webp"
   },
   "resources/img/sathy/fondo-web-2.jpg": {
     "file": "assets/fondo-web-2-93725c6a.jpg",
     "src": "resources/img/sathy/fondo-web-2.jpg"
   },
-  "resources/img/sathy/fondo-web-01-01-02.jpg": {
-    "file": "assets/fondo-web-01-01-02-6bd71cb2.jpg",
-    "src": "resources/img/sathy/fondo-web-01-01-02.jpg"
+  "resources/img/sathy/fondo-web-2.webp": {
+    "file": "assets/fondo-web-2-f48acf6e.webp",
+    "src": "resources/img/sathy/fondo-web-2.webp"
   },
-  "resources/img/alicia_rey_constelaciones.jpg": {
-    "file": "assets/alicia_rey_constelaciones-bafff6ef.jpg",
-    "src": "resources/img/alicia_rey_constelaciones.jpg"
-  },
-  "resources/fonts/Lato-Regular.ttf": {
-    "file": "assets/Lato-Regular-e82542ae.ttf",
-    "src": "resources/fonts/Lato-Regular.ttf"
-  },
-  "resources/fonts/Lato-Italic.ttf": {
-    "file": "assets/Lato-Italic-3be26bf6.ttf",
-    "src": "resources/fonts/Lato-Italic.ttf"
-  },
-  "resources/fonts/Lato-BoldItalic.ttf": {
-    "file": "assets/Lato-BoldItalic-e38611f4.ttf",
-    "src": "resources/fonts/Lato-BoldItalic.ttf"
-  },
-  "resources/fonts/Lato-LightItalic.ttf": {
-    "file": "assets/Lato-LightItalic-6d5176f3.ttf",
-    "src": "resources/fonts/Lato-LightItalic.ttf"
-  },
-  "resources/fonts/Lato-Bold.ttf": {
-    "file": "assets/Lato-Bold-d7f0b7f2.ttf",
-    "src": "resources/fonts/Lato-Bold.ttf"
-  },
-  "resources/fonts/Lato-Light.ttf": {
-    "file": "assets/Lato-Light-fb5343c4.ttf",
-    "src": "resources/fonts/Lato-Light.ttf"
-  },
-  "resources/libraries/loading-attr/loading-attribute-polyfill.css": {
-    "file": "assets/loading-attribute-polyfill-e02dbc35.css",
-    "src": "resources/libraries/loading-attr/loading-attribute-polyfill.css",
-    "isEntry": true
-  },
-  "resources/css/config.css": {
-    "file": "assets/config-378f14f6.css",
-    "src": "resources/css/config.css",
-    "isEntry": true
-  },
-  "resources/css/home-styles.css": {
-    "file": "assets/home-styles-9cfc6cd5.css",
-    "src": "resources/css/home-styles.css",
-    "isEntry": true
+  "resources/js/app.js": {
+    "file": "assets/app-7141b7b0.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
   },
   "resources/libraries/aos/aos.css": {
-    "file": "assets/aos-f85da3e0.css",
-    "src": "resources/libraries/aos/aos.css",
-    "isEntry": true
-  },
-  "resources/css/app.css": {
-    "file": "assets/app-e6209131.css",
-    "src": "resources/css/app.css",
-    "isEntry": true
-  },
-  "resources/libraries/notif/notif.js": {
-    "file": "assets/notif-c1d5ef85.js",
-    "src": "resources/libraries/notif/notif.js",
-    "isEntry": true
-  },
-  "resources/libraries/modernizr/modernizr-webp.js": {
-    "file": "assets/modernizr-webp-1c4e1155.js",
-    "src": "resources/libraries/modernizr/modernizr-webp.js",
-    "isEntry": true
-  },
-  "resources/libraries/loading-attr/loading-attribute-polyfill.umd.js": {
-    "file": "assets/loading-attribute-polyfill.umd-aa0eb636.js",
-    "src": "resources/libraries/loading-attr/loading-attribute-polyfill.umd.js",
-    "isEntry": true
+    "file": "assets/aos-73168167.css",
+    "isEntry": true,
+    "src": "resources/libraries/aos/aos.css"
   },
   "resources/libraries/aos/aos.js": {
     "file": "assets/aos-265656b0.js",
-    "src": "resources/libraries/aos/aos.js",
-    "isEntry": true
+    "isEntry": true,
+    "src": "resources/libraries/aos/aos.js"
   },
-  "resources/js/app.js": {
-    "file": "assets/app-0b9455b1.js",
-    "src": "resources/js/app.js",
-    "isEntry": true
+  "resources/libraries/loading-attr/loading-attribute-polyfill.css": {
+    "file": "assets/loading-attribute-polyfill-e02dbc35.css",
+    "isEntry": true,
+    "src": "resources/libraries/loading-attr/loading-attribute-polyfill.css"
+  },
+  "resources/libraries/loading-attr/loading-attribute-polyfill.umd.js": {
+    "file": "assets/loading-attribute-polyfill.umd-aa0eb636.js",
+    "isEntry": true,
+    "src": "resources/libraries/loading-attr/loading-attribute-polyfill.umd.js"
+  },
+  "resources/libraries/modernizr/modernizr-webp.js": {
+    "file": "assets/modernizr-webp-1c4e1155.js",
+    "isEntry": true,
+    "src": "resources/libraries/modernizr/modernizr-webp.js"
+  },
+  "resources/libraries/notif/notif.js": {
+    "file": "assets/notif-c1d5ef85.js",
+    "isEntry": true,
+    "src": "resources/libraries/notif/notif.js"
   }
 }

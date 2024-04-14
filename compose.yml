@@ -1,0 +1,32 @@
+services:
+  php:
+    image: php:8.2.18-fpm-bookworm
+    volumes:
+      - ./:/app
+    working_dir: /app
+    environment:
+      DB_HOST: mariadb
+
+  composer:
+    image: composer:2.3
+    volumes:
+      - ./:/app
+
+  nginx:
+    image: nginx:1.25.4-bookworm
+    ports:
+      - 81:80
+    volumes:
+      - ./nginx-conf/:/etc/nginx/
+      - ./:/app
+    working_dir: /app
+
+  mariadb:
+    image: mariadb:10.11.7
+    environment:
+      MARIADB_ROOT_PASSWORD: DhYjQO88FIrrxnPOP4Uyy+JKXCNU9z3r
+      MARIADB_USER: aliweb
+      MARIADB_PASSWORD: J2ywMJt3teBFRfA
+      MARIADB_DATABASE: alireyLaravel
+    volumes:
+      - ./mariadb-data:/var/lib/mysql
