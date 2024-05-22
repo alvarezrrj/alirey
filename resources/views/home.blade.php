@@ -57,10 +57,12 @@
             data-aos="zoom-out"
             >
             <picture>
-              <source srcset="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.webp') }}" type="image/webp">
+              <source
+                srcset="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.webp') }}"
+                type="image/webp">
               <img
                 alt="Biodescodificación y Constelaciones | Alicia Rey"
-                class="w-[320px] max-w-full h-auto rounded-[7rem_5px_/_7rem_5px] border-4 border-skin"
+                class="w-[320px] max-w-full h-auto rounded-[5px_7rem_/_5px_7rem] border-4 border-skin"
                 height="717"
                 src="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.jpg') }}"
                 title="Biodescodificación y Constelaciones | Alicia Rey"
