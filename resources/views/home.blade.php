@@ -64,7 +64,7 @@
                 alt="Biodescodificación y Constelaciones | Alicia Rey"
                 class="w-[320px] max-w-full h-auto rounded-[5px_7rem_/_5px_7rem] border-4 border-skin"
                 height="717"
-                src="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.jpg') }}"
+                src="{{ Vite::asset('resources/img/biodescodificacion_constelaciones_en_cordoba_alicia_rey_perfil.png') }}"
                 title="Biodescodificación y Constelaciones | Alicia Rey"
                 width="528"
                 />
